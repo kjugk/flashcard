@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - npm i
+  build:
+    commands:
+      - npm run build
+artifacts:
+  files:
+    - build/*
+  name: test-build
+  discard-paths: yes
+  base-directory: location
