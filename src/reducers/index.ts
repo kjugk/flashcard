@@ -1,9 +1,8 @@
-import { combineReducers, Action } from "redux";
-
-const flashcards = (state = [], action: Action<any>) => {
-  return state;
-};
+import { combineReducers } from "redux";
+import { flashcardListPageReducer } from "../pages/flashcard-list-page/store/reducers";
 
 export const rootReducer = combineReducers({
-  flashcards,
+  flashcardListPage: flashcardListPageReducer,
 });
+
+export type RootState = ReturnType<typeof rootReducer>;
