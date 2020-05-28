@@ -4,6 +4,9 @@ phases:
   install:
     commands:
       - npm i
+  test:
+    commands:
+      - npm test -- --watchAll=false
   build:
     commands:
       - npm run build
