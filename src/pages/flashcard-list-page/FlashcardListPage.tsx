@@ -1,15 +1,35 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { getFlashcards } from "./store/actions";
+import { RootState } from "../../store/rootReducer";
+import { FlashcardList } from "./components/FlashcardList";
 
-export class FlashcardListPage extends Component {
+type Props = ReturnType<typeof mapStateToProps> & typeof dispatchProps;
+
+class FlashcardListPage extends Component<Props> {
   componentDidMount() {
-    // TODO fetch list data and store result
+    this.props.getFlashcards();
   }
 
   render() {
     return (
       <div>
         <h1>List Page</h1>
+        <FlashcardList items={this.props.flashcards} />
       </div>
     );
   }
 }
+
+const mapStateToProps = (state: RootState) => {
+  const { flashcards } = state.flashcardListPage;
+  return {
+    flashcards,
+  };
+};
+
+const dispatchProps = {
+  getFlashcards,
+};
+
+export default connect(mapStateToProps, dispatchProps)(FlashcardListPage);
