@@ -5,7 +5,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
 import { Provider } from "react-redux";
-import { rootReducer } from "./reducers";
+import { rootReducer } from "./store/rootReducer";
 import { createStore } from "redux";
 
 const store = createStore(rootReducer);

@@ -1,14 +1,9 @@
-import {
-  Flashcard,
-  STORE_FLASHCARDS,
-  FlashcardListPageActionTypes,
-} from "./types";
+import { STORE_FLASHCARDS, FlashcardListPageActionTypes } from "./types";
 
-export function storeFlashcards(
-  flashcards: Flashcard[]
-): FlashcardListPageActionTypes {
+export function getFlashcards(): FlashcardListPageActionTypes {
+  // TODO insert redux thunk
   return {
     type: STORE_FLASHCARDS,
-    payload: flashcards,
+    payload: [{ name: "my first card!!!" }],
   };
 }
