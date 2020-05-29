@@ -22,13 +22,6 @@ module.exports = {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     "react/prop-types": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
   },
-  overrides: [
-    {
-      files: ["serviceWorker.ts"],
-      rules: {
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-      },
-    },
-  ],
 };
