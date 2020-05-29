@@ -1,9 +1,9 @@
-import React from "react";
+import React, { FunctionComponent } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import FlashcardListPage from "./pages/flashcard-list-page/FlashcardListPage";
 import "./App.css";
 
-function App() {
+const App: FunctionComponent = () => {
   return (
     <Router>
       <Switch>
@@ -12,6 +12,6 @@ function App() {
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;
