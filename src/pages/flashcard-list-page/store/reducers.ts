@@ -1,8 +1,4 @@
-import {
-  FlashcardListPageActionTypes,
-  FlashcardListPageState,
-  STORE_FLASHCARDS,
-} from "./types";
+import { FlashcardListPageActionTypes, FlashcardListPageState, STORE_FLASHCARDS } from "./types";
 
 const initialState: FlashcardListPageState = {
   flashcards: [],
