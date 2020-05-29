@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getFlashcards } from "./store/actions";
 import { RootState } from "../../store/rootReducer";
 import { FlashcardList } from "./components/FlashcardList";
+import { getFlashcards } from "./effects";
+import { ThunkDispatch } from "redux-thunk";
+import { FlashcardListPageActionTypes } from "./store/types";
 
-type Props = ReturnType<typeof mapStateToProps> & typeof dispatchProps;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchProps>;
 
 class FlashcardListPage extends Component<Props> {
   componentDidMount() {
@@ -28,8 +31,12 @@ const mapStateToProps = (state: RootState) => {
   };
 };
 
-const dispatchProps = {
-  getFlashcards,
-};
+const mapDispatchProps = (
+  dispatch: ThunkDispatch<RootState, unknown, FlashcardListPageActionTypes>
+) => ({
+  getFlashcards: () => {
+    dispatch(getFlashcards());
+  },
+});
 
-export default connect(mapStateToProps, dispatchProps)(FlashcardListPage);
+export default connect(mapStateToProps, mapDispatchProps)(FlashcardListPage);
