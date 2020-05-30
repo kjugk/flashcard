@@ -5,6 +5,7 @@ import {
 } from "./types";
 
 const initialState: FlashcardListPageState = {
+  initialized: false,
   flashcards: [],
 };
 
@@ -16,6 +17,7 @@ export function flashcardListPageReducer(
     case STORE_FLASHCARDS:
       return {
         ...state,
+        initialized: true,
         flashcards: [...state.flashcards, ...action.payload],
       };
     default:
