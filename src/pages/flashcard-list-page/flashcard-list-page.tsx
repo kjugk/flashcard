@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { FunctionComponent, Component, useEffect } from "react";
 import { connect } from "react-redux";
-import { RootState } from "../../store/rootReducer";
-import { FlashcardList } from "./components/FlashcardList";
+import { RootState } from "../../store/root-reducer";
+import { FlashcardList } from "./components/flashcard-list";
 import { getFlashcards } from "./effects";
 import { ThunkDispatch } from "redux-thunk";
 import { FlashcardListPageActionTypes } from "./store/types";
@@ -9,20 +9,23 @@ import { FlashcardListPageActionTypes } from "./store/types";
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchProps>;
 
-class FlashcardListPage extends Component<Props> {
-  componentDidMount() {
-    this.props.getFlashcards();
-  }
+/**
+ * カードリストページ。
+ */
+const FlashcardListPage: FunctionComponent<Props> = (props) => {
+  const { getFlashcards, flashcards } = props;
 
-  render() {
-    return (
-      <div>
-        <h1>List Page</h1>
-        <FlashcardList items={this.props.flashcards} />
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    getFlashcards();
+  }, []);
+
+  return (
+    <div>
+      <h1>List Page</h1>
+      <FlashcardList items={flashcards} />
+    </div>
+  );
+};
 
 const mapStateToProps = (state: RootState) => {
   const { flashcards } = state.flashcardListPage;

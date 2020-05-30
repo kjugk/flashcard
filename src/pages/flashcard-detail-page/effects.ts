@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { storeFlashcardDetail } from "./store/actions";
-import { RootState } from "../../store/rootReducer";
+import { RootState } from "../../store/root-reducer";
 import { ThunkAction } from "redux-thunk";
 
 export const getFlashcardDetail = (
