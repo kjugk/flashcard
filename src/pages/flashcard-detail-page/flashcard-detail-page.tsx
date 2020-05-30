@@ -1,17 +1,17 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { connect } from "react-redux";
-import { RootState } from "../../store/rootReducer";
+import { RootState } from "../../store/root-reducer";
 import { getFlashcardDetail } from "./effects";
 import { ThunkDispatch } from "redux-thunk";
 import { FlashcardDetailPageActionTypes } from "./store/types";
 import { useParams } from "react-router-dom";
 
-/**
- * カードの詳細ページ。
- */
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
+/**
+ * カードの詳細ページ。
+ */
 const FlashcardDetailPage: FunctionComponent<Props> = (props) => {
   const { id } = useParams<{ id: string }>();
   const { flashcard, getFlashcardDetail } = props;
