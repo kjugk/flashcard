@@ -1,9 +1,10 @@
 // State types
 export interface Flashcard {
+  id: string;
   name: string;
 }
-
 export interface FlashcardListPageState {
+  initialized: boolean;
   flashcards: Flashcard[];
 }
 
