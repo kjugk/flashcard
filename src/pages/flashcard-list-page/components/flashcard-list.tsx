@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from "react";
-import { Flashcard } from "../store/types";
 import { Link } from "react-router-dom";
+import { FlashcardListItem } from "../../../shared/types/flashcard-list-item";
 
 interface Props {
-  items: Flashcard[];
+  items: FlashcardListItem[];
 }
 
 export const FlashcardList: FunctionComponent<Props> = (props) => {

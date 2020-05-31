@@ -1,8 +1,9 @@
 import {
-  FlashcardDetail,
   FlashcardDetailPageActionTypes,
   STORE_FLASHCARD_DETAIL,
 } from "./types";
+
+import { FlashcardDetail } from "../../../shared/types/flashcard-detail";
 
 export function storeFlashcardDetail(
   item: FlashcardDetail
