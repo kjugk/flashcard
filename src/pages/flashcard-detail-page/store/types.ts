@@ -1,9 +1,6 @@
-// State types
-export interface FlashcardDetail {
-  id: string;
-  name: string;
-}
+import { FlashcardDetail } from "../../../shared/types/flashcard-detail";
 
+// State types
 export interface FlashcardDetailPageState {
   flashcard?: FlashcardDetail;
 }

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, Component, useEffect } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../store/root-reducer";
 import { FlashcardList } from "./components/flashcard-list";
