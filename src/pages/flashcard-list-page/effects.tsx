@@ -16,8 +16,8 @@ export const getFlashcards = (): ThunkAction<
     const { flashcardListPage } = getState();
     if (flashcardListPage.initialized) return;
 
+    // TODO 共通エラー処理
     const items = await repository.getAll();
-
     dispatch(storeFlashcards(items));
   };
 };
