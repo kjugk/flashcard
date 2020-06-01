@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { connect } from "react-redux";
 import { RootState } from "../../store/root-reducer";
-import { FlashcardList } from "./components/flashcard-list";
+import { FlashcardList } from "./components/flashcard-list.component";
 import { getFlashcards } from "./effects";
 import { ThunkDispatch } from "redux-thunk";
 import { FlashcardListPageActionTypes } from "./store/types";

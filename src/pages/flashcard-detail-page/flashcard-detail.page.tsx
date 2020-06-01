@@ -5,12 +5,14 @@ import { getFlashcardDetail } from "./effects";
 import { ThunkDispatch } from "redux-thunk";
 import { FlashcardDetailPageActionTypes } from "./store/types";
 import { useParams } from "react-router-dom";
+import { QaViewer } from "./components/qa-viewer.component";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
 
 /**
  * カードの詳細ページ。
+ * 子コンポーネントの副作用を伴うaction は全てここで処理する。
  */
 const FlashcardDetailPage: FunctionComponent<Props> = (props) => {
   const { id } = useParams<{ id: string }>();
@@ -24,7 +26,14 @@ const FlashcardDetailPage: FunctionComponent<Props> = (props) => {
     return null;
   }
 
-  return <div>{flashcard.name}</div>;
+  // TODO ページの内容を別コンポーネントに切り出すか検討する
+  return (
+    <div>
+      <h1>{flashcard.name}</h1>
+      {flashcard.description && <p>{flashcard.description}</p>}
+      <QaViewer qaList={flashcard.qaList}></QaViewer>
+    </div>
+  );
 };
 
 const mapStateToProps = (state: RootState) => ({
