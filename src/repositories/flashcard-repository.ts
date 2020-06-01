@@ -26,6 +26,19 @@ export class FlashcardRepository {
     return {
       id: response.flashcard.id,
       name: response.flashcard.name,
+      description: "最初に作った単語帳",
+      qaList: [
+        {
+          question: "apple",
+          answer: "りんご",
+          explanation: "",
+        },
+        {
+          question: "book",
+          answer: "本",
+          explanation: "",
+        },
+      ],
     };
   }
 }
