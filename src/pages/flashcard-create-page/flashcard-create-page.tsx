@@ -6,13 +6,16 @@ import { FlashcardCreateForm } from "./components/flashcard-create-form";
 
 /**
  * カード作成ページ。
- * TODO formik 試す
  */
 const FlashcardCreatePage: FunctionComponent = () => {
   return (
     <div>
       <h1>Create Page</h1>
-      <FlashcardCreateForm />
+      <FlashcardCreateForm
+        onSubmit={(values) => {
+          console.log(values);
+        }}
+      />
     </div>
   );
 };
