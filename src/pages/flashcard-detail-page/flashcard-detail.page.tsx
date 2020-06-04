@@ -5,6 +5,7 @@ import { getFlashcardDetail } from "./effects";
 import { ThunkDispatch } from "redux-thunk";
 import { FlashcardDetailPageActionTypes } from "./store/types";
 import { useParams } from "react-router-dom";
+import { Header } from "../../shared/components/header/header";
 import { QaViewer } from "./components/qa-viewer.component";
 
 type Props = ReturnType<typeof mapStateToProps> &
@@ -30,6 +31,7 @@ const FlashcardDetailPage: FunctionComponent<Props> = (props) => {
   // TODO ページの内容を別コンポーネントに切り出すか検討する
   return (
     <div>
+      <Header />
       <h1>{flashcard.name}</h1>
       {flashcard.description && <p>{flashcard.description}</p>}
       <QaViewer qaList={flashcard.qaList}></QaViewer>

@@ -5,6 +5,7 @@ import { FlashcardList } from "./components/flashcard-list.component";
 import { getFlashcards } from "./effects";
 import { ThunkDispatch } from "redux-thunk";
 import { FlashcardListPageActionTypes } from "./store/types";
+import { Header } from "../../shared/components/header/header";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchProps>;
@@ -17,10 +18,11 @@ const FlashcardListPage: FunctionComponent<Props> = (props) => {
 
   useEffect(() => {
     getFlashcards();
-  }, []);
+  }, [getFlashcards]);
 
   return (
     <div>
+      <Header />
       <h1>List Page</h1>
       <FlashcardList items={flashcards} />
     </div>
