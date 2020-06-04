@@ -18,7 +18,6 @@ const FlashcardListPage: FunctionComponent<Props> = (props) => {
 
   useEffect(() => {
     if (isDirty) {
-      console.log("update");
       getFlashcards();
     }
   }, [isDirty]);

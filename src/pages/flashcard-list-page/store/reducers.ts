@@ -24,7 +24,7 @@ export function flashcardListPageReducer(
       return {
         ...state,
         isDirty: false,
-        flashcards: [...state.flashcards, ...action.payload],
+        flashcards: action.payload,
       };
     default:
       return state;
