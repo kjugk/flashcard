@@ -29,9 +29,13 @@ export const FlashcardCreateForm: FunctionComponent<Props> = (props) => {
         if (!values.name) {
           errors.name = "必須項目です";
         }
+        // TODO QA が一つ以上存在する
         return errors;
       }}
-      onSubmit={(values) => props.onSubmit(values)}
+      onSubmit={(values) => {
+        console.log(values);
+        props.onSubmit(values);
+      }}
     >
       {({ values }) => (
         <Form>
@@ -63,6 +67,7 @@ export const FlashcardCreateForm: FunctionComponent<Props> = (props) => {
                 ))}
                 <button
                   type="button"
+                  disabled={values.qaList.length >= 5}
                   onClick={() => {
                     arrayHelpers.push({ question: "", answer: "" });
                   }}
