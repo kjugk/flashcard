@@ -12,10 +12,7 @@ export const getFlashcards = (): ThunkAction<
   unknown,
   AnyAction
 > => {
-  return async (dispatch, getState) => {
-    const { flashcardListPage } = getState();
-    if (flashcardListPage.initialized) return;
-
+  return async (dispatch) => {
     // TODO 共通エラー処理
     const items = await repository.getAll();
     dispatch(storeFlashcards(items));

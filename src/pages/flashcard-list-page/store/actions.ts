@@ -1,5 +1,8 @@
-import { STORE_FLASHCARDS, FlashcardListPageActionTypes } from "./types";
-
+import {
+  STORE_FLASHCARDS,
+  NOTIFY_LIST_IS_DIRTY,
+  FlashcardListPageActionTypes,
+} from "./types";
 import { FlashcardListItem } from "../../../shared/types/flashcard-list-item";
 
 export function storeFlashcards(
@@ -8,5 +11,12 @@ export function storeFlashcards(
   return {
     type: STORE_FLASHCARDS,
     payload: items,
+  };
+}
+
+export function notifyListIsDirty(): FlashcardListPageActionTypes {
+  return {
+    type: NOTIFY_LIST_IS_DIRTY,
+    payload: true,
   };
 }

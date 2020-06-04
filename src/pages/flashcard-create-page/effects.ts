@@ -1,19 +1,19 @@
+import { AnyAction } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { RootState } from "../../store/root-reducer";
 import { FlashcardRepository } from "../../repositories/flashcard-repository";
 import { IFlashcardCreateForm } from "./store/types";
+import { notifyListIsDirty } from "../flashcard-list-page/store/actions";
 
 const repository = new FlashcardRepository();
 
-// TODO 副作用がない場合は、commands などに分けるか検討
-export const createFlashcard = async (form: IFlashcardCreateForm) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const id = await repository.create(form);
-      setTimeout(() => {
-        resolve(id);
-      }, 1000);
-    } catch (e) {
-      // TODO エラーtype別の処理
-      reject(e);
-    }
-  });
+export const createFlashcard = (
+  form: IFlashcardCreateForm
+): ThunkAction<Promise<string>, RootState, unknown, AnyAction> => {
+  return async (dispatch) => {
+    // TODO 共通エラー処理
+    const id = await repository.create(form);
+    dispatch(notifyListIsDirty());
+    return id;
+  };
 };

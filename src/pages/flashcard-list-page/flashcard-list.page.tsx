@@ -14,11 +14,13 @@ type Props = ReturnType<typeof mapStateToProps> &
  * カードリストページ。
  */
 const FlashcardListPage: FunctionComponent<Props> = (props) => {
-  const { getFlashcards, flashcards } = props;
+  const { getFlashcards, flashcards, isDirty } = props;
 
   useEffect(() => {
-    getFlashcards();
-  }, [getFlashcards]);
+    if (isDirty) {
+      getFlashcards();
+    }
+  }, [isDirty]);
 
   return (
     <div>
@@ -30,8 +32,9 @@ const FlashcardListPage: FunctionComponent<Props> = (props) => {
 };
 
 const mapStateToProps = (state: RootState) => {
-  const { flashcards } = state.flashcardListPage;
+  const { flashcards, isDirty } = state.flashcardListPage;
   return {
+    isDirty,
     flashcards,
   };
 };
