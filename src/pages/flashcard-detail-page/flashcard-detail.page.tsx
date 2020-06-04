@@ -19,8 +19,9 @@ const FlashcardDetailPage: FunctionComponent<Props> = (props) => {
   const { flashcard, getFlashcardDetail } = props;
 
   useEffect(() => {
+    console.log("detail");
     getFlashcardDetail(id);
-  }, []);
+  }, [getFlashcardDetail, id]);
 
   if (flashcard === undefined) {
     return null;
