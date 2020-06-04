@@ -2,10 +2,11 @@ import {
   FlashcardListPageActionTypes,
   FlashcardListPageState,
   STORE_FLASHCARDS,
+  NOTIFY_LIST_IS_DIRTY,
 } from "./types";
 
 const initialState: FlashcardListPageState = {
-  initialized: false,
+  isDirty: true,
   flashcards: [],
 };
 
@@ -14,10 +15,15 @@ export function flashcardListPageReducer(
   action: FlashcardListPageActionTypes
 ): FlashcardListPageState {
   switch (action.type) {
+    case NOTIFY_LIST_IS_DIRTY:
+      return {
+        ...state,
+        isDirty: action.payload,
+      };
     case STORE_FLASHCARDS:
       return {
         ...state,
-        initialized: true,
+        isDirty: false,
         flashcards: [...state.flashcards, ...action.payload],
       };
     default:
