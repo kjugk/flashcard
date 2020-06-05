@@ -10,14 +10,20 @@ export class FlashcardRepository {
     this.http = new HttpFlashcardApi();
   }
 
-  async getAll(): Promise<FlashcardListItem[]> {
-    const response = await this.http.getAll();
+  getAll(): Promise<FlashcardListItem[]> {
+    return new Promise(async (resolve, reject) => {
+      const response = await this.http.getAll();
 
-    return response.flashcards.map((f) => {
-      return {
-        name: f.name,
-        id: f.id,
-      };
+      setTimeout(() => {
+        resolve(
+          response.flashcards.map((f) => {
+            return {
+              name: f.name,
+              id: f.id,
+            };
+          })
+        );
+      }, 1000);
     });
   }
 

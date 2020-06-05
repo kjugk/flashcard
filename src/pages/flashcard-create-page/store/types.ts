@@ -1,9 +1,4 @@
 // State types
-export interface FlashcardCreatePageState {
-  form: {
-    name: string;
-  };
-}
 
 export interface IFlashcardCreateForm {
   name: string;
