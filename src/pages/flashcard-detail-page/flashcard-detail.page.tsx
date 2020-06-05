@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 import { RootState } from "../../store/root-reducer";
 import { getFlashcardDetail } from "./effects";
 import { ThunkDispatch } from "redux-thunk";
-import { FlashcardDetailPageActionTypes } from "./store/types";
 import { useParams } from "react-router-dom";
 import { Header } from "../../shared/components/header/header";
 import { QaViewer } from "./components/qa-viewer.component";
+import { Action } from "redux";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps>;
@@ -20,7 +20,6 @@ const FlashcardDetailPage: FunctionComponent<Props> = (props) => {
   const { flashcard, getFlashcardDetail, isLoading } = props;
 
   useEffect(() => {
-    console.log("detail");
     getFlashcardDetail(id);
   }, [getFlashcardDetail, id]);
 
@@ -53,7 +52,7 @@ const mapStateToProps = (state: RootState) => {
 };
 
 const mapDispatchToProps = (
-  dispatch: ThunkDispatch<RootState, unknown, FlashcardDetailPageActionTypes>
+  dispatch: ThunkDispatch<RootState, unknown, Action<string>>
 ) => ({
   getFlashcardDetail: (id: string) => {
     dispatch(getFlashcardDetail(id));

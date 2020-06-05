@@ -1,4 +1,4 @@
-import { AnyAction } from "redux";
+import { Action } from "redux";
 import { storeFlashcards, updateLoading } from "./store/actions";
 import { RootState } from "../../store/root-reducer";
 import { ThunkAction } from "redux-thunk";
@@ -10,7 +10,7 @@ export const getFlashcards = (): ThunkAction<
   Promise<void>,
   RootState,
   unknown,
-  AnyAction
+  Action<string>
 > => {
   return async (dispatch) => {
     // TODO 共通エラー処理

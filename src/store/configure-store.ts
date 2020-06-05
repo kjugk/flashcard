@@ -6,5 +6,6 @@ export function configureStore() {
   return reduxConfigureStore({
     reducer: rootReducer,
     middleware: [thunk],
+    devTools: process.env.NODE_ENV !== "production",
   });
 }

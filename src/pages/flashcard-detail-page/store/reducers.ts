@@ -1,31 +1,29 @@
-import {
-  FlashcardDetailPageState,
-  FlashcardDetailPageActionTypes,
-  STORE_FLASHCARD_DETAIL,
-  UPDATE_LOADING,
-} from "./types";
+import { createReducer } from "@reduxjs/toolkit";
+import { updateLoading, storeFlashcardDetail } from "./actions";
+import { FlashcardDetail } from "../../../shared/types/flashcard-detail";
+
+// State types
+export interface FlashcardDetailPageState {
+  isLoading: boolean;
+  flashcard?: FlashcardDetail;
+}
 
 const initialState: FlashcardDetailPageState = {
   isLoading: false,
   flashcard: undefined,
 };
 
-export function flashcardDetailPageReducer(
-  state = initialState,
-  action: FlashcardDetailPageActionTypes
-): FlashcardDetailPageState {
-  switch (action.type) {
-    case UPDATE_LOADING:
-      return {
+export const flashcardDetailPageReducer = createReducer(
+  initialState,
+  (builder) => {
+    builder
+      .addCase(updateLoading, (state, action) => ({
         ...state,
         isLoading: action.payload,
-      };
-    case STORE_FLASHCARD_DETAIL:
-      return {
+      }))
+      .addCase(storeFlashcardDetail, (state, action) => ({
         ...state,
         flashcard: action.payload,
-      };
-    default:
-      return state;
+      }));
   }
-}
+);
