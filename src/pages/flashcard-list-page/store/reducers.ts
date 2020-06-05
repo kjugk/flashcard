@@ -19,18 +19,15 @@ export const flashcardListPageReducer = createReducer(
   initialState,
   (builder) => {
     builder
-      .addCase(updateLoading, (state, action) => ({
-        ...state,
-        isLoading: action.payload,
-      }))
-      .addCase(notifyListIsDirty, (state, action) => ({
-        ...state,
-        isDirty: action.payload,
-      }))
-      .addCase(storeFlashcards, (state, action) => ({
-        ...state,
-        isDirty: false,
-        flashcards: action.payload,
-      }));
+      .addCase(updateLoading, (state, action) => {
+        state.isLoading = action.payload;
+      })
+      .addCase(notifyListIsDirty, (state, action) => {
+        state.isDirty = action.payload;
+      })
+      .addCase(storeFlashcards, (state, action) => {
+        state.isDirty = false;
+        state.flashcards = action.payload;
+      });
   }
 );
