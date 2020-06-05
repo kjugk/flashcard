@@ -1,9 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-import {
-  IFlashcardCreateForm,
-  IFlashcardCreateFormErrors,
-} from "../store/types";
+import { IFlashcardCreateForm, IFlashcardCreateFormErrors } from "../types";
 
 interface Props {
   onSubmit: (params: IFlashcardCreateForm) => void;

@@ -5,9 +5,9 @@ import { createFlashcard } from "./effects";
 import { Header } from "../../shared/components/header/header";
 import { ThunkDispatch } from "redux-thunk";
 import { RootState } from "../../store/root-reducer";
-import { IFlashcardCreateForm } from "./store/types";
+import { IFlashcardCreateForm } from "./types";
 import { connect } from "react-redux";
-import { AnyAction } from "redux";
+import { Action } from "redux";
 
 type Props = ReturnType<typeof mapDispatchProps>;
 
@@ -32,7 +32,7 @@ const FlashcardCreatePage: FunctionComponent<Props> = (props) => {
 };
 
 const mapDispatchProps = (
-  dispatch: ThunkDispatch<RootState, unknown, AnyAction>
+  dispatch: ThunkDispatch<RootState, unknown, Action<string>>
 ) => ({
   createFlashcard: (form: IFlashcardCreateForm) =>
     dispatch(createFlashcard(form)),

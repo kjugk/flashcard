@@ -4,8 +4,8 @@ import { RootState } from "../../store/root-reducer";
 import { FlashcardList } from "./components/flashcard-list.component";
 import { getFlashcards } from "./effects";
 import { ThunkDispatch } from "redux-thunk";
-import { FlashcardListPageActionTypes } from "./store/types";
 import { Header } from "../../shared/components/header/header";
+import { Action } from "redux";
 
 type Props = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchProps>;
@@ -17,10 +17,10 @@ const FlashcardListPage: FunctionComponent<Props> = (props) => {
   const { getFlashcards, flashcards, isDirty, isLoading } = props;
 
   useEffect(() => {
-    if (isDirty) {
-      getFlashcards();
-    }
-  }, [isDirty]);
+    if (!isDirty) return;
+
+    getFlashcards();
+  }, [isDirty, getFlashcards]);
 
   return (
     <div>
@@ -41,7 +41,7 @@ const mapStateToProps = (state: RootState) => {
 };
 
 const mapDispatchProps = (
-  dispatch: ThunkDispatch<RootState, unknown, FlashcardListPageActionTypes>
+  dispatch: ThunkDispatch<RootState, unknown, Action<string>>
 ) => ({
   getFlashcards: () => {
     dispatch(getFlashcards());

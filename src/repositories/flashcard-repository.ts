@@ -1,7 +1,7 @@
 import { FlashcardListItem } from "../shared/types/flashcard-list-item";
 import { FlashcardDetail } from "../shared/types/flashcard-detail";
 import { HttpFlashcardApi } from "../apis/http/flashcard/http-flashcard-api";
-import { IFlashcardCreateForm } from "../pages/flashcard-create-page/store/types";
+import { IFlashcardCreateForm } from "../pages/flashcard-create-page/types";
 
 export class FlashcardRepository {
   private http: HttpFlashcardApi;
