@@ -17,7 +17,7 @@ type Props = ReturnType<typeof mapStateToProps> &
  */
 const FlashcardDetailPage: FunctionComponent<Props> = (props) => {
   const { id } = useParams<{ id: string }>();
-  const { flashcard, getFlashcardDetail } = props;
+  const { flashcard, getFlashcardDetail, isLoading } = props;
 
   useEffect(() => {
     console.log("detail");
@@ -32,16 +32,25 @@ const FlashcardDetailPage: FunctionComponent<Props> = (props) => {
   return (
     <div>
       <Header />
-      <h1>{flashcard.name}</h1>
-      {flashcard.description && <p>{flashcard.description}</p>}
-      <QaViewer qaList={flashcard.qaList}></QaViewer>
+      {isLoading && <div>Loading</div>}
+      {!isLoading && (
+        <>
+          <h1>{flashcard.name}</h1>
+          {flashcard.description && <p>{flashcard.description}</p>}
+          <QaViewer qaList={flashcard.qaList}></QaViewer>
+        </>
+      )}
     </div>
   );
 };
 
-const mapStateToProps = (state: RootState) => ({
-  flashcard: state.flashcardDetailPage.flashcard,
-});
+const mapStateToProps = (state: RootState) => {
+  const { isLoading, flashcard } = state.flashcardDetailPage;
+  return {
+    isLoading,
+    flashcard,
+  };
+};
 
 const mapDispatchToProps = (
   dispatch: ThunkDispatch<RootState, unknown, FlashcardDetailPageActionTypes>
