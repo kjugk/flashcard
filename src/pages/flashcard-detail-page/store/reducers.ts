@@ -17,13 +17,11 @@ export const flashcardDetailPageReducer = createReducer(
   initialState,
   (builder) => {
     builder
-      .addCase(updateLoading, (state, action) => ({
-        ...state,
-        isLoading: action.payload,
-      }))
-      .addCase(storeFlashcardDetail, (state, action) => ({
-        ...state,
-        flashcard: action.payload,
-      }));
+      .addCase(updateLoading, (state, action) => {
+        state.isLoading = action.payload;
+      })
+      .addCase(storeFlashcardDetail, (state, action) => {
+        state.flashcard = action.payload;
+      });
   }
 );
