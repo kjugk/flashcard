@@ -1,65 +1,37 @@
-import React, { FunctionComponent, useEffect } from "react";
-import { connect } from "react-redux";
-import { RootState } from "../../store/root-reducer";
+import React, { FunctionComponent, useEffect, useReducer } from "react";
 import { getFlashcardDetail } from "./effects";
-import { ThunkDispatch } from "redux-thunk";
 import { useParams } from "react-router-dom";
 import { Header } from "../../shared/components/header/header";
 import { QaViewer } from "./components/qa-viewer.component";
-import { Action } from "redux";
-
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+import { reducer, initialState } from "./store/reducer";
 
 /**
  * カードの詳細ページ。
  * 子コンポーネントの副作用を伴うaction は全てここで処理する。
  */
-const FlashcardDetailPage: FunctionComponent<Props> = (props) => {
+export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
-  const { flashcard, getFlashcardDetail, isLoading } = props;
+  const [{ isLoading, flashcard }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
 
   useEffect(() => {
-    getFlashcardDetail(id);
+    getFlashcardDetail(id, dispatch);
   }, [getFlashcardDetail, id]);
 
-  if (flashcard === undefined) {
-    return null;
-  }
-
-  // TODO ページの内容を別コンポーネントに切り出すか検討する
   return (
     <div>
       <Header />
       {isLoading && <div>Loading</div>}
-      {!isLoading && (
-        <>
+      {!isLoading && flashcard && (
+        <article>
           <h1>{flashcard.name}</h1>
           {flashcard.description && <p>{flashcard.description}</p>}
           <QaViewer qaList={flashcard.qaList}></QaViewer>
-        </>
+        </article>
       )}
+      {/* <Footer /> */}
     </div>
   );
 };
-
-const mapStateToProps = (state: RootState) => {
-  const { isLoading, flashcard } = state.flashcardDetailPage;
-  return {
-    isLoading,
-    flashcard,
-  };
-};
-
-const mapDispatchToProps = (
-  dispatch: ThunkDispatch<RootState, unknown, Action<string>>
-) => ({
-  getFlashcardDetail: (id: string) => {
-    dispatch(getFlashcardDetail(id));
-  },
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(FlashcardDetailPage);

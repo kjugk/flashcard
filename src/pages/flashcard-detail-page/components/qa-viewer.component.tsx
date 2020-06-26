@@ -29,6 +29,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
 
       <div>
         <button
+          type="button"
           disabled={currentPage === 1}
           onClick={() => {
             toggleShowAnser(false);
@@ -39,6 +40,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
         </button>
         <div>{`${currentPage}/${qaList.length}`}</div>
         <button
+          type="button"
           disabled={currentPage === qaList.length}
           onClick={() => {
             toggleShowAnser(false);

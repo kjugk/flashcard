@@ -12,6 +12,8 @@ type Props = ReturnType<typeof mapStateToProps> &
 
 /**
  * カードリストページ。
+ * page コンポーネントにも、DOM をもたせて OK.
+ * container と presentational 的な分け方はしない
  */
 const FlashcardListPage: FunctionComponent<Props> = (props) => {
   const { getFlashcards, flashcards, isDirty, isLoading } = props;
