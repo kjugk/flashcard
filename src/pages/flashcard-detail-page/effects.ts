@@ -1,12 +1,12 @@
 import { Dispatch } from "react";
 import { FlashcardRepository } from "../../repositories/flashcard-repository";
-import { Action } from "./store/actions";
+import { FlashcardDetailPageAction } from "./store";
 
 const repository = new FlashcardRepository();
 
 export const getFlashcardDetail = async (
   id: string,
-  dispatch: Dispatch<Action>
+  dispatch: Dispatch<FlashcardDetailPageAction>
 ) => {
   dispatch({
     type: "update-loading",

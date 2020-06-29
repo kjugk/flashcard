@@ -30,7 +30,6 @@ export const FlashcardCreateForm: FunctionComponent<Props> = (props) => {
         return errors;
       }}
       onSubmit={(values) => {
-        console.log(values);
         props.onSubmit(values);
       }}
     >

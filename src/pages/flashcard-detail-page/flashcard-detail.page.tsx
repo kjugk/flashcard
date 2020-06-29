@@ -3,7 +3,7 @@ import { getFlashcardDetail } from "./effects";
 import { useParams } from "react-router-dom";
 import { Header } from "../../shared/components/header/header";
 import { QaViewer } from "./components/qa-viewer.component";
-import { reducer, initialState } from "./store/reducer";
+import { reducer, initialState } from "./store";
 
 /**
  * カードの詳細ページ。
@@ -18,7 +18,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
 
   useEffect(() => {
     getFlashcardDetail(id, dispatch);
-  }, [getFlashcardDetail, id]);
+  }, [id]);
 
   return (
     <div>
