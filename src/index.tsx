@@ -3,14 +3,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { Provider } from "react-redux";
-import { configureStore } from "./store/configure-store";
+import { ListProvider } from "./pages/flashcard-list-page/store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={configureStore()}>
+    {/* グローバルなstore は、ここでネストして渡す */}
+    <ListProvider>
       <App />
-    </Provider>
+    </ListProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

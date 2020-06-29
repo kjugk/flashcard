@@ -1,26 +1,23 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { connect } from "react-redux";
-import { RootState } from "../../store/root-reducer";
 import { FlashcardList } from "./components/flashcard-list.component";
 import { getFlashcards } from "./effects";
-import { ThunkDispatch } from "redux-thunk";
 import { Header } from "../../shared/components/header/header";
-import { Action } from "redux";
-
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchProps>;
+import { useList } from "./store";
 
 /**
  * カードリストページ。
+ * page コンポーネントにも、DOM をもたせて OK.
+ * container と presentational 的な分け方はしない
  */
-const FlashcardListPage: FunctionComponent<Props> = (props) => {
-  const { getFlashcards, flashcards, isDirty, isLoading } = props;
+const FlashcardListPage: FunctionComponent = () => {
+  const { state, dispatch } = useList();
+  const { flashcards, isDirty, isLoading } = state;
 
   useEffect(() => {
-    if (!isDirty) return;
-
-    getFlashcards();
-  }, [isDirty, getFlashcards]);
+    if (isDirty) {
+      getFlashcards(dispatch);
+    }
+  }, [isDirty, dispatch]);
 
   return (
     <div>
@@ -31,21 +28,4 @@ const FlashcardListPage: FunctionComponent<Props> = (props) => {
   );
 };
 
-const mapStateToProps = (state: RootState) => {
-  const { flashcards, isDirty, isLoading } = state.flashcardListPage;
-  return {
-    isLoading,
-    isDirty,
-    flashcards,
-  };
-};
-
-const mapDispatchProps = (
-  dispatch: ThunkDispatch<RootState, unknown, Action<string>>
-) => ({
-  getFlashcards: () => {
-    dispatch(getFlashcards());
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchProps)(FlashcardListPage);
+export default FlashcardListPage;

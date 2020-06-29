@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import FlashcardListPage from "./pages/flashcard-list-page/flashcard-list.page";
-import FlashcardDetailPage from "./pages/flashcard-detail-page/flashcard-detail.page";
+import { FlashcardDetailPage } from "./pages/flashcard-detail-page/flashcard-detail.page";
 import FlashcardCreatePage from "./pages/flashcard-create-page/flashcard-create-page";
 import "./App.css";
 

@@ -1,16 +1,21 @@
-import { AnyAction } from "redux";
-import { storeFlashcardDetail } from "./store/actions";
-import { RootState } from "../../store/root-reducer";
-import { ThunkAction } from "redux-thunk";
+import { Dispatch } from "react";
 import { FlashcardRepository } from "../../repositories/flashcard-repository";
+import { FlashcardDetailPageAction } from "./store";
 
 const repository = new FlashcardRepository();
 
-export const getFlashcardDetail = (
-  id: string
-): ThunkAction<Promise<void>, RootState, unknown, AnyAction> => {
-  return async (dispatch) => {
-    const item = await repository.find(id);
-    dispatch(storeFlashcardDetail(item));
-  };
+export const getFlashcardDetail = async (
+  id: string,
+  dispatch: Dispatch<FlashcardDetailPageAction>
+) => {
+  dispatch({
+    type: "update-loading",
+    payload: true,
+  });
+
+  const item = await repository.find(id);
+  dispatch({
+    type: "store-flashcard-detail",
+    payload: item,
+  });
 };
