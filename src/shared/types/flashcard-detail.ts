@@ -5,6 +5,5 @@ export interface FlashcardDetail {
   qaList: {
     question: string;
     answer: string;
-    explanation: string;
   }[];
 }

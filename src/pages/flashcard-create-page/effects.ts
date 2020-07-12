@@ -1,4 +1,4 @@
-import { FlashcardRepository } from "../../repositories/flashcard-repository";
+import { FlashcardRepository } from "../../repositories/flashcard/flashcard-repository";
 import { IFlashcardCreateForm } from "./types";
 import { Dispatch } from "react";
 import { FlashcardListPageAction } from "../flashcard-list-page/store";

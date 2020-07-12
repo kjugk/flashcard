@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { FlashcardRepository } from "../../repositories/flashcard-repository";
+import { FlashcardRepository } from "../../repositories/flashcard/flashcard-repository";
 import { FlashcardDetailPageAction } from "./store";
 
 const repository = new FlashcardRepository();
