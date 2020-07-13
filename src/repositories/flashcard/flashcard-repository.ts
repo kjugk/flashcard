@@ -1,9 +1,10 @@
 import { FlashcardListItem } from "../../shared/types/flashcard-list-item";
 import { FlashcardDetail } from "../../shared/types/flashcard-detail";
-import { IFlashcardCreateForm } from "../../pages/flashcard-create-page/types";
 import axios, { AxiosInstance } from "axios";
 import { GetAllFlashcardResponse } from "./get-all-flashcard-response";
 import { GetFlashcardResponse } from "./get-flashcard-response";
+import { CreateFlashcardRequest } from "./create-flashcard-request";
+import { CreateFlashcardResponse } from "./create-flashcard-response";
 
 export class FlashcardRepository {
   private http: AxiosInstance;
@@ -19,8 +20,9 @@ export class FlashcardRepository {
   // API のデータをアプリケーションで使える形式にして返す
   async getAll(): Promise<FlashcardListItem[]> {
     const response = await this.http.get<GetAllFlashcardResponse>("flashcards");
+    const { flashcards } = response.data;
 
-    return response.data.flashcards.map((flashcard) => {
+    return flashcards.map((flashcard) => {
       return {
         name: flashcard.name,
         id: flashcard.id,
@@ -32,7 +34,6 @@ export class FlashcardRepository {
     const response = await this.http.get<GetFlashcardResponse>(
       `flashcards/${id}`
     );
-
     const { flashcard } = response.data;
 
     return {
@@ -43,10 +44,14 @@ export class FlashcardRepository {
     };
   }
 
-  async create(form: IFlashcardCreateForm): Promise<string> {
-    // パラメーターに変換してリクエスト
-    // 空のqaは落とす(サーバーでやっても良い)
-    // id を返す
-    return "created";
+  async create(request: CreateFlashcardRequest): Promise<string> {
+    // TODO 空のqaは落とす(サーバーでやっても良い)
+    const response = await this.http.post<CreateFlashcardResponse>(
+      "flashcard",
+      request
+    );
+    const { flashcard } = response.data;
+
+    return flashcard.id;
   }
 }

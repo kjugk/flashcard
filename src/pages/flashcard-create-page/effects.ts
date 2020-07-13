@@ -7,12 +7,14 @@ const repository = new FlashcardRepository();
 export const createFlashcard = async (
   form: IFlashcardCreateForm,
   dispatch: Dispatch<FlashcardListPageAction>
-) => {
+): Promise<string> => {
   // TODO 共通エラー処理
   const id = await repository.create(form);
+
   dispatch({
     type: "update-list-is-dirty",
     payload: true,
   });
+
   return id;
 };
