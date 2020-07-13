@@ -2,6 +2,7 @@ import React, { FunctionComponent, useEffect } from "react";
 import { FlashcardList } from "./components/flashcard-list.component";
 import { getFlashcards } from "./effects";
 import { Header } from "../../shared/components/header/header";
+import { Footer } from "../../shared/components/footer/footer";
 import { useList } from "./store";
 
 /**
@@ -22,8 +23,11 @@ const FlashcardListPage: FunctionComponent = () => {
   return (
     <div>
       <Header />
-      <h1>List Page</h1>
-      <FlashcardList isLoading={isLoading} items={flashcards} />
+      <main>
+        <h1>List Page</h1>
+        <FlashcardList isLoading={isLoading} items={flashcards} />
+      </main>
+      <Footer />
     </div>
   );
 };
