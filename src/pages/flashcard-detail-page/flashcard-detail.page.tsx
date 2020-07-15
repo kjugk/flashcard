@@ -12,7 +12,7 @@ import { reducer, initialState } from "./store";
 export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
-  const [{ isLoading, flashcard }, dispatch] = useReducer(
+  const [{ isLoading, isDeleting, flashcard }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -36,7 +36,11 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       {!isLoading && flashcard && (
         <article>
           <h1>{flashcard.name}</h1>
-          <button type="button" onClick={onClickDeleteButton}>
+          <button
+            type="button"
+            onClick={onClickDeleteButton}
+            disabled={isDeleting}
+          >
             delete
           </button>
           {flashcard.description && <p>{flashcard.description}</p>}
