@@ -5,6 +5,7 @@ import { GetAllFlashcardResponse } from "./get-all-flashcard-response";
 import { GetFlashcardResponse } from "./get-flashcard-response";
 import { CreateFlashcardRequest } from "./create-flashcard-request";
 import { CreateFlashcardResponse } from "./create-flashcard-response";
+import { DeleteFlashcardResponse } from "./delete-flashcard-response";
 
 export class FlashcardRepository {
   private http: AxiosInstance;
@@ -48,6 +49,15 @@ export class FlashcardRepository {
     const response = await this.http.post<CreateFlashcardResponse>(
       "flashcard",
       request
+    );
+    const { flashcard } = response.data;
+
+    return flashcard.id;
+  }
+
+  async delete(id: string): Promise<string> {
+    const response = await this.http.delete<DeleteFlashcardResponse>(
+      `flashcards/${id}`
     );
     const { flashcard } = response.data;
 
