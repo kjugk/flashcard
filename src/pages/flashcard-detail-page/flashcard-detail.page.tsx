@@ -4,6 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { Header } from "../../shared/components/header/header";
 import { QaViewer } from "./components/qa-viewer.component";
 import { reducer, initialState } from "./store";
+import { useSystem } from "../../shared/store/system";
 
 /**
  * カードの詳細ページ。
@@ -12,13 +13,15 @@ import { reducer, initialState } from "./store";
 export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
+  const { systemDispatch } = useSystem();
   const [{ isLoading, isDeleting, flashcard }, dispatch] = useReducer(
     reducer,
     initialState
   );
 
+  // 詳細データを取得する
   useEffect(() => {
-    getFlashcardDetail(id, dispatch);
+    getFlashcardDetail(id, dispatch, systemDispatch);
   }, [id]);
 
   const onClickDeleteButton = async () => {

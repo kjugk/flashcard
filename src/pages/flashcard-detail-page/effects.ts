@@ -1,12 +1,14 @@
 import { Dispatch } from "react";
 import { FlashcardRepository } from "../../repositories/flashcard/flashcard-repository";
 import { FlashcardDetailPageAction } from "./store";
+import { SystemAction } from "../../shared/store/system";
 
 const repository = new FlashcardRepository();
 
 export const getFlashcardDetail = async (
   id: string,
-  dispatch: Dispatch<FlashcardDetailPageAction>
+  dispatch: Dispatch<FlashcardDetailPageAction>,
+  systemDispatch: Dispatch<SystemAction>
 ) => {
   dispatch({
     type: "update-loading",
@@ -17,6 +19,11 @@ export const getFlashcardDetail = async (
   dispatch({
     type: "store-flashcard-detail",
     payload: item,
+  });
+
+  systemDispatch({
+    type: "set-system-info-message",
+    payload: "削除したよ。",
   });
 };
 
