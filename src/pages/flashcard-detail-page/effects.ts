@@ -1,6 +1,7 @@
 import { Dispatch } from "react";
 import { FlashcardRepository } from "../../repositories/flashcard/flashcard-repository";
 import { FlashcardDetailPageAction } from "./store";
+import { SystemAction } from "../../shared/store/system";
 
 const repository = new FlashcardRepository();
 
@@ -22,9 +23,9 @@ export const getFlashcardDetail = async (
 
 export const deleteFlashcard = async (
   id: string,
-  dispatch: Dispatch<FlashcardDetailPageAction>
+  dispatch: Dispatch<FlashcardDetailPageAction>,
+  systemDispatch: Dispatch<SystemAction>
 ) => {
-  // useEffect 使ってできるかも
   dispatch({
     type: "update-deleting",
     payload: true,
@@ -35,5 +36,10 @@ export const deleteFlashcard = async (
   dispatch({
     type: "update-deleting",
     payload: false,
+  });
+
+  systemDispatch({
+    type: "set-system-info-message",
+    payload: "削除しました",
   });
 };

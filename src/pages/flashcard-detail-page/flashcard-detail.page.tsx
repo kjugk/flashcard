@@ -1,9 +1,10 @@
-import React, { FunctionComponent, useEffect, useReducer } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import { getFlashcardDetail, deleteFlashcard } from "./effects";
 import { useParams, useHistory } from "react-router-dom";
 import { Header } from "../../shared/components/header/header";
 import { QaViewer } from "./components/qa-viewer.component";
-import { reducer, initialState } from "./store";
+import { useDetailPageReducer } from "./store";
+import { useSystemContext } from "../../shared/store/system";
 
 /**
  * カードの詳細ページ。
@@ -12,19 +13,21 @@ import { reducer, initialState } from "./store";
 export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
-  const [{ isLoading, isDeleting, flashcard }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const { systemDispatch } = useSystemContext();
+  const [
+    { isLoading, isDeleting, flashcard },
+    dispatch,
+  ] = useDetailPageReducer();
 
+  // 詳細データを取得する
   useEffect(() => {
     getFlashcardDetail(id, dispatch);
-  }, [id]);
+  }, [id, dispatch]);
 
   const onClickDeleteButton = async () => {
     // TODO modal で聞くようにする。
     if (window.confirm("削除しますか?")) {
-      await deleteFlashcard(id, dispatch);
+      await deleteFlashcard(id, dispatch, systemDispatch);
       history.replace("/");
     }
   };
