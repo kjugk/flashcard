@@ -19,3 +19,21 @@ export const getFlashcardDetail = async (
     payload: item,
   });
 };
+
+export const deleteFlashcard = async (
+  id: string,
+  dispatch: Dispatch<FlashcardDetailPageAction>
+) => {
+  // useEffect 使ってできるかも
+  dispatch({
+    type: "update-deleting",
+    payload: true,
+  });
+  await repository.delete(id);
+  // TODO global message を dispatch する
+
+  dispatch({
+    type: "update-deleting",
+    payload: false,
+  });
+};

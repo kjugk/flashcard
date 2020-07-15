@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useReducer } from "react";
-import { getFlashcardDetail } from "./effects";
-import { useParams } from "react-router-dom";
+import { getFlashcardDetail, deleteFlashcard } from "./effects";
+import { useParams, useHistory } from "react-router-dom";
 import { Header } from "../../shared/components/header/header";
 import { QaViewer } from "./components/qa-viewer.component";
 import { reducer, initialState } from "./store";
@@ -11,7 +11,8 @@ import { reducer, initialState } from "./store";
  */
 export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
-  const [{ isLoading, flashcard }, dispatch] = useReducer(
+  const history = useHistory();
+  const [{ isLoading, isDeleting, flashcard }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -20,6 +21,14 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     getFlashcardDetail(id, dispatch);
   }, [id]);
 
+  const onClickDeleteButton = async () => {
+    // TODO modal で聞くようにする。
+    if (window.confirm("削除しますか?")) {
+      await deleteFlashcard(id, dispatch);
+      history.replace("/");
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -27,6 +36,13 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       {!isLoading && flashcard && (
         <article>
           <h1>{flashcard.name}</h1>
+          <button
+            type="button"
+            onClick={onClickDeleteButton}
+            disabled={isDeleting}
+          >
+            delete
+          </button>
           {flashcard.description && <p>{flashcard.description}</p>}
           <QaViewer qaList={flashcard.qaList}></QaViewer>
         </article>
