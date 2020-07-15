@@ -1,5 +1,5 @@
+import { useReducer } from "react";
 import { FlashcardListItem } from "../../../shared/types/flashcard-list-item";
-import React, { createContext, useReducer, useContext, Dispatch } from "react";
 
 // actions
 export type FlashcardListPageAction =
@@ -47,19 +47,4 @@ function reducer(
   }
 }
 
-interface IContextProps {
-  state: FlashcardListPageState;
-  dispatch: Dispatch<FlashcardListPageAction>;
-}
-
-const ListContext = createContext({} as IContextProps);
-export const ListProvider: React.FunctionComponent = (props) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  return (
-    <ListContext.Provider value={{ state, dispatch }}>
-      {props.children}
-    </ListContext.Provider>
-  );
-};
-
-export const useList = () => useContext(ListContext);
+export const useListPageReducer = () => useReducer(reducer, initialState);

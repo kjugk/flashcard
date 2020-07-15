@@ -3,7 +3,8 @@ import { FlashcardList } from "./components/flashcard-list.component";
 import { getFlashcards } from "./effects";
 import { Header } from "../../shared/components/header/header";
 import { Footer } from "../../shared/components/footer/footer";
-import { useList } from "./store";
+import { SystemMessage } from "../../shared/components/system-message";
+import { useListPageReducer } from "./store";
 
 /**
  * カードリストページ。
@@ -11,14 +12,11 @@ import { useList } from "./store";
  * container と presentational 的な分け方はしない
  */
 const FlashcardListPage: FunctionComponent = () => {
-  const { state, dispatch } = useList();
-  const { flashcards, isDirty, isLoading } = state;
+  const [{ flashcards, isLoading }, dispatch] = useListPageReducer();
 
   useEffect(() => {
-    if (isDirty) {
-      getFlashcards(dispatch);
-    }
-  }, [isDirty, dispatch]);
+    getFlashcards(dispatch);
+  }, [dispatch]);
 
   return (
     <div>
@@ -26,6 +24,7 @@ const FlashcardListPage: FunctionComponent = () => {
       <main>
         <h1>List Page</h1>
         <FlashcardList isLoading={isLoading} items={flashcards} />
+        <SystemMessage />
       </main>
       <Footer />
     </div>

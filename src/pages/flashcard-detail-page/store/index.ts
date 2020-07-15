@@ -1,4 +1,5 @@
 import { FlashcardDetail } from "../../../shared/types/flashcard-detail";
+import { useReducer } from "react";
 
 // Actions
 export type FlashcardDetailPageAction =
@@ -47,3 +48,5 @@ export function reducer(
       throw new Error();
   }
 }
+
+export const useDetailPageReducer = () => useReducer(reducer, initialState);

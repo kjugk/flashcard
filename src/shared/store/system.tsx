@@ -42,4 +42,4 @@ export const SystemProvider: React.FunctionComponent = (props) => {
   );
 };
 
-export const useSystem = () => useContext(SystemContext);
+export const useSystemContext = () => useContext(SystemContext);

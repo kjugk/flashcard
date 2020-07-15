@@ -7,8 +7,7 @@ const repository = new FlashcardRepository();
 
 export const getFlashcardDetail = async (
   id: string,
-  dispatch: Dispatch<FlashcardDetailPageAction>,
-  systemDispatch: Dispatch<SystemAction>
+  dispatch: Dispatch<FlashcardDetailPageAction>
 ) => {
   dispatch({
     type: "update-loading",
@@ -20,18 +19,13 @@ export const getFlashcardDetail = async (
     type: "store-flashcard-detail",
     payload: item,
   });
-
-  systemDispatch({
-    type: "set-system-info-message",
-    payload: "削除したよ。",
-  });
 };
 
 export const deleteFlashcard = async (
   id: string,
-  dispatch: Dispatch<FlashcardDetailPageAction>
+  dispatch: Dispatch<FlashcardDetailPageAction>,
+  systemDispatch: Dispatch<SystemAction>
 ) => {
-  // useEffect 使ってできるかも
   dispatch({
     type: "update-deleting",
     payload: true,
@@ -42,5 +36,10 @@ export const deleteFlashcard = async (
   dispatch({
     type: "update-deleting",
     payload: false,
+  });
+
+  systemDispatch({
+    type: "set-system-info-message",
+    payload: "削除しました",
   });
 };
