@@ -4,6 +4,7 @@ import FlashcardListPage from "./pages/flashcard-list-page/flashcard-list.page";
 import { FlashcardDetailPage } from "./pages/flashcard-detail-page/flashcard-detail.page";
 import FlashcardCreatePage from "./pages/flashcard-create-page/flashcard-create-page";
 import "./App.css";
+import { SignInPage } from "./pages/sign-in-page/sign-in-page";
 
 const App: FunctionComponent = () => {
   return (
@@ -15,6 +16,7 @@ const App: FunctionComponent = () => {
           path="/flashcard-detail/:id"
           component={FlashcardDetailPage}
         ></Route>
+        <Route path="/sign-in" exact component={SignInPage}></Route>
         <Route path="/" component={FlashcardListPage}></Route>
       </Switch>
     </Router>
