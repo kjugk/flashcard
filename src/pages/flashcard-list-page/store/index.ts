@@ -4,8 +4,7 @@ import { FlashcardListItem } from "../../../shared/types/flashcard-list-item";
 // actions
 export type FlashcardListPageAction =
   | { type: "update-loading"; payload: boolean }
-  | { type: "store-flashcards"; payload: FlashcardListItem[] }
-  | { type: "update-list-is-dirty"; payload: boolean };
+  | { type: "store-flashcards"; payload: FlashcardListItem[] };
 
 // State types
 interface FlashcardListPageState {
@@ -38,12 +37,8 @@ function reducer(
         isLoading: false,
         isDirty: false,
       };
-
-    case "update-list-is-dirty":
-      return {
-        ...state,
-        isDirty: action.payload,
-      };
+    default:
+      return state;
   }
 }
 
