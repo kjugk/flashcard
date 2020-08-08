@@ -3,13 +3,19 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { SystemProvider } from "./shared/store/system";
+import { SystemProvider } from "./shared/providers/system";
+import { CurrentUserProvider } from "./shared/providers/current-user";
+import { configureCognito } from "./shared/lib/cognito";
+
+configureCognito();
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* グローバルなstore は、ここでネストして渡す */}
+    {/* グローバルな context は、ここでネストして渡す */}
     <SystemProvider>
-      <App />
+      <CurrentUserProvider>
+        <App />
+      </CurrentUserProvider>
     </SystemProvider>
   </React.StrictMode>,
   document.getElementById("root")

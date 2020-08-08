@@ -4,7 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 import { Header } from "../../shared/components/header/header";
 import { QaViewer } from "./components/qa-viewer.component";
 import { useDetailPageReducer } from "./store";
-import { useSystemContext } from "../../shared/store/system";
+import { useSystemContext } from "../../shared/providers/system";
 
 /**
  * カードの詳細ページ。

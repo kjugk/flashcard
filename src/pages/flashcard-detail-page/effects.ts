@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import { FlashcardRepository } from "../../repositories/flashcard/flashcard-repository";
 import { FlashcardDetailPageAction } from "./store";
-import { SystemAction } from "../../shared/store/system";
+import { SystemAction } from "../../shared/providers/system";
 
 const repository = new FlashcardRepository();
 

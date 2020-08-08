@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { useSystemContext } from "../../store/system";
+import { useSystemContext } from "../../providers/system";
 
 /**
  * ユーザーに通知するメッセージを表示するコンポーネント
