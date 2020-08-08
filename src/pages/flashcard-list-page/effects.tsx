@@ -14,6 +14,7 @@ export const getFlashcards = async (
 
   // TODO 共通エラー処理(グローバルエラー的なstore 作る???)
   const list = await repository.getAll();
+
   dispatch({
     type: "store-flashcards",
     payload: list,

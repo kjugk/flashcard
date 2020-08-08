@@ -3,8 +3,8 @@ import { FlashcardList } from "./components/flashcard-list.component";
 import { getFlashcards } from "./effects";
 import { Header } from "../../shared/components/header/header";
 import { Footer } from "../../shared/components/footer/footer";
-import { SystemMessage } from "../../shared/components/system-message";
 import { useListPageReducer } from "./store";
+import { SystemMessage } from "../../shared/components/system-message";
 
 /**
  * カードリストページ。

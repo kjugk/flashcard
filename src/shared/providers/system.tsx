@@ -9,7 +9,6 @@ export type SystemAction = { type: "set-system-info-message"; payload: string };
 interface SystemState {
   infoMessage: string;
 }
-
 const initialState: SystemState = {
   infoMessage: "",
 };
@@ -29,7 +28,6 @@ interface IContextProps {
   systemState: SystemState;
   systemDispatch: Dispatch<SystemAction>;
 }
-
 const SystemContext = createContext({} as IContextProps);
 
 export const SystemProvider: React.FunctionComponent = (props) => {
