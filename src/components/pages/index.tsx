@@ -1,5 +1,3 @@
-import { FlashcardList } from "./flashcard-list/flashcard-list";
-
 export * from "./flashcard-list";
 export * from "./flashcard-detail";
 export * from "./flashcard-create";
