@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,7 +15,8 @@ import {
   useCurrentUserContext,
   useIsSignedIn,
 } from "./shared/providers/current-user";
-import { useSystemContext } from "./shared/providers/system";
+import { TopPage } from "./pages/top-page";
+import { NotFoundPage } from "./pages/not-found-page";
 
 const App: FunctionComponent = () => {
   return (
@@ -32,9 +33,8 @@ const App: FunctionComponent = () => {
         </PrivateRoute>
 
         <Route path="/sign-in" exact component={SignInPage}></Route>
-
-        {/* TODO トップページ作る */}
-        <Route path="/" component={FlashcardListPage}></Route>
+        <Route exact path="/" component={TopPage}></Route>
+        <Route path="*" component={NotFoundPage}></Route>
       </Switch>
     </Router>
   );
@@ -43,18 +43,7 @@ const App: FunctionComponent = () => {
 // ログイン「必須」ページのRoute
 const PrivateRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
   const { currentUserState } = useCurrentUserContext();
-  const { systemDispatch } = useSystemContext();
   const isSignedIn = useIsSignedIn();
-
-  useEffect(() => {
-    if (!isSignedIn) {
-      console.log("Hoge");
-      systemDispatch({
-        type: "set-system-info-message",
-        payload: "ログインしてください",
-      });
-    }
-  }, [isSignedIn]);
 
   if (!currentUserState.initialized) {
     return (
