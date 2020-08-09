@@ -6,32 +6,27 @@ import {
   RouteProps,
   Redirect,
 } from "react-router-dom";
-import FlashcardListPage from "./components/pages/flashcard-list";
-import { FlashcardDetailPage } from "./components/pages/flashcard-detail";
-import FlashcardCreatePage from "./components/pages/flashcard-create";
 import "./App.css";
-import { SignInPage } from "./components/pages/sign-in";
+import * as pages from "./components/pages/index";
 import { useCurrentUserContext, useIsSignedIn } from "./providers/current-user";
-import { TopPage } from "./components/pages/top";
-import { NotFoundPage } from "./components/pages/not-found";
 
 const App: FunctionComponent = () => {
   return (
     <Router>
       <Switch>
         <PrivateRoute path="/flashcard-list">
-          <FlashcardListPage />
+          <pages.FlashcardListPage />
         </PrivateRoute>
         <PrivateRoute path="/flashcard-create">
-          <FlashcardCreatePage />
+          <pages.FlashcardCreatePage />
         </PrivateRoute>
         <PrivateRoute path="/flashcard-detail/:id">
-          <FlashcardDetailPage />
+          <pages.FlashcardDetailPage />
         </PrivateRoute>
 
-        <Route path="/sign-in" exact component={SignInPage}></Route>
-        <Route exact path="/" component={TopPage}></Route>
-        <Route path="*" component={NotFoundPage}></Route>
+        <Route path="/sign-in" exact component={pages.SignInPage}></Route>
+        <Route exact path="/" component={pages.TopPage}></Route>
+        <Route path="*" component={pages.NotFoundPage}></Route>
       </Switch>
     </Router>
   );
