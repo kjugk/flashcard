@@ -6,17 +6,14 @@ import {
   RouteProps,
   Redirect,
 } from "react-router-dom";
-import FlashcardListPage from "./pages/flashcard-list-page/flashcard-list.page";
-import { FlashcardDetailPage } from "./pages/flashcard-detail-page/flashcard-detail.page";
-import FlashcardCreatePage from "./pages/flashcard-create-page/flashcard-create-page";
+import FlashcardListPage from "./components/pages/flashcard-list";
+import { FlashcardDetailPage } from "./components/pages/flashcard-detail";
+import FlashcardCreatePage from "./components/pages/flashcard-create";
 import "./App.css";
-import { SignInPage } from "./pages/sign-in-page/sign-in-page";
-import {
-  useCurrentUserContext,
-  useIsSignedIn,
-} from "./shared/providers/current-user";
-import { TopPage } from "./pages/top-page";
-import { NotFoundPage } from "./pages/not-found-page";
+import { SignInPage } from "./components/pages/sign-in";
+import { useCurrentUserContext, useIsSignedIn } from "./providers/current-user";
+import { TopPage } from "./components/pages/top";
+import { NotFoundPage } from "./components/pages/not-found";
 
 const App: FunctionComponent = () => {
   return (

@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import { SystemProvider } from "./shared/providers/system";
-import { CurrentUserProvider } from "./shared/providers/current-user";
-import { configureCognito } from "./shared/lib/cognito";
+import { SystemProvider } from "./providers/system";
+import { CurrentUserProvider } from "./providers/current-user";
+import { configureCognito } from "./lib/cognito";
 
 configureCognito();
 
