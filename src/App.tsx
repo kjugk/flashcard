@@ -7,26 +7,35 @@ import {
   Redirect,
 } from "react-router-dom";
 import "./App.css";
-import * as pages from "./components/pages/index";
 import { useCurrentUserContext, useIsSignedIn } from "./providers/current-user";
+import {
+  FlashcardCreatePage,
+  FlashcardListPage,
+  FlashcardDetailPage,
+  SignInPage,
+  TopPage,
+  NotFoundPage,
+} from "./components/pages/index";
 
 const App: FunctionComponent = () => {
   return (
     <Router>
       <Switch>
         <PrivateRoute path="/flashcard-list">
-          <pages.FlashcardListPage />
-        </PrivateRoute>
-        <PrivateRoute path="/flashcard-create">
-          <pages.FlashcardCreatePage />
-        </PrivateRoute>
-        <PrivateRoute path="/flashcard-detail/:id">
-          <pages.FlashcardDetailPage />
+          <FlashcardListPage />
         </PrivateRoute>
 
-        <Route path="/sign-in" exact component={pages.SignInPage}></Route>
-        <Route exact path="/" component={pages.TopPage}></Route>
-        <Route path="*" component={pages.NotFoundPage}></Route>
+        <PrivateRoute path="/flashcard-create">
+          <FlashcardCreatePage />
+        </PrivateRoute>
+
+        <PrivateRoute path="/flashcard-detail/:id">
+          <FlashcardDetailPage />
+        </PrivateRoute>
+
+        <Route path="/sign-in" exact component={SignInPage}></Route>
+        <Route exact path="/" component={TopPage}></Route>
+        <Route path="*" component={NotFoundPage}></Route>
       </Switch>
     </Router>
   );
@@ -38,11 +47,7 @@ const PrivateRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
   const isSignedIn = useIsSignedIn();
 
   if (!currentUserState.initialized) {
-    return (
-      <Route {...rest}>
-        {!currentUserState.initialized && <div>loading...</div>}
-      </Route>
-    );
+    return <div>loading...</div>;
   }
 
   return (
