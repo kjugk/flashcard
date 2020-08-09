@@ -11,7 +11,7 @@ import { SystemMessage } from "../../shared/system-message";
  * page コンポーネントにも、DOM をもたせて OK.
  * container と presentational 的な分け方はしない
  */
-const FlashcardListPage: FunctionComponent = () => {
+export const FlashcardListPage: FunctionComponent = () => {
   const [{ flashcards, isLoading }, dispatch] = useListPageReducer();
 
   useEffect(() => {
@@ -30,5 +30,3 @@ const FlashcardListPage: FunctionComponent = () => {
     </div>
   );
 };
-
-export default FlashcardListPage;

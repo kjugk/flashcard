@@ -7,7 +7,7 @@ import { Header } from "../../shared/header";
 /**
  * カード作成ページ。
  */
-const FlashcardCreatePage: FunctionComponent = () => {
+export const FlashcardCreatePage: FunctionComponent = () => {
   const history = useHistory();
 
   return (
@@ -23,5 +23,3 @@ const FlashcardCreatePage: FunctionComponent = () => {
     </div>
   );
 };
-
-export default FlashcardCreatePage;
