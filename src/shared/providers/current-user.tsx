@@ -9,6 +9,7 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
+import { useHistory } from "react-router-dom";
 
 // actions
 export type CurrentUserAction =
@@ -125,4 +126,15 @@ export const useIsSignedIn = () => {
     () => currentUserState.initialized && currentUserState.name !== "",
     [currentUserState.initialized, currentUserState.name]
   );
+};
+
+export const useSignedInUserGuard = () => {
+  const isSignedIn = useIsSignedIn();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (isSignedIn) {
+      history.push("/flashcard-list");
+    }
+  }, [isSignedIn]);
 };

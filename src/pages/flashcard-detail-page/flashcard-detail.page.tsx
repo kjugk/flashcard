@@ -28,7 +28,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     // TODO modal で聞くようにする。
     if (window.confirm("削除しますか?")) {
       await deleteFlashcard(id, dispatch, systemDispatch);
-      history.replace("/");
+      history.replace("/flashcard-list");
     }
   };
 
