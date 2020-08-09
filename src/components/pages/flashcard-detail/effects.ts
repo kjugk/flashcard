@@ -31,7 +31,6 @@ export const deleteFlashcard = async (
     payload: true,
   });
   await repository.delete(id);
-  // TODO global message を dispatch する
 
   dispatch({
     type: "update-deleting",

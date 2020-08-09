@@ -1,12 +1,15 @@
 import { FlashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { Dispatch } from "react";
 import { FlashcardListPageAction } from "./store";
+import { getCognitoIdToken } from "../../../lib/cognito";
 
 const repository = new FlashcardRepository();
 
 export const getFlashcards = async (
   dispatch: Dispatch<FlashcardListPageAction>
 ) => {
+  console.log(await getCognitoIdToken());
+
   dispatch({
     type: "update-loading",
     payload: true,
