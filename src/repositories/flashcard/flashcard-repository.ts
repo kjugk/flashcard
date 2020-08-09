@@ -1,5 +1,5 @@
-import { FlashcardListItem } from "../../shared/types/flashcard-list-item";
-import { FlashcardDetail } from "../../shared/types/flashcard-detail";
+import { FlashcardListItem } from "../../types/flashcard-list-item";
+import { FlashcardDetail } from "../../types/flashcard-detail";
 import axios, { AxiosInstance } from "axios";
 import { GetAllFlashcardResponse } from "./get-all-flashcard-response";
 import { GetFlashcardResponse } from "./get-flashcard-response";
