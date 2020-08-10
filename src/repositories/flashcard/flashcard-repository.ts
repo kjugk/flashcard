@@ -1,25 +1,27 @@
 import { FlashcardListItem } from "../../types/flashcard-list-item";
 import { FlashcardDetail } from "../../types/flashcard-detail";
-import axios, { AxiosInstance } from "axios";
+import axios from "axios";
 import { GetAllFlashcardResponse } from "./get-all-flashcard-response";
 import { GetFlashcardResponse } from "./get-flashcard-response";
 import { CreateFlashcardRequest } from "./create-flashcard-request";
 import { CreateFlashcardResponse } from "./create-flashcard-response";
 import { DeleteFlashcardResponse } from "./delete-flashcard-response";
+import { getCognitoIdToken } from "../../lib/cognito";
 
 export class FlashcardRepository {
-  private http: AxiosInstance;
-
-  constructor() {
-    // TODO factory 作る
-    this.http = axios.create({
+  // 他の repository が出てきたら共通化する
+  getHttpClient = async () => {
+    const token = await getCognitoIdToken();
+    return axios.create({
       baseURL: process.env.REACT_APP_API_BASE_URL,
+      headers: { Authorization: `Bearer ${token}` },
     });
-  }
+  };
 
   // API のデータをアプリケーションで使える形式にして返す
   async getAll(): Promise<FlashcardListItem[]> {
-    const response = await this.http.get<GetAllFlashcardResponse>("flashcards");
+    const http = await this.getHttpClient();
+    const response = await http.get<GetAllFlashcardResponse>("flashcards");
     const { flashcards } = response.data;
 
     return flashcards.map((flashcard) => {
@@ -31,9 +33,8 @@ export class FlashcardRepository {
   }
 
   async find(id: string): Promise<FlashcardDetail> {
-    const response = await this.http.get<GetFlashcardResponse>(
-      `flashcards/${id}`
-    );
+    const http = await this.getHttpClient();
+    const response = await http.get<GetFlashcardResponse>(`flashcards/${id}`);
     const { flashcard } = response.data;
 
     return {
@@ -45,8 +46,9 @@ export class FlashcardRepository {
   }
 
   async create(request: CreateFlashcardRequest): Promise<string> {
+    const http = await this.getHttpClient();
     // TODO 空のqaは落とす(サーバーでやっても良い)
-    const response = await this.http.post<CreateFlashcardResponse>(
+    const response = await http.post<CreateFlashcardResponse>(
       "flashcard",
       request
     );
@@ -56,7 +58,8 @@ export class FlashcardRepository {
   }
 
   async delete(id: string): Promise<string> {
-    const response = await this.http.delete<DeleteFlashcardResponse>(
+    const http = await this.getHttpClient();
+    const response = await http.delete<DeleteFlashcardResponse>(
       `flashcards/${id}`
     );
     const { flashcard } = response.data;

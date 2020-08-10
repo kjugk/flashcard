@@ -6,7 +6,6 @@ import {
   RouteProps,
   Redirect,
 } from "react-router-dom";
-import "./App.css";
 import { useCurrentUserContext, useIsSignedIn } from "./providers/current-user";
 import {
   FlashcardCreatePage,

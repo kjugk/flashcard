@@ -43,10 +43,8 @@ export function reducer(
         isLoading: false,
         flashcard: action.payload,
       };
-
-    default:
-      throw new Error();
   }
 }
 
+// custom hooks
 export const useDetailPageReducer = () => useReducer(reducer, initialState);

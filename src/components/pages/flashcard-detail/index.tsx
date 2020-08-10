@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { getFlashcardDetail, deleteFlashcard } from "./effects";
+import { getFlashcardDetail, deleteFlashcard } from "./actions";
 import { useParams, useHistory } from "react-router-dom";
-import { Header } from "../../shared/header";
-import { QaViewer } from "./qa-viewer";
 import { useDetailPageReducer } from "./store";
 import { useSystemContext } from "../../../providers/system";
+import { Header, Footer } from "../../shared";
+import { QaViewer } from "./qa-viewer";
 
 /**
  * カードの詳細ページ。
@@ -24,7 +24,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     getFlashcardDetail(id, dispatch);
   }, [id, dispatch]);
 
-  const onClickDeleteButton = async () => {
+  const handleClickDeleteButton = async () => {
     // TODO modal で聞くようにする。
     if (window.confirm("削除しますか?")) {
       await deleteFlashcard(id, dispatch, systemDispatch);
@@ -37,20 +37,20 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       <Header />
       {isLoading && <div>Loading</div>}
       {!isLoading && flashcard && (
-        <article>
+        <main>
           <h1>{flashcard.name}</h1>
           <button
             type="button"
-            onClick={onClickDeleteButton}
+            onClick={handleClickDeleteButton}
             disabled={isDeleting}
           >
             delete
           </button>
           {flashcard.description && <p>{flashcard.description}</p>}
           <QaViewer qaList={flashcard.qaList}></QaViewer>
-        </article>
+        </main>
       )}
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

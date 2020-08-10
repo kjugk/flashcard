@@ -54,11 +54,33 @@ function reducer(
   }
 }
 
-interface IContextProps {
-  currentUserState: CurrentUserState;
-  currentUserDispatch: Dispatch<CurrentUserAction>;
-}
-const CurrentUserContext = createContext({} as IContextProps);
+// custom hooks
+export const useIsSignedIn = () => {
+  const { currentUserState } = useCurrentUserContext();
+  return useMemo(
+    () => currentUserState.initialized && currentUserState.name !== "",
+    [currentUserState.initialized, currentUserState.name]
+  );
+};
+
+export const useSignedInUserGuard = () => {
+  const isSignedIn = useIsSignedIn();
+  const history = useHistory();
+
+  useEffect(() => {
+    if (isSignedIn) {
+      history.push("/flashcard-list");
+    }
+  }, [isSignedIn, history]);
+};
+
+// provider
+const CurrentUserContext = createContext(
+  {} as {
+    currentUserState: CurrentUserState;
+    currentUserDispatch: Dispatch<CurrentUserAction>;
+  }
+);
 
 export const CurrentUserProvider: React.FunctionComponent = (props) => {
   const [currentUserState, currentUserDispatch] = useReducer(
@@ -118,23 +140,3 @@ export const CurrentUserProvider: React.FunctionComponent = (props) => {
 };
 
 export const useCurrentUserContext = () => useContext(CurrentUserContext);
-
-// custom hooks
-export const useIsSignedIn = () => {
-  const { currentUserState } = useCurrentUserContext();
-  return useMemo(
-    () => currentUserState.initialized && currentUserState.name !== "",
-    [currentUserState.initialized, currentUserState.name]
-  );
-};
-
-export const useSignedInUserGuard = () => {
-  const isSignedIn = useIsSignedIn();
-  const history = useHistory();
-
-  useEffect(() => {
-    if (isSignedIn) {
-      history.push("/flashcard-list");
-    }
-  }, [isSignedIn, history]);
-};

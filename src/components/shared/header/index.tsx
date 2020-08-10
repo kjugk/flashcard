@@ -5,6 +5,7 @@ import { signOut } from "../../../lib/cognito";
 
 export const Header: FunctionComponent = () => {
   const isSignedIn = useIsSignedIn();
+  const handleSignOut = () => signOut();
 
   return (
     <div>
@@ -13,7 +14,7 @@ export const Header: FunctionComponent = () => {
         <Link to="/flashcard-create">新規作成</Link>
 
         {isSignedIn && (
-          <button type="button" onClick={() => signOut()}>
+          <button type="button" onClick={handleSignOut}>
             ログアウト
           </button>
         )}
