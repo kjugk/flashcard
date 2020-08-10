@@ -15,11 +15,14 @@ export const getFlashcards = async (
     payload: true,
   });
 
-  // TODO 共通エラー処理(グローバルエラー的なstore 作る???)
-  const list = await repository.getAll();
+  try {
+    const list = await repository.getAll();
 
-  dispatch({
-    type: "store-flashcards",
-    payload: list,
-  });
+    dispatch({
+      type: "store-flashcards",
+      payload: list,
+    });
+  } catch (e) {
+    // TODO 共通エラー処理(グローバルエラー的なstore 作る???)
+  }
 };

@@ -1,10 +1,8 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { FlashcardList } from "./flashcard-list";
-import { getFlashcards } from "./effects";
-import { Header } from "../../shared/header";
-import { Footer } from "../../shared/footer/footer";
+import { getFlashcards } from "./actions";
+import { Header, Footer, SystemMessage } from "../../shared";
 import { useListPageReducer } from "./store";
-import { SystemMessage } from "../../shared/system-message";
 
 /**
  * カードリストページ。
@@ -12,12 +10,14 @@ import { SystemMessage } from "../../shared/system-message";
  * container と presentational 的な分け方はしない
  */
 export const FlashcardListPage: FunctionComponent = () => {
-  const [{ flashcards, isLoading }, dispatch] = useListPageReducer();
+  const [state, dispatch] = useListPageReducer();
+  const { isLoading, flashcards } = state;
 
   useEffect(() => {
     getFlashcards(dispatch);
   }, [dispatch]);
 
+  // TODO 共通レイアウトをコンポーネント化する?
   return (
     <div>
       <Header />
