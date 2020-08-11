@@ -54,7 +54,7 @@ export const getCognitoIdToken = () => {
           if (err) {
             throw new Error("User is not signed in.");
           }
-          resolve(session.getAccessToken().getJwtToken());
+          resolve(session.getIdToken().getJwtToken());
         }
       );
     } catch (e) {
