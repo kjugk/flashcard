@@ -95,20 +95,24 @@ export const CurrentUserProvider: React.FunctionComponent = (props) => {
     });
   };
 
+  // 初回ログインユーザーを取得する。
+  // cognito の API を隠蔽したほうが良いかも
   useEffect(() => {
-    // cognito の API を隠蔽したほうが良いかも
-    const getUser = async () => {
-      let [name, picture] = ["", ""];
+    let [name, picture] = ["", ""];
 
-      try {
-        const user = await getCognitoUser();
+    getCognitoUser()
+      .then((user) => {
         if (user === undefined) {
           dispatchSignInAction(name, picture);
           return;
         }
 
         user.getUserAttributes((err, result) => {
-          if (err || result === undefined) {
+          if (err) {
+            dispatchSignInAction(name, picture);
+            return;
+          }
+          if (result === undefined) {
             dispatchSignInAction(name, picture);
             return;
           }
@@ -119,12 +123,10 @@ export const CurrentUserProvider: React.FunctionComponent = (props) => {
 
           dispatchSignInAction(name, picture);
         });
-      } catch (e) {
-        return dispatchSignInAction(name, picture);
-      }
-    };
-
-    getUser();
+      })
+      .catch(() => {
+        dispatchSignInAction(name, picture);
+      });
   }, []);
 
   return (
