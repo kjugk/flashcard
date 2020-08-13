@@ -8,16 +8,7 @@ import { CreateFlashcardResponse } from "./create-flashcard-response";
 import { DeleteFlashcardResponse } from "./delete-flashcard-response";
 import { getCognitoIdToken } from "../../lib/cognito";
 
-export class FlashcardRepository {
-  // 他の repository が出てきたら共通化する
-  getHttpClient = async () => {
-    const token = await getCognitoIdToken();
-    return axios.create({
-      baseURL: process.env.REACT_APP_API_BASE_URL,
-      headers: { Authorization: token },
-    });
-  };
-
+class FlashcardRepository {
   // API のデータをアプリケーションで使える形式にして返す
   async getAll(): Promise<FlashcardListItem[]> {
     const http = await this.getHttpClient();
@@ -66,6 +57,15 @@ export class FlashcardRepository {
 
     return flashcard.id;
   }
+
+  // 他の repository が出てきたら共通化する
+  private getHttpClient = async () => {
+    const token = await getCognitoIdToken();
+    return axios.create({
+      baseURL: process.env.REACT_APP_API_BASE_URL,
+      headers: { Authorization: token },
+    });
+  };
 }
 
 export const flashcardRepository = new FlashcardRepository();
