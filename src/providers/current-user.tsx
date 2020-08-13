@@ -95,7 +95,7 @@ export const CurrentUserProvider: React.FunctionComponent = (props) => {
     });
   };
 
-  // 初回ログインユーザーを取得する。
+  // ログインユーザーを取得する。
   // cognito の API を隠蔽したほうが良いかも
   useEffect(() => {
     let [name, picture] = ["", ""];
