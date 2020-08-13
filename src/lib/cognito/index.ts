@@ -1,7 +1,7 @@
-import Amplify from "aws-amplify";
-import { Auth } from "aws-amplify";
+import Amplify from "@aws-amplify/core";
+import Auth from "@aws-amplify/auth";
 import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth/lib/types";
-import { CognitoUser, CognitoUserSession } from "amazon-cognito-identity-js";
+import { CognitoUser } from "amazon-cognito-identity-js";
 
 /**
  * Aws cognito をセットアップする。
@@ -39,27 +39,8 @@ export const signOut = () => {
   Auth.signOut();
 };
 
-export const getCognitoIdToken = () => {
-  return new Promise<string>(async (resolve, reject) => {
-    try {
-      const user = await getCognitoUser();
-      if (user === undefined) {
-        throw new Error("User is not signed in.");
-      }
-
-      const session = await Auth.currentSession();
-      user.refreshSession(
-        session.getRefreshToken(),
-        (err, session: CognitoUserSession) => {
-          if (err) {
-            throw new Error("User is not signed in.");
-          }
-          resolve(session.getIdToken().getJwtToken());
-        }
-      );
-    } catch (e) {
-      console.error(e);
-      reject(e);
-    }
-  });
+export const getCognitoIdToken = async () => {
+  // token が expire していても、refreshToken が有効ならここで token が refresh される。
+  const session = await Auth.currentSession();
+  return session.getIdToken().getJwtToken();
 };

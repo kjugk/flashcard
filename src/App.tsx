@@ -32,7 +32,7 @@ const App: FunctionComponent = () => {
           <FlashcardDetailPage />
         </PrivateRoute>
 
-        <Route path="/sign-in" exact component={SignInPage}></Route>
+        <Route path="/sign-in" component={SignInPage}></Route>
         <Route exact path="/" component={TopPage}></Route>
         <Route path="*" component={NotFoundPage}></Route>
       </Switch>
