@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import { App } from "./components/app";
 import * as serviceWorker from "./serviceWorker";
 import { SystemProvider } from "./providers/system";
 import { CurrentUserProvider } from "./providers/current-user";

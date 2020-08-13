@@ -1,11 +1,10 @@
-import { FlashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
+import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { IFlashcardCreateForm } from "./types";
-const repository = new FlashcardRepository();
 
 export const createFlashcard = async (
   form: IFlashcardCreateForm
 ): Promise<string> => {
   // TODO 共通エラー処理
-  const id = await repository.create(form);
+  const id = await flashcardRepository.create(form);
   return id;
 };

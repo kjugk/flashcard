@@ -6,7 +6,10 @@ import {
   RouteProps,
   Redirect,
 } from "react-router-dom";
-import { useCurrentUserContext, useIsSignedIn } from "./providers/current-user";
+import {
+  useCurrentUserContext,
+  useIsSignedIn,
+} from "../providers/current-user";
 import {
   FlashcardCreatePage,
   FlashcardListPage,
@@ -14,9 +17,9 @@ import {
   SignInPage,
   TopPage,
   NotFoundPage,
-} from "./components/pages/index";
+} from "./pages/index";
 
-const App: FunctionComponent = () => {
+export const App: FunctionComponent = () => {
   return (
     <Router>
       <Switch>
@@ -56,5 +59,3 @@ const PrivateRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
     </Route>
   );
 };
-
-export default App;
