@@ -1,16 +1,26 @@
 // システム関連の global state を管理する
-
-import React, { createContext, useReducer, useContext, Dispatch } from "react";
+import React, {
+  createContext,
+  useReducer,
+  useContext,
+  Dispatch,
+  useMemo,
+} from "react";
 
 // actions
-export type SystemAction = { type: "set-system-info-message"; payload: string };
+// TODO action 一つにまとめて、messageTYpe にする
+export type SystemAction =
+  | { type: "set-system-info-message"; payload: string }
+  | { type: "set-system-error-message"; payload: string };
 
 // State types
 interface SystemState {
   infoMessage: string;
+  errorMessage: string;
 }
 const initialState: SystemState = {
   infoMessage: "",
+  errorMessage: "",
 };
 
 // reducer
@@ -20,6 +30,11 @@ function reducer(state: SystemState, action: SystemAction): SystemState {
       return {
         ...state,
         infoMessage: action.payload,
+      };
+    case "set-system-error-message":
+      return {
+        ...state,
+        errorMessage: action.payload,
       };
   }
 }
@@ -40,4 +55,10 @@ export const SystemProvider: React.FunctionComponent = (props) => {
   );
 };
 
+// custome hooks
 export const useSystemContext = () => useContext(SystemContext);
+export const useHasAnyMessage = (state: SystemState) => {
+  return useMemo(() => state.infoMessage !== "" || state.errorMessage !== "", [
+    state,
+  ]);
+};

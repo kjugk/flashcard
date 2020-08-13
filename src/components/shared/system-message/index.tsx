@@ -1,12 +1,12 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { useSystemContext } from "../../../providers/system";
+import { useSystemContext, useHasAnyMessage } from "../../../providers/system";
 
 /**
  * ユーザーに通知するメッセージを表示するコンポーネント
  */
 export const SystemMessage: FunctionComponent = () => {
   const { systemState, systemDispatch } = useSystemContext();
-  const { infoMessage } = systemState;
+  const hasAnyMessage = useHasAnyMessage(systemState);
 
   function cleanupMessage() {
     systemDispatch({
@@ -17,17 +17,19 @@ export const SystemMessage: FunctionComponent = () => {
 
   // TODO message を queue にする。
   useEffect(() => {
-    if (infoMessage !== "") {
+    if (hasAnyMessage) {
       setTimeout(cleanupMessage, 2000);
     }
 
     return () => {
       // メッセージが残ってたら削除する。
-      if (infoMessage !== "") cleanupMessage();
+      if (hasAnyMessage) cleanupMessage();
     };
     // eslint-disable-next-line
-  }, [infoMessage, systemDispatch]);
+  }, [hasAnyMessage]);
 
-  if (systemState.infoMessage === "") return null;
+  if (!hasAnyMessage) return null;
+
+  // TODO messege の種類でスタイル出し分ける
   return <div>{systemState.infoMessage}</div>;
 };

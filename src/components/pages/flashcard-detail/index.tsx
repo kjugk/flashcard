@@ -27,8 +27,10 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const handleClickDeleteButton = async () => {
     // TODO modal で聞くようにする。
     if (window.confirm("削除しますか?")) {
-      await deleteFlashcard(id, dispatch, systemDispatch);
-      history.replace("/flashcard-list");
+      try {
+        await deleteFlashcard(id, dispatch, systemDispatch);
+        history.replace("/flashcard-list");
+      } catch (e) {}
     }
   };
 

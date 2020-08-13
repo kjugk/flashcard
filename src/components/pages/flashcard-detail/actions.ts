@@ -1,9 +1,7 @@
 import { Dispatch } from "react";
-import { FlashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
+import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { FlashcardDetailPageAction } from "./store";
 import { SystemAction } from "../../../providers/system";
-
-const repository = new FlashcardRepository();
 
 export const getFlashcardDetail = async (
   id: string,
@@ -14,7 +12,7 @@ export const getFlashcardDetail = async (
     payload: true,
   });
 
-  const item = await repository.find(id);
+  const item = await flashcardRepository.find(id);
   dispatch({
     type: "store-flashcard-detail",
     payload: item,
@@ -30,15 +28,17 @@ export const deleteFlashcard = async (
     type: "update-deleting",
     payload: true,
   });
-  await repository.delete(id);
 
-  dispatch({
-    type: "update-deleting",
-    payload: false,
-  });
-
-  systemDispatch({
-    type: "set-system-info-message",
-    payload: "削除しました",
-  });
+  try {
+    await flashcardRepository.delete(id);
+    systemDispatch({
+      type: "set-system-info-message",
+      payload: "削除しました",
+    });
+  } finally {
+    dispatch({
+      type: "update-deleting",
+      payload: false,
+    });
+  }
 };
