@@ -6,6 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import { SystemProvider } from "./providers/system";
 import { CurrentUserProvider } from "./providers/current-user";
 import { configureCognito } from "./lib/cognito";
+import { SystemMessage } from "./components/shared";
 
 configureCognito();
 
@@ -15,6 +16,7 @@ ReactDOM.render(
     <SystemProvider>
       <CurrentUserProvider>
         <App />
+        <SystemMessage />
       </CurrentUserProvider>
     </SystemProvider>
   </React.StrictMode>,

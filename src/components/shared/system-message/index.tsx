@@ -10,12 +10,12 @@ export const SystemMessage: FunctionComponent = () => {
 
   function cleanupMessage() {
     systemDispatch({
-      type: "set-system-info-message",
-      payload: "",
+      type: "cleanup-message",
     });
   }
 
   // TODO message を queue にする。
+  // 消す時に、messageID をしてする。
   useEffect(() => {
     if (hasAnyMessage) {
       setTimeout(cleanupMessage, 2000);
@@ -31,5 +31,5 @@ export const SystemMessage: FunctionComponent = () => {
   if (!hasAnyMessage) return null;
 
   // TODO messege の種類でスタイル出し分ける
-  return <div>{systemState.infoMessage}</div>;
+  return <div>{systemState.message}</div>;
 };

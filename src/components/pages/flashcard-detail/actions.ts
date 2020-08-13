@@ -12,19 +12,26 @@ export const getFlashcardDetail = async (
     payload: true,
   });
 
-  const item = await flashcardRepository.find(id);
-  dispatch({
-    type: "store-flashcard-detail",
-    payload: item,
-  });
+  try {
+    const item = await flashcardRepository.find(id);
+    dispatch({
+      type: "store-flashcard-detail",
+      payload: item,
+    });
+  } finally {
+    dispatch({
+      type: "update-loading",
+      payload: false,
+    });
+  }
 };
 
 export const deleteFlashcard = async (
   id: string,
-  dispatch: Dispatch<FlashcardDetailPageAction>,
+  detailPageDispatch: Dispatch<FlashcardDetailPageAction>,
   systemDispatch: Dispatch<SystemAction>
 ) => {
-  dispatch({
+  detailPageDispatch({
     type: "update-deleting",
     payload: true,
   });
@@ -32,11 +39,14 @@ export const deleteFlashcard = async (
   try {
     await flashcardRepository.delete(id);
     systemDispatch({
-      type: "set-system-info-message",
-      payload: "削除しました",
+      type: "set-system-message",
+      payload: {
+        messageType: "info",
+        message: "削除しました。",
+      },
     });
   } finally {
-    dispatch({
+    detailPageDispatch({
       type: "update-deleting",
       payload: false,
     });

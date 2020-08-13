@@ -7,34 +7,44 @@ import React, {
   useMemo,
 } from "react";
 
+type MessageType = "info" | "error";
+
 // actions
-// TODO action 一つにまとめて、messageTYpe にする
 export type SystemAction =
-  | { type: "set-system-info-message"; payload: string }
-  | { type: "set-system-error-message"; payload: string };
+  | { type: "cleanup-message" }
+  | {
+      type: "set-system-message";
+      payload: {
+        message: string;
+        messageType: MessageType;
+      };
+    };
 
 // State types
 interface SystemState {
-  infoMessage: string;
-  errorMessage: string;
+  message: string;
+  messageType: MessageType;
 }
+
 const initialState: SystemState = {
-  infoMessage: "",
-  errorMessage: "",
+  message: "",
+  messageType: "info",
 };
 
 // reducer
 function reducer(state: SystemState, action: SystemAction): SystemState {
   switch (action.type) {
-    case "set-system-info-message":
+    case "cleanup-message":
       return {
         ...state,
-        infoMessage: action.payload,
+        message: "",
+        messageType: "info",
       };
-    case "set-system-error-message":
+
+    case "set-system-message":
       return {
         ...state,
-        errorMessage: action.payload,
+        ...action.payload,
       };
   }
 }
@@ -58,7 +68,5 @@ export const SystemProvider: React.FunctionComponent = (props) => {
 // custome hooks
 export const useSystemContext = () => useContext(SystemContext);
 export const useHasAnyMessage = (state: SystemState) => {
-  return useMemo(() => state.infoMessage !== "" || state.errorMessage !== "", [
-    state,
-  ]);
+  return useMemo(() => state.message !== "", [state]);
 };

@@ -12,8 +12,8 @@ import { QaViewer } from "./qa-viewer";
  */
 export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
-  const history = useHistory();
   const { systemDispatch } = useSystemContext();
+  const history = useHistory();
   const [
     { isLoading, isDeleting, flashcard },
     dispatch,
@@ -21,8 +21,15 @@ export const FlashcardDetailPage: FunctionComponent = () => {
 
   // 詳細データを取得する
   useEffect(() => {
-    getFlashcardDetail(id, dispatch);
-  }, [id, dispatch]);
+    const get = async () => {
+      try {
+        await getFlashcardDetail(id, dispatch);
+      } catch {
+        history.replace("/not-found");
+      }
+    };
+    get();
+  }, [id, dispatch, history]);
 
   const handleClickDeleteButton = async () => {
     // TODO modal で聞くようにする。
@@ -30,7 +37,15 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       try {
         await deleteFlashcard(id, dispatch, systemDispatch);
         history.replace("/flashcard-list");
-      } catch (e) {}
+      } catch (e) {
+        systemDispatch({
+          type: "set-system-message",
+          payload: {
+            messageType: "error",
+            message: "削除できませんでした。",
+          },
+        });
+      }
     }
   };
 
