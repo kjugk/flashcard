@@ -1,9 +1,7 @@
 import { Dispatch } from "react";
-import { FlashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
+import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { FlashcardDetailPageAction } from "./store";
 import { SystemAction } from "../../../providers/system";
-
-const repository = new FlashcardRepository();
 
 export const getFlashcardDetail = async (
   id: string,
@@ -14,31 +12,43 @@ export const getFlashcardDetail = async (
     payload: true,
   });
 
-  const item = await repository.find(id);
-  dispatch({
-    type: "store-flashcard-detail",
-    payload: item,
-  });
+  try {
+    const item = await flashcardRepository.find(id);
+    dispatch({
+      type: "store-flashcard-detail",
+      payload: item,
+    });
+  } finally {
+    dispatch({
+      type: "update-loading",
+      payload: false,
+    });
+  }
 };
 
 export const deleteFlashcard = async (
   id: string,
-  dispatch: Dispatch<FlashcardDetailPageAction>,
+  detailPageDispatch: Dispatch<FlashcardDetailPageAction>,
   systemDispatch: Dispatch<SystemAction>
 ) => {
-  dispatch({
+  detailPageDispatch({
     type: "update-deleting",
     payload: true,
   });
-  await repository.delete(id);
 
-  dispatch({
-    type: "update-deleting",
-    payload: false,
-  });
-
-  systemDispatch({
-    type: "set-system-info-message",
-    payload: "削除しました",
-  });
+  try {
+    await flashcardRepository.delete(id);
+    systemDispatch({
+      type: "set-system-message",
+      payload: {
+        messageType: "info",
+        message: "削除しました。",
+      },
+    });
+  } finally {
+    detailPageDispatch({
+      type: "update-deleting",
+      payload: false,
+    });
+  }
 };

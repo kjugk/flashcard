@@ -67,3 +67,5 @@ export class FlashcardRepository {
     return flashcard.id;
   }
 }
+
+export const flashcardRepository = new FlashcardRepository();

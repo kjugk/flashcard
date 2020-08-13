@@ -1,8 +1,6 @@
-import { FlashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
+import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { Dispatch } from "react";
 import { FlashcardListPageAction } from "./store";
-
-const repository = new FlashcardRepository();
 
 export const getFlashcards = async (
   dispatch: Dispatch<FlashcardListPageAction>
@@ -12,14 +10,9 @@ export const getFlashcards = async (
     payload: true,
   });
 
-  try {
-    const list = await repository.getAll();
-
-    dispatch({
-      type: "store-flashcards",
-      payload: list,
-    });
-  } catch (e) {
-    // TODO 共通エラー処理(グローバルエラー的なstore 作る???)
-  }
+  const list = await flashcardRepository.getAll();
+  dispatch({
+    type: "store-flashcards",
+    payload: list,
+  });
 };

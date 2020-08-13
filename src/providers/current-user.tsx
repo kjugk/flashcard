@@ -117,9 +117,14 @@ export const CurrentUserProvider: React.FunctionComponent = (props) => {
             return;
           }
 
-          name = result.find((r) => r.getName() === "name")?.getValue() ?? "";
-          picture =
-            result.find((r) => r.getName() === "picture")?.getValue() ?? "";
+          result.forEach((r) => {
+            if (r.getName() === "name") {
+              name = r.getValue();
+            }
+            if (r.getName() === "picture") {
+              picture = r.getValue();
+            }
+          });
 
           dispatchSignInAction(name, picture);
         });

@@ -1,25 +1,50 @@
 // システム関連の global state を管理する
+import React, {
+  createContext,
+  useReducer,
+  useContext,
+  Dispatch,
+  useMemo,
+} from "react";
 
-import React, { createContext, useReducer, useContext, Dispatch } from "react";
+type MessageType = "info" | "error";
 
 // actions
-export type SystemAction = { type: "set-system-info-message"; payload: string };
+export type SystemAction =
+  | { type: "cleanup-message" }
+  | {
+      type: "set-system-message";
+      payload: {
+        message: string;
+        messageType: MessageType;
+      };
+    };
 
 // State types
 interface SystemState {
-  infoMessage: string;
+  message: string;
+  messageType: MessageType;
 }
+
 const initialState: SystemState = {
-  infoMessage: "",
+  message: "",
+  messageType: "info",
 };
 
 // reducer
 function reducer(state: SystemState, action: SystemAction): SystemState {
   switch (action.type) {
-    case "set-system-info-message":
+    case "cleanup-message":
       return {
         ...state,
-        infoMessage: action.payload,
+        message: "",
+        messageType: "info",
+      };
+
+    case "set-system-message":
+      return {
+        ...state,
+        ...action.payload,
       };
   }
 }
@@ -40,4 +65,8 @@ export const SystemProvider: React.FunctionComponent = (props) => {
   );
 };
 
+// custome hooks
 export const useSystemContext = () => useContext(SystemContext);
+export const useHasAnyMessage = (state: SystemState) => {
+  return useMemo(() => state.message !== "", [state]);
+};

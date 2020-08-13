@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { FlashcardList } from "./flashcard-list";
 import { getFlashcards } from "./actions";
-import { Header, Footer, SystemMessage } from "../../shared";
+import { Header, Footer } from "../../shared";
 import { useListPageReducer } from "./store";
 
 /**
@@ -24,7 +24,6 @@ export const FlashcardListPage: FunctionComponent = () => {
       <main>
         <h1>List Page</h1>
         <FlashcardList isLoading={isLoading} items={flashcards} />
-        <SystemMessage />
       </main>
       <Footer />
     </div>
