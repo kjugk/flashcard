@@ -4,8 +4,10 @@ import { CognitoHostedUIIdentityProvider } from "@aws-amplify/auth/lib/types";
 import { CognitoUser } from "amazon-cognito-identity-js";
 
 /**
- * Aws cognito をセットアップする。
+ * Cognito 関連の処理を集めたモジュール。
  */
+
+// Aws cognito をセットアップする。
 export function configureCognito() {
   Amplify.configure({
     Auth: {
