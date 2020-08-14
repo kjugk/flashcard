@@ -1,7 +1,6 @@
 // カレントユーザー関連の global state を管理する
 import { useReducer, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
-import { useCurrentUserContext } from "../provider/current-user.provider";
 
 // actions
 export type CurrentUserAction =
