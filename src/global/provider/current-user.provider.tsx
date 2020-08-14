@@ -1,80 +1,12 @@
-// カレントユーザー関連の global state を管理する
-import { getCognitoUser } from "../lib/cognito";
+import React, { createContext, useEffect, useContext, Dispatch } from "react";
+import {
+  useCurrentUserReducer,
+  CurrentUserState,
+  CurrentUserAction,
+} from "../store/current-user.store";
+import { getCognitoUser } from "../../lib/cognito";
 
-import React, {
-  createContext,
-  useContext,
-  useReducer,
-  Dispatch,
-  useEffect,
-  useMemo,
-} from "react";
-import { useHistory } from "react-router-dom";
-
-// actions
-export type CurrentUserAction =
-  | {
-      type: "sign-in";
-      payload: { name: string; picture: string };
-    }
-  | {
-      type: "sign-out";
-    };
-
-// state
-interface CurrentUserState {
-  initialized: boolean;
-  name: string;
-  picture: string;
-}
-const initialState: CurrentUserState = {
-  initialized: false,
-  name: "",
-  picture: "",
-};
-
-// reducer
-function reducer(
-  state: CurrentUserState,
-  action: CurrentUserAction
-): CurrentUserState {
-  switch (action.type) {
-    case "sign-in":
-      return {
-        ...state,
-        initialized: true,
-        ...action.payload,
-      };
-    case "sign-out":
-      return {
-        ...state,
-        name: "",
-        picture: "",
-      };
-  }
-}
-
-// custom hooks
-export const useIsSignedIn = () => {
-  const { currentUserState } = useCurrentUserContext();
-  return useMemo(
-    () => currentUserState.initialized && currentUserState.name !== "",
-    [currentUserState.initialized, currentUserState.name]
-  );
-};
-
-export const useSignedInUserGuard = () => {
-  const isSignedIn = useIsSignedIn();
-  const history = useHistory();
-
-  useEffect(() => {
-    if (isSignedIn) {
-      history.push("/flashcard-list");
-    }
-  }, [isSignedIn, history]);
-};
-
-// provider
+// context
 const CurrentUserContext = createContext(
   {} as {
     currentUserState: CurrentUserState;
@@ -82,11 +14,9 @@ const CurrentUserContext = createContext(
   }
 );
 
+// provider
 export const CurrentUserProvider: React.FunctionComponent = (props) => {
-  const [currentUserState, currentUserDispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [currentUserState, currentUserDispatch] = useCurrentUserReducer();
 
   const dispatchSignInAction = (name: string, picture: string) => {
     currentUserDispatch({

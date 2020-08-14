@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect } from "react";
 import { getFlashcardDetail, deleteFlashcard } from "./actions";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
-import { useSystemContext } from "../../../providers/system";
+import { useSystemContext } from "../../../global/provider/system.provider";
 import { Header, Footer } from "../../shared";
 import { QaViewer } from "./qa-viewer";
 

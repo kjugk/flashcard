@@ -1,5 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
-import { useSystemContext, useHasAnyMessage } from "../../../providers/system";
+import { useSystemContext } from "../../../global/provider/system.provider";
+import { useHasAnyMessage } from "../../../global/store/system.store";
 
 /**
  * ユーザーに通知するメッセージを表示するコンポーネント

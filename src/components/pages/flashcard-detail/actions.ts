@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { FlashcardDetailPageAction } from "./store";
-import { SystemAction } from "../../../providers/system";
+import { SystemAction } from "../../../global/store/system.store";
 
 export const getFlashcardDetail = async (
   id: string,

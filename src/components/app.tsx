@@ -6,10 +6,7 @@ import {
   RouteProps,
   Redirect,
 } from "react-router-dom";
-import {
-  useCurrentUserContext,
-  useIsSignedIn,
-} from "../providers/current-user";
+import { useCurrentUserContext } from "../global/provider/current-user.provider";
 import {
   FlashcardCreatePage,
   FlashcardListPage,
@@ -18,6 +15,7 @@ import {
   TopPage,
   NotFoundPage,
 } from "./pages/index";
+import { useIsSignedIn } from "../global/store/current-user.store";
 
 export const App: FunctionComponent = () => {
   return (
@@ -46,7 +44,7 @@ export const App: FunctionComponent = () => {
 // ログイン「必須」ページのRoute
 const PrivateRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
   const { currentUserState } = useCurrentUserContext();
-  const isSignedIn = useIsSignedIn();
+  const isSignedIn = useIsSignedIn(currentUserState);
 
   if (!currentUserState.initialized) {
     return <div>loading...</div>;

@@ -1,11 +1,5 @@
 // システム関連の global state を管理する
-import React, {
-  createContext,
-  useReducer,
-  useContext,
-  Dispatch,
-  useMemo,
-} from "react";
+import { useReducer, useMemo } from "react";
 
 type MessageType = "info" | "error";
 
@@ -21,7 +15,7 @@ export type SystemAction =
     };
 
 // State types
-interface SystemState {
+export interface SystemState {
   message: string;
   messageType: MessageType;
 }
@@ -49,24 +43,10 @@ function reducer(state: SystemState, action: SystemAction): SystemState {
   }
 }
 
-interface IContextProps {
-  systemState: SystemState;
-  systemDispatch: Dispatch<SystemAction>;
-}
-const SystemContext = createContext({} as IContextProps);
-
-export const SystemProvider: React.FunctionComponent = (props) => {
-  const [systemState, systemDispatch] = useReducer(reducer, initialState);
-
-  return (
-    <SystemContext.Provider value={{ systemState, systemDispatch }}>
-      {props.children}
-    </SystemContext.Provider>
-  );
-};
-
 // custome hooks
-export const useSystemContext = () => useContext(SystemContext);
+export const useSystemReducer = () => useReducer(reducer, initialState);
+
+// selectors
 export const useHasAnyMessage = (state: SystemState) => {
   return useMemo(() => state.message !== "", [state]);
 };
