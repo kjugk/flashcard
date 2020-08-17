@@ -7,6 +7,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { useCurrentUserContext } from "../global/provider/current-user.provider";
+import { useIsSignedIn } from "../global/store/current-user.store";
 import {
   FlashcardCreatePage,
   FlashcardListPage,
@@ -15,7 +16,6 @@ import {
   TopPage,
   NotFoundPage,
 } from "./pages/index";
-import { useIsSignedIn } from "../global/store/current-user.store";
 
 export const App: FunctionComponent = () => {
   return (
@@ -52,8 +52,8 @@ const PrivateRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
 
   return (
     <Route {...rest}>
-      {isSignedIn && children}
       {!isSignedIn && <Redirect to="/" />}
+      {isSignedIn && children}
     </Route>
   );
 };

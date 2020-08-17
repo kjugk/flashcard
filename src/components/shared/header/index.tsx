@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { signOut } from "../../../lib/cognito";
 import { useIsSignedIn } from "../../../global/store/current-user.store";
 import { useCurrentUserContext } from "../../../global/provider/current-user.provider";
+import { Button } from "../../lib";
 
 export const Header: FunctionComponent = () => {
   const { currentUserState, currentUserDispatch } = useCurrentUserContext();
@@ -20,11 +21,7 @@ export const Header: FunctionComponent = () => {
         <Link to="/">Flashcard</Link>
         <Link to="/flashcard-create">新規作成</Link>
 
-        {isSignedIn && (
-          <button type="button" onClick={handleSignOut}>
-            ログアウト
-          </button>
-        )}
+        {isSignedIn && <Button label="ログアウト" onClick={handleSignOut} />}
       </nav>
     </div>
   );

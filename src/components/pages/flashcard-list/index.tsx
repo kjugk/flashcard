@@ -15,7 +15,8 @@ export const FlashcardListPage: FunctionComponent = () => {
 
   useEffect(() => {
     getFlashcards(dispatch);
-  }, [dispatch]);
+    // eslint-disable-next-line
+  }, []);
 
   // TODO 共通レイアウトをコンポーネント化する?
   return (
