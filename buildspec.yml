@@ -6,7 +6,7 @@ phases:
       - npm i
   pre_build:
     commands:
-      - npm test -- --watchAll=false
+      # - npm test -- --watchAll=false
   build:
     commands:
       - npm run build
