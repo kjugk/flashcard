@@ -5,6 +5,7 @@ import {
   CurrentUserAction,
 } from "../store/current-user.store";
 import { getCognitoUser } from "../../lib/cognito";
+import { Hub, HubCallback } from "@aws-amplify/core";
 
 // context
 const CurrentUserContext = createContext(
@@ -25,9 +26,20 @@ export const CurrentUserProvider: React.FunctionComponent = (props) => {
     });
   };
 
+  const listener: HubCallback = (data) => {
+    switch (data.payload.event) {
+      case "signOut":
+        currentUserDispatch({
+          type: "sign-out",
+        });
+    }
+  };
+
   // ログインユーザーを取得する。
   // cognito の API を隠蔽したほうが良いかも
   useEffect(() => {
+    Hub.listen("auth", listener);
+
     let [name, picture] = ["", ""];
 
     getCognitoUser()
