@@ -5,9 +5,14 @@ import { useIsSignedIn } from "../../../global/store/current-user.store";
 import { useCurrentUserContext } from "../../../global/provider/current-user.provider";
 
 export const Header: FunctionComponent = () => {
-  const { currentUserState } = useCurrentUserContext();
+  const { currentUserState, currentUserDispatch } = useCurrentUserContext();
   const isSignedIn = useIsSignedIn(currentUserState);
-  const handleSignOut = () => signOut();
+  const handleSignOut = async () => {
+    await signOut();
+    currentUserDispatch({
+      type: "sign-out",
+    });
+  };
 
   return (
     <div>

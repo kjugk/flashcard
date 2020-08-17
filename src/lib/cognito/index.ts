@@ -38,7 +38,7 @@ export const getCognitoUser = async () => {
 };
 
 export const signOut = () => {
-  Auth.signOut();
+  return Auth.signOut();
 };
 
 export const getCognitoIdToken = async () => {

@@ -53,7 +53,7 @@ const PrivateRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
   return (
     <Route {...rest}>
       {isSignedIn && children}
-      {!isSignedIn && <Redirect to="/sign-in" />}
+      {!isSignedIn && <Redirect to="/" />}
     </Route>
   );
 };

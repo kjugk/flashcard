@@ -67,5 +67,5 @@ export const useSignedInUserGuard = (currentUserState: CurrentUserState) => {
     if (isSignedIn) {
       history.push("/flashcard-list");
     }
-  }, [isSignedIn, history]);
+  }, [isSignedIn]);
 };
