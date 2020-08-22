@@ -2,8 +2,9 @@ import React, { FunctionComponent } from "react";
 import { useHistory } from "react-router-dom";
 import { FlashcardCreateForm } from "./form";
 import { createFlashcard } from "./actions";
-import { Header, Footer } from "../../shared";
+import { Header } from "../../shared";
 import { IFlashcardCreateForm } from "./types";
+import { Container } from "../../lib";
 
 /**
  * カード作成ページ。
@@ -19,9 +20,9 @@ export const FlashcardCreatePage: FunctionComponent = () => {
   return (
     <div>
       <Header />
-      <h1>Create Page</h1>
-      <FlashcardCreateForm onSubmit={handleSubmitForm} />
-      <Footer />
+      <Container>
+        <FlashcardCreateForm onSubmit={handleSubmitForm} />
+      </Container>
     </div>
   );
 };
