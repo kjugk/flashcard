@@ -1,8 +1,9 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { FlashcardList } from "./flashcard-list";
 import { getFlashcards } from "./actions";
-import { Header, Footer } from "../../shared";
+import { Header } from "../../shared";
 import { useListPageReducer } from "./store";
+import { Container } from "../../lib/";
 
 /**
  * カードリストページ。
@@ -15,17 +16,17 @@ export const FlashcardListPage: FunctionComponent = () => {
 
   useEffect(() => {
     getFlashcards(dispatch);
-  }, [dispatch]);
+    // eslint-disable-next-line
+  }, []);
 
   // TODO 共通レイアウトをコンポーネント化する?
   return (
     <div>
       <Header />
-      <main>
+      <Container tag="main">
         <h1>List Page</h1>
         <FlashcardList isLoading={isLoading} items={flashcards} />
-      </main>
-      <Footer />
+      </Container>
     </div>
   );
 };
