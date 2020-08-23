@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState, useMemo } from "react";
+import React, { FunctionComponent, useState, useMemo, useEffect } from "react";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import ArrowFoward from "@material-ui/icons/ArrowForward";
 import styled from "styled-components";
@@ -18,6 +18,7 @@ interface Props {
 export const QaViewer: FunctionComponent<Props> = (props) => {
   const { qaList } = props;
   const [currentPage, changeCurrentPage] = useState(1);
+  const [inTransition, setInTransition] = useState(false);
   const [showAnswer, toggleShowAnswer] = useState(false);
 
   const currantQa = useMemo(() => qaList[currentPage - 1], [
@@ -25,18 +26,26 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
     currentPage,
   ]);
 
-  if (currantQa === undefined) {
-    // TODO raise Error
-    return null;
-  }
+  useEffect(() => {
+    setInTransition(true);
+    setTimeout(() => {
+      setInTransition(false);
+    }, 400);
+  }, [currentPage]);
 
   return (
     <div>
       <CardWrapper>
-        <Card>
-          <CardContent onClick={() => toggleShowAnswer(!showAnswer)}>
-            {!showAnswer && <div>{currantQa.question}</div>}
-            {showAnswer && <div>{currantQa.answer}</div>}
+        <Card
+          inTransition={inTransition}
+          showAnswer={showAnswer}
+          onClick={() => toggleShowAnswer(!showAnswer)}
+        >
+          <CardContent>
+            <div>{currantQa.question}</div>
+          </CardContent>
+          <CardContent className="answer">
+            <div>{currantQa.answer}</div>
           </CardContent>
         </Card>
       </CardWrapper>
@@ -45,8 +54,8 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
         <TextButton
           disabled={currentPage === 1}
           onClick={() => {
-            toggleShowAnswer(false);
             changeCurrentPage(currentPage - 1);
+            toggleShowAnswer(false);
           }}
         >
           <ArrowBack />
@@ -57,8 +66,8 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
         <TextButton
           disabled={currentPage === qaList.length}
           onClick={() => {
-            toggleShowAnswer(false);
             changeCurrentPage(currentPage + 1);
+            toggleShowAnswer(false);
           }}
         >
           <ArrowFoward />
@@ -74,11 +83,14 @@ const CardWrapper = styled.div`
   margin: 0 auto;
 `;
 
-const Card = styled.div`
+const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
   position: relative;
   width: 100%;
   padding-bottom: 80%;
   margin: 16px 0;
+  transform-style: preserve-3d;
+  ${(props) => (props.inTransition ? "" : "transition: transform 0.4s;")}
+  ${(props) => (props.showAnswer ? "transform: rotateY(-180deg);" : "")}
 `;
 
 const CardContent = styled.div`
@@ -93,6 +105,10 @@ const CardContent = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+  backface-visibility: hidden;
+  &.answer {
+    transform: rotateY(-180deg);
+  }
 `;
 
 const Controller = styled.div`
