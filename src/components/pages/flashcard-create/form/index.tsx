@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { IFlashcardCreateForm, IFlashcardCreateFormErrors } from "../types";
 import { Box } from "../../../lib";
+import { Delete } from "@material-ui/icons";
 
 interface Props {
   onSubmit: (params: IFlashcardCreateForm) => void;
@@ -64,7 +65,7 @@ export const FlashcardCreateForm: FunctionComponent<Props> = (props) => {
                       disabled={values.qaList.length <= 1}
                       onClick={() => arrayHelpers.remove(index)}
                     >
-                      -
+                      <Delete fontSize="small" />
                     </button>
                   </Box>
                 ))}
