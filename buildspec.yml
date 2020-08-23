@@ -1,0 +1,16 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - npm i
+  pre_build:
+    commands:
+      # - npm test -- --watchAll=false
+  build:
+    commands:
+      - npm run build
+artifacts:
+  files:
+    - "**/*"
+  base-directory: build
