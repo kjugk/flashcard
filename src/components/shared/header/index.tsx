@@ -32,5 +32,7 @@ export const Header: FunctionComponent = () => {
 
 const StyledHeader = styled.header`
   background: ${variables.colors.white};
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
+  margin-bottom: 1px;
   padding: 16px;
 `;

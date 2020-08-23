@@ -3,8 +3,10 @@ import { getFlashcardDetail, deleteFlashcard } from "./actions";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
 import { useSystemContext } from "../../../global/provider/system.provider";
-import { Header, Footer } from "../../shared";
+import { Header } from "../../shared";
 import { QaViewer } from "./qa-viewer";
+import { Title } from "../../lib/title";
+import { Container } from "../../lib";
 
 /**
  * カードの詳細ページ。
@@ -52,22 +54,27 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   return (
     <div>
       <Header />
-      {isLoading && <div>Loading</div>}
-      {!isLoading && flashcard && (
-        <main>
-          <h1>{flashcard.name}</h1>
-          <button
-            type="button"
-            onClick={handleClickDeleteButton}
-            disabled={isDeleting}
-          >
-            delete
-          </button>
-          {flashcard.description && <p>{flashcard.description}</p>}
-          <QaViewer qaList={flashcard.qaList}></QaViewer>
-        </main>
-      )}
-      <Footer />
+      <Container tag="main" style={{ padding: "16px", background: "#FFF" }}>
+        {isLoading && <div>Loading</div>}
+
+        {!isLoading && flashcard && (
+          <>
+            <Title text={flashcard.name} tag="h1" size="xl" />
+
+            <button
+              type="button"
+              onClick={handleClickDeleteButton}
+              disabled={isDeleting}
+            >
+              delete
+            </button>
+
+            <QaViewer qaList={flashcard.qaList}></QaViewer>
+
+            {flashcard.description && <p>{flashcard.description}</p>}
+          </>
+        )}
+      </Container>
     </div>
   );
 };
