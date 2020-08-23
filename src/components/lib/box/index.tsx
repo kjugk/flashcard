@@ -17,6 +17,7 @@ export const Box: FC<Props> = ({ style, withShadow = true, children }) => {
 
 const StyledBox = styled.div<{ withShadow: boolean }>`
   background: ${variables.colors.white};
+  border: 0.5px solid ${variables.colors.lightGrey};
   padding: 16px;
   ${(props) =>
     props.withShadow ? "box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.2)" : ""}

@@ -27,6 +27,7 @@ export const FlashcardListPage: FunctionComponent = () => {
         {isLoading && <div>Loading...</div>}
         {!isLoading && (
           <>
+            <h1>暗記カード一覧</h1>
             {flashcards.length <= 0 && <EmptyState />}
             {flashcards.length >= 1 && <FlashcardList items={flashcards} />}
           </>

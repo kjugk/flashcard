@@ -19,6 +19,7 @@ class FlashcardRepository {
       return {
         name: flashcard.name,
         id: flashcard.id,
+        description: flashcard.description,
       };
     });
   }
