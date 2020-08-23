@@ -5,6 +5,7 @@ import { Header } from "../../shared";
 import { useListPageReducer } from "./store";
 import { Container } from "../../lib/";
 import { EmptyState } from "./empty-state";
+import { Title } from "../../lib/title";
 
 /**
  * カードリストページ。
@@ -27,6 +28,12 @@ export const FlashcardListPage: FunctionComponent = () => {
         {isLoading && <div>Loading...</div>}
         {!isLoading && (
           <>
+            <Title
+              text="カード一覧"
+              tag="h1"
+              size="xl"
+              style={{ marginBottom: "16px" }}
+            />
             {flashcards.length <= 0 && <EmptyState />}
             {flashcards.length >= 1 && <FlashcardList items={flashcards} />}
           </>
