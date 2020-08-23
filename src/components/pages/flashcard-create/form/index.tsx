@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from "react";
 import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { IFlashcardCreateForm, IFlashcardCreateFormErrors } from "../types";
+import { Box } from "../../../lib";
+import { Delete } from "@material-ui/icons";
 
 interface Props {
   onSubmit: (params: IFlashcardCreateForm) => void;
@@ -35,21 +37,27 @@ export const FlashcardCreateForm: FunctionComponent<Props> = (props) => {
     >
       {({ values }) => (
         <Form>
-          <div>
-            <Field type="text" name="name" placeholder="カードの名前" />
-            <ErrorMessage name="name" component="div" />
-          </div>
+          <Box>
+            <div>
+              <Field type="text" name="name" placeholder="カードの名前" />
+              <ErrorMessage name="name" component="div" />
+            </div>
 
-          <div>
-            <Field type="text" name="description" placeholder="カードの説明" />
-          </div>
+            <div>
+              <Field
+                type="text"
+                name="description"
+                placeholder="カードの説明"
+              />
+            </div>
+          </Box>
 
           <FieldArray
             name="qaList"
             render={(arrayHelpers) => (
               <div>
                 {values.qaList.map((qa, index) => (
-                  <div key={index}>
+                  <Box key={index} style={{ marginBottom: "16px" }}>
                     <Field name={`qaList.${index}.question`} type="text" />
                     <Field name={`qaList.${index}.answer`} type="text" />
                     <button
@@ -57,9 +65,9 @@ export const FlashcardCreateForm: FunctionComponent<Props> = (props) => {
                       disabled={values.qaList.length <= 1}
                       onClick={() => arrayHelpers.remove(index)}
                     >
-                      -
+                      <Delete fontSize="small" />
                     </button>
-                  </div>
+                  </Box>
                 ))}
                 <button
                   type="button"
