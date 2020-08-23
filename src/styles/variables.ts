@@ -1,3 +1,5 @@
+export type FontSize = "xl" | "l" | "m";
+
 interface CssVariables {
   colors: {
     white: string;
@@ -5,8 +7,7 @@ interface CssVariables {
     lightGrey: string;
   };
   fontSize: {
-    l: string;
-    m: string;
+    [key in FontSize]: string;
   };
 }
 
@@ -17,6 +18,7 @@ export const variables: CssVariables = {
     lightGrey: "#CFCECE",
   },
   fontSize: {
+    xl: "20px",
     l: "18px",
     m: "16px",
   },
