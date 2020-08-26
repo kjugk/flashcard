@@ -26,6 +26,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
     currentPage,
   ]);
 
+  // ページ変更直後は css の animation を off にする。
   useEffect(() => {
     setInTransition(true);
     setTimeout(() => {

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect } from "react";
 import { FlashcardList } from "./flashcard-list";
-import { getFlashcards } from "./actions";
+import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { Header } from "../../shared";
 import { useListPageReducer } from "./store";
 import { Container } from "../../lib/";
@@ -16,8 +16,21 @@ export const FlashcardListPage: FunctionComponent = () => {
   const [state, dispatch] = useListPageReducer();
   const { isLoading, flashcards } = state;
 
+  const getFlashcards = async () => {
+    dispatch({
+      type: "update-loading",
+      payload: true,
+    });
+
+    const list = await flashcardRepository.getAll();
+    dispatch({
+      type: "store-flashcards",
+      payload: list,
+    });
+  };
+
   useEffect(() => {
-    getFlashcards(dispatch);
+    getFlashcards();
     // eslint-disable-next-line
   }, []);
 

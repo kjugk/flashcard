@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { getFlashcardDetail, deleteFlashcard } from "./actions";
+import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
 import { useSystemContext } from "../../../global/provider/system.provider";
@@ -17,31 +17,48 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
-  const [
-    { isLoading, isDeleting, flashcard },
-    dispatch,
-  ] = useDetailPageReducer();
+  const [state, dispatch] = useDetailPageReducer();
   const [showModal, setShowModal] = useState(false);
 
-  // 詳細データを取得する
-  useEffect(() => {
-    const get = async () => {
-      try {
-        await getFlashcardDetail(id, dispatch);
-      } catch {
-        history.replace("/not-found");
-      }
-    };
-    get();
-  }, [id, dispatch, history]);
+  const getFlashcardDetail = async () => {
+    dispatch({
+      type: "update-loading",
+      payload: true,
+    });
 
-  const closeModal = () => setShowModal(false);
-  const handleClickDeleteButton = () => setShowModal(true);
-  const handleConfirmDelete = async () => {
     try {
-      await deleteFlashcard(id, dispatch, systemDispatch);
+      const item = await flashcardRepository.find(id);
+      dispatch({
+        type: "store-flashcard-detail",
+        payload: item,
+      });
+    } catch {
+      history.replace("/not-found");
+    } finally {
+      dispatch({
+        type: "update-loading",
+        payload: false,
+      });
+    }
+  };
+
+  const deleteFlashcard = async () => {
+    dispatch({
+      type: "update-deleting",
+      payload: true,
+    });
+
+    try {
+      await flashcardRepository.delete(id);
+      systemDispatch({
+        type: "set-system-message",
+        payload: {
+          messageType: "info",
+          message: "削除しました。",
+        },
+      });
       history.replace("/flashcard-list");
-    } catch (e) {
+    } catch {
       systemDispatch({
         type: "set-system-message",
         payload: {
@@ -49,8 +66,23 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           message: "削除できませんでした。",
         },
       });
+    } finally {
+      dispatch({
+        type: "update-deleting",
+        payload: false,
+      });
     }
   };
+
+  // 詳細データを取得する
+  useEffect(() => {
+    getFlashcardDetail();
+  }, []);
+
+  const closeModal = () => setShowModal(false);
+  const handleClickDeleteButton = () => setShowModal(true);
+  const handleConfirmDelete = deleteFlashcard;
+  const { isDeleting, isLoading, flashcard } = state;
 
   return (
     <div>
@@ -76,6 +108,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         )}
       </Container>
 
+      {/* TODO SubmitModal に置き換える */}
       <Modal show={showModal} onClose={closeModal}>
         <div>
           <Title text="削除しますがよろしいですか?" tag="h2" size="xl" />

@@ -14,7 +14,9 @@ export const Modal: FC<Props> = ({ show, onClose, children }) => {
     <>
       <BackDrop />
       <ModalContainer onClick={onClose}>
-        <ModalContent>{children}</ModalContent>
+        <ModalContent onClick={(e) => e.stopPropagation()}>
+          {children}
+        </ModalContent>
       </ModalContainer>
     </>
   );
