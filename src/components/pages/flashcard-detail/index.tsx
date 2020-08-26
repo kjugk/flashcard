@@ -8,6 +8,7 @@ import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";
 import { Container, Button } from "../../lib";
 import { Modal } from "../../lib/modal";
+import { variables } from "../../../styles/variables";
 
 /**
  * カードの詳細ページ。
@@ -19,13 +20,10 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const { systemDispatch } = useSystemContext();
   const [state, dispatch] = useDetailPageReducer();
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
 
   const getFlashcardDetail = async () => {
-    dispatch({
-      type: "update-loading",
-      payload: true,
-    });
-
     try {
       const item = await flashcardRepository.find(id);
       dispatch({
@@ -35,18 +33,12 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     } catch {
       history.replace("/not-found");
     } finally {
-      dispatch({
-        type: "update-loading",
-        payload: false,
-      });
+      setLoading(false);
     }
   };
 
   const deleteFlashcard = async () => {
-    dispatch({
-      type: "update-deleting",
-      payload: true,
-    });
+    setDeleting(true);
 
     try {
       await flashcardRepository.delete(id);
@@ -67,10 +59,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         },
       });
     } finally {
-      dispatch({
-        type: "update-deleting",
-        payload: false,
-      });
+      setDeleting(false);
     }
   };
 
@@ -82,21 +71,24 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const closeModal = () => setShowModal(false);
   const handleClickDeleteButton = () => setShowModal(true);
   const handleConfirmDelete = deleteFlashcard;
-  const { isDeleting, isLoading, flashcard } = state;
+  const { flashcard } = state;
 
   return (
     <div>
       <Header />
-      <Container tag="main" style={{ padding: "16px", background: "#FFF" }}>
-        {isLoading && <div>Loading</div>}
-        {!isLoading && flashcard && (
+      <Container
+        tag="main"
+        style={{ padding: "16px", background: variables.colors.white }}
+      >
+        {loading && <div>Loading</div>}
+        {!loading && flashcard && (
           <>
             <Title text={flashcard.name} tag="h1" size="xl" />
 
             <button
               type="button"
               onClick={handleClickDeleteButton}
-              disabled={isDeleting}
+              disabled={deleting}
             >
               delete
             </button>

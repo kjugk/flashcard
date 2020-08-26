@@ -2,21 +2,17 @@ import { FlashcardDetail } from "../../../../types/flashcard-detail";
 import { useReducer } from "react";
 
 // Actions
-export type FlashcardDetailPageAction =
-  | { type: "update-loading"; payload: boolean }
-  | { type: "update-deleting"; payload: boolean }
-  | { type: "store-flashcard-detail"; payload: FlashcardDetail };
+export type FlashcardDetailPageAction = {
+  type: "store-flashcard-detail";
+  payload: FlashcardDetail;
+};
 
 // State
 interface FlashcardDetailPageState {
-  isLoading: boolean;
-  isDeleting: boolean;
   flashcard?: FlashcardDetail;
 }
 
 export const initialState: FlashcardDetailPageState = {
-  isLoading: false,
-  isDeleting: false,
   flashcard: undefined,
 };
 
@@ -26,23 +22,13 @@ export function reducer(
   action: FlashcardDetailPageAction
 ) {
   switch (action.type) {
-    case "update-loading":
-      return {
-        ...state,
-        isLoading: action.payload,
-      };
-    case "update-deleting":
-      return {
-        ...state,
-        isDeleting: action.payload,
-      };
-
     case "store-flashcard-detail":
       return {
         ...state,
-        isLoading: false,
         flashcard: action.payload,
       };
+    default:
+      return state;
   }
 }
 
