@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { getFlashcardDetail, deleteFlashcard } from "./actions";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
@@ -6,7 +6,8 @@ import { useSystemContext } from "../../../global/provider/system.provider";
 import { Header } from "../../shared";
 import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";
-import { Container } from "../../lib";
+import { Container, Button } from "../../lib";
+import { Modal } from "../../lib/modal";
 
 /**
  * カードの詳細ページ。
@@ -14,12 +15,13 @@ import { Container } from "../../lib";
  */
 export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
-  const { systemDispatch } = useSystemContext();
   const history = useHistory();
+  const { systemDispatch } = useSystemContext();
   const [
     { isLoading, isDeleting, flashcard },
     dispatch,
   ] = useDetailPageReducer();
+  const [showModal, setShowModal] = useState(false);
 
   // 詳細データを取得する
   useEffect(() => {
@@ -33,21 +35,20 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     get();
   }, [id, dispatch, history]);
 
-  const handleClickDeleteButton = async () => {
-    // TODO modal で聞くようにする。
-    if (window.confirm("削除しますか?")) {
-      try {
-        await deleteFlashcard(id, dispatch, systemDispatch);
-        history.replace("/flashcard-list");
-      } catch (e) {
-        systemDispatch({
-          type: "set-system-message",
-          payload: {
-            messageType: "error",
-            message: "削除できませんでした。",
-          },
-        });
-      }
+  const closeModal = () => setShowModal(false);
+  const handleClickDeleteButton = () => setShowModal(true);
+  const handleConfirmDelete = async () => {
+    try {
+      await deleteFlashcard(id, dispatch, systemDispatch);
+      history.replace("/flashcard-list");
+    } catch (e) {
+      systemDispatch({
+        type: "set-system-message",
+        payload: {
+          messageType: "error",
+          message: "削除できませんでした。",
+        },
+      });
     }
   };
 
@@ -56,7 +57,6 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       <Header />
       <Container tag="main" style={{ padding: "16px", background: "#FFF" }}>
         {isLoading && <div>Loading</div>}
-
         {!isLoading && flashcard && (
           <>
             <Title text={flashcard.name} tag="h1" size="xl" />
@@ -75,6 +75,17 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           </>
         )}
       </Container>
+
+      <Modal show={showModal} onClose={closeModal}>
+        <div>
+          <Title text="削除しますがよろしいですか?" tag="h2" size="xl" />
+          <div>一度削除したものは復元出来ません</div>
+          <div>
+            <Button label="キャンセル" onClick={closeModal} />
+            <Button label="削除" onClick={handleConfirmDelete} />
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

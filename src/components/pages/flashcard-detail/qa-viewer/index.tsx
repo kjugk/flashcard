@@ -17,9 +17,9 @@ interface Props {
  */
 export const QaViewer: FunctionComponent<Props> = (props) => {
   const { qaList } = props;
-  const [currentPage, changeCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [inTransition, setInTransition] = useState(false);
-  const [showAnswer, toggleShowAnswer] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   const currantQa = useMemo(() => qaList[currentPage - 1], [
     qaList,
@@ -30,7 +30,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
     setInTransition(true);
     setTimeout(() => {
       setInTransition(false);
-    }, 400);
+    }, 100);
   }, [currentPage]);
 
   return (
@@ -39,7 +39,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
         <Card
           inTransition={inTransition}
           showAnswer={showAnswer}
-          onClick={() => toggleShowAnswer(!showAnswer)}
+          onClick={() => setShowAnswer(!showAnswer)}
         >
           <CardContent>
             <div>{currantQa.question}</div>
@@ -54,8 +54,8 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
         <TextButton
           disabled={currentPage === 1}
           onClick={() => {
-            changeCurrentPage(currentPage - 1);
-            toggleShowAnswer(false);
+            setCurrentPage(currentPage - 1);
+            setShowAnswer(false);
           }}
         >
           <ArrowBack />
@@ -66,8 +66,8 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
         <TextButton
           disabled={currentPage === qaList.length}
           onClick={() => {
-            changeCurrentPage(currentPage + 1);
-            toggleShowAnswer(false);
+            setCurrentPage(currentPage + 1);
+            setShowAnswer(false);
           }}
         >
           <ArrowFoward />
@@ -96,13 +96,14 @@ const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
 const CardContent = styled.div`
   background: ${variables.colors.white};
   border: 0.5px solid ${variables.colors.lightGrey};
-  box-sizing: border-box;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: ${variables.fontSize.xxl};
   position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
