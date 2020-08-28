@@ -1,19 +1,28 @@
-import { FlashcardDetail } from "../../../../types/flashcard-detail";
 import { useReducer } from "react";
 
-// Actions
-export type FlashcardDetailPageAction = {
-  type: "store-flashcard-detail";
-  payload: FlashcardDetail;
-};
-
 // State
+export interface FlashcardDetail {
+  id: string;
+  name: string;
+  description: string;
+  qaList: {
+    question: string;
+    answer: string;
+  }[];
+}
+
 interface FlashcardDetailPageState {
   flashcard?: FlashcardDetail;
 }
 
 export const initialState: FlashcardDetailPageState = {
   flashcard: undefined,
+};
+
+// Actions
+export type FlashcardDetailPageAction = {
+  type: "store-flashcard-detail";
+  payload: FlashcardDetail;
 };
 
 // Reducer

@@ -1,5 +1,4 @@
 import { useReducer } from "react";
-import { FlashcardListItem } from "../../../../types/flashcard-list-item";
 
 // actions
 export type FlashcardListPageAction = {
@@ -8,6 +7,12 @@ export type FlashcardListPageAction = {
 };
 
 // State types
+export interface FlashcardListItem {
+  id: string;
+  name: string;
+  description: string;
+}
+
 interface FlashcardListPageState {
   flashcards: FlashcardListItem[];
 }
