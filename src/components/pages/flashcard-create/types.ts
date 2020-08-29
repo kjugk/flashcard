@@ -1,4 +1,4 @@
-export interface IFlashcardCreateForm {
+export interface FlashcardCreateFormValues {
   name: string;
   description: string;
   qaList: {

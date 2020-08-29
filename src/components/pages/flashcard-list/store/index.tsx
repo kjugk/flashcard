@@ -1,21 +1,23 @@
 import { useReducer } from "react";
-import { FlashcardListItem } from "../../../../types/flashcard-list-item";
 
 // actions
-export type FlashcardListPageAction =
-  | { type: "update-loading"; payload: boolean }
-  | { type: "store-flashcards"; payload: FlashcardListItem[] };
+export type FlashcardListPageAction = {
+  type: "store-flashcards";
+  payload: FlashcardListItem[];
+};
 
 // State types
+export interface FlashcardListItem {
+  id: string;
+  name: string;
+  description: string;
+}
+
 interface FlashcardListPageState {
-  isDirty: boolean;
-  isLoading: boolean;
   flashcards: FlashcardListItem[];
 }
 
 const initialState: FlashcardListPageState = {
-  isLoading: false,
-  isDirty: true,
   flashcards: [],
 };
 
@@ -25,17 +27,10 @@ function reducer(
   action: FlashcardListPageAction
 ): FlashcardListPageState {
   switch (action.type) {
-    case "update-loading":
-      return {
-        ...state,
-        isLoading: action.payload,
-      };
     case "store-flashcards":
       return {
         ...state,
         flashcards: action.payload,
-        isLoading: false,
-        isDirty: false,
       };
     default:
       return state;

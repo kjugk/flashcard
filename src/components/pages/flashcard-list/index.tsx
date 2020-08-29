@@ -1,6 +1,6 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { FlashcardList } from "./flashcard-list";
-import { getFlashcards } from "./actions";
+import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { Header } from "../../shared";
 import { useListPageReducer } from "./store";
 import { Container } from "../../lib/";
@@ -13,11 +13,23 @@ import { Title } from "../../lib/title";
  * container と presentational 的な分け方はしない
  */
 export const FlashcardListPage: FunctionComponent = () => {
-  const [state, dispatch] = useListPageReducer();
-  const { isLoading, flashcards } = state;
+  const [{ flashcards }, dispatch] = useListPageReducer();
+  const [loading, setLoading] = useState(true);
+
+  const getFlashcards = async () => {
+    try {
+      const list = await flashcardRepository.getAll();
+      dispatch({
+        type: "store-flashcards",
+        payload: list,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    getFlashcards(dispatch);
+    getFlashcards();
     // eslint-disable-next-line
   }, []);
 
@@ -25,8 +37,8 @@ export const FlashcardListPage: FunctionComponent = () => {
     <div>
       <Header />
       <Container tag="main" style={{ padding: "16px" }}>
-        {isLoading && <div>Loading...</div>}
-        {!isLoading && (
+        {loading && <div>Loading...</div>}
+        {!loading && (
           <>
             <Title
               text="カード一覧"

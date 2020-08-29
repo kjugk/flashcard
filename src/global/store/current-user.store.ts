@@ -40,7 +40,6 @@ function reducer(
     case "sign-out":
       return {
         ...state,
-        initialized: true,
         name: "",
         picture: "",
       };

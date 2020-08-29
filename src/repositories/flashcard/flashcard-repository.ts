@@ -1,5 +1,5 @@
-import { FlashcardListItem } from "../../types/flashcard-list-item";
-import { FlashcardDetail } from "../../types/flashcard-detail";
+import { FlashcardListItem } from "../../components/pages/flashcard-list/store";
+import { FlashcardDetail } from "../../components/pages/flashcard-detail/store";
 import axios from "axios";
 import { GetAllFlashcardResponse } from "./get-all-flashcard-response";
 import { GetFlashcardResponse } from "./get-flashcard-response";
@@ -59,7 +59,6 @@ class FlashcardRepository {
     return flashcard.id;
   }
 
-  // 他の repository が出てきたら共通化する
   private getHttpClient = async () => {
     const token = await getCognitoIdToken();
     return axios.create({

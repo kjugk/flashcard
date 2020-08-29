@@ -1,12 +1,14 @@
-import React, { FunctionComponent, useEffect } from "react";
-import { getFlashcardDetail, deleteFlashcard } from "./actions";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
 import { useSystemContext } from "../../../global/provider/system.provider";
 import { Header } from "../../shared";
 import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";
-import { Container } from "../../lib";
+import { Container, Button } from "../../lib";
+import { Modal } from "../../lib/modal";
+import { variables } from "../../../styles/variables";
 
 /**
  * カードの詳細ページ。
@@ -14,57 +16,79 @@ import { Container } from "../../lib";
  */
 export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
-  const { systemDispatch } = useSystemContext();
   const history = useHistory();
-  const [
-    { isLoading, isDeleting, flashcard },
-    dispatch,
-  ] = useDetailPageReducer();
+  const { systemDispatch } = useSystemContext();
+  const [state, dispatch] = useDetailPageReducer();
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [deleting, setDeleting] = useState(false);
+
+  const getFlashcardDetail = async () => {
+    try {
+      const item = await flashcardRepository.find(id);
+      dispatch({
+        type: "store-flashcard-detail",
+        payload: item,
+      });
+    } catch {
+      history.replace("/not-found");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteFlashcard = async () => {
+    setDeleting(true);
+
+    try {
+      await flashcardRepository.delete(id);
+      systemDispatch({
+        type: "set-system-message",
+        payload: {
+          messageType: "info",
+          message: "削除しました。",
+        },
+      });
+      history.replace("/flashcard-list");
+    } catch {
+      systemDispatch({
+        type: "set-system-message",
+        payload: {
+          messageType: "error",
+          message: "削除できませんでした。",
+        },
+      });
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   // 詳細データを取得する
   useEffect(() => {
-    const get = async () => {
-      try {
-        await getFlashcardDetail(id, dispatch);
-      } catch {
-        history.replace("/not-found");
-      }
-    };
-    get();
-  }, [id, dispatch, history]);
+    getFlashcardDetail();
+  }, []);
 
-  const handleClickDeleteButton = async () => {
-    // TODO modal で聞くようにする。
-    if (window.confirm("削除しますか?")) {
-      try {
-        await deleteFlashcard(id, dispatch, systemDispatch);
-        history.replace("/flashcard-list");
-      } catch (e) {
-        systemDispatch({
-          type: "set-system-message",
-          payload: {
-            messageType: "error",
-            message: "削除できませんでした。",
-          },
-        });
-      }
-    }
-  };
+  const closeModal = () => setShowModal(false);
+  const handleClickDeleteButton = () => setShowModal(true);
+  const handleConfirmDelete = deleteFlashcard;
+  const { flashcard } = state;
 
   return (
     <div>
       <Header />
-      <Container tag="main" style={{ padding: "16px", background: "#FFF" }}>
-        {isLoading && <div>Loading</div>}
-
-        {!isLoading && flashcard && (
+      <Container
+        tag="main"
+        style={{ padding: "16px", background: variables.colors.white }}
+      >
+        {loading && <div>Loading</div>}
+        {!loading && flashcard && (
           <>
             <Title text={flashcard.name} tag="h1" size="xl" />
 
             <button
               type="button"
               onClick={handleClickDeleteButton}
-              disabled={isDeleting}
+              disabled={deleting}
             >
               delete
             </button>
@@ -75,6 +99,18 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           </>
         )}
       </Container>
+
+      {/* TODO SubmitModal に置き換える */}
+      <Modal show={showModal} onClose={closeModal}>
+        <div>
+          <Title text="削除しますがよろしいですか?" tag="h2" size="xl" />
+          <div>一度削除したものは復元出来ません</div>
+          <div>
+            <Button label="キャンセル" onClick={closeModal} />
+            <Button label="削除" onClick={handleConfirmDelete} />
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

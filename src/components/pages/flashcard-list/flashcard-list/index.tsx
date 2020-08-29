@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FlashcardListItem } from "../../../../types/flashcard-list-item";
+import { FlashcardListItem } from "../store";
 import { Box } from "../../../lib/box";
 import { variables } from "../../../../styles/variables";
 
