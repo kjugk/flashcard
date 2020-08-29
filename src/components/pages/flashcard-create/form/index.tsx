@@ -1,89 +1,55 @@
-import React, { FunctionComponent } from "react";
-import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-import { IFlashcardCreateForm, IFlashcardCreateFormErrors } from "../types";
-import { Box } from "../../../lib";
-import { Delete } from "@material-ui/icons";
+import React, { FC, useEffect } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
+import { FlashcardCreateFormValues } from "../types";
 
 interface Props {
-  onSubmit: (params: IFlashcardCreateForm) => void;
+  onSubmit: (values: FlashcardCreateFormValues) => void;
 }
 
-export const FlashcardCreateForm: FunctionComponent<Props> = (props) => {
-  const initialValues: IFlashcardCreateForm = {
-    name: "",
-    description: "",
-    qaList: [
-      {
-        question: "",
-        answer: "",
-      },
-    ],
+export const FlashcardCreateForm: FC = () => {
+  const { register, control, handleSubmit, errors } = useForm<
+    FlashcardCreateFormValues
+  >();
+  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
+    {
+      control,
+      name: "qaList",
+    }
+  );
+  const onSubmit = handleSubmit((data) => console.log(data));
+
+  const appendQuestion = () => {
+    append({ question: "", answer: "" });
   };
 
+  const removeQuestion = (index: number) => {
+    if (fields.length <= 1) return;
+    remove(index);
+  };
+
+  useEffect(() => {
+    appendQuestion();
+  }, []);
+
   return (
-    <Formik
-      initialValues={initialValues}
-      validate={(values) => {
-        const errors: IFlashcardCreateFormErrors = {};
-        if (!values.name) {
-          errors.name = "必須項目です";
-        }
-        // TODO QA が一つ以上存在する
-        return errors;
-      }}
-      onSubmit={(values) => {
-        props.onSubmit(values);
-      }}
-    >
-      {({ values }) => (
-        <Form>
-          <Box>
-            <div>
-              <Field type="text" name="name" placeholder="カードの名前" />
-              <ErrorMessage name="name" component="div" />
-            </div>
+    <form onSubmit={onSubmit}>
+      <textarea name="name" ref={register({ required: true })} />
+      <input name="description" ref={register({ required: true })} />
 
-            <div>
-              <Field
-                type="text"
-                name="description"
-                placeholder="カードの説明"
-              />
-            </div>
-          </Box>
+      {fields.map((field, index) => (
+        <div key={field.id}>
+          <input name={`qaList[${index}].question`} ref={register()} />
+          <input name={`qaList[${index}].answer`} ref={register()} />
+          <button type="button" onClick={() => removeQuestion(index)}>
+            remove
+          </button>
+        </div>
+      ))}
 
-          <FieldArray
-            name="qaList"
-            render={(arrayHelpers) => (
-              <div>
-                {values.qaList.map((qa, index) => (
-                  <Box key={index} style={{ marginBottom: "16px" }}>
-                    <Field name={`qaList.${index}.question`} type="text" />
-                    <Field name={`qaList.${index}.answer`} type="text" />
-                    <button
-                      type="button"
-                      disabled={values.qaList.length <= 1}
-                      onClick={() => arrayHelpers.remove(index)}
-                    >
-                      <Delete fontSize="small" />
-                    </button>
-                  </Box>
-                ))}
-                <button
-                  type="button"
-                  disabled={values.qaList.length >= 5}
-                  onClick={() => {
-                    arrayHelpers.push({ question: "", answer: "" });
-                  }}
-                >
-                  add
-                </button>
-              </div>
-            )}
-          />
-          <button type="submit">submit</button>
-        </Form>
-      )}
-    </Formik>
+      <button type="submit">submit</button>
+      <button type="button" onClick={appendQuestion}>
+        add
+      </button>
+    </form>
   );
 };
