@@ -1,4 +1,4 @@
-export type FontSize = "xxl" | "xl" | "l" | "m";
+export type FontSize = "xxl" | "xl" | "l" | "m" | "s" | "xs";
 
 interface CssVariables {
   colors: {
@@ -22,5 +22,7 @@ export const variables: CssVariables = {
     xl: "20px",
     l: "18px",
     m: "16px",
+    s: "14px",
+    xs: "12px",
   },
 };

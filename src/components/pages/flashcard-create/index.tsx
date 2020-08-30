@@ -21,7 +21,7 @@ export const FlashcardCreatePage: FunctionComponent = () => {
     <div>
       <Header />
       <Container>
-        <FlashcardCreateForm />
+        <FlashcardCreateForm onSubmit={handleSubmitForm} />
       </Container>
     </div>
   );
