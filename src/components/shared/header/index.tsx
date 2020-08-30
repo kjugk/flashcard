@@ -23,7 +23,9 @@ export const Header: FunctionComponent = () => {
         <nav>
           <Link to="/flashcard-list">Flashcard</Link>
           <Link to="/flashcard-create">新規作成</Link>
-          {isSignedIn && <Button label="ログアウト" onClick={handleSignOut} />}
+          {isSignedIn && (
+            <Button label="ログアウト" size="xs" onClick={handleSignOut} />
+          )}
         </nav>
       </Container>
     </StyledHeader>

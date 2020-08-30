@@ -8,6 +8,7 @@ import {
 import { FlashcardCreateFormValues } from "../types";
 import { Textarea } from "../../../lib/textarea";
 import { Box } from "../../../lib/box";
+import { Button } from "../../../lib/button";
 import { Title } from "../../../lib/title";
 import Delete from "@material-ui/icons/Delete";
 
@@ -141,11 +142,18 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit }) => {
         ))}
       </div>
 
-      <button type="button" onClick={appendQuestion}>
-        カードを追加
-      </button>
+      <div style={{ textAlign: "center", marginBottom: "24px" }}>
+        <Button
+          label="カードを追加"
+          outlined
+          size="xs"
+          onClick={appendQuestion}
+        />
+      </div>
 
-      <button type="submit">作成</button>
+      <div style={{ textAlign: "center", marginBottom: "32px" }}>
+        <Button type="submit" label="作成" size="xl" />
+      </div>
     </form>
   );
 };

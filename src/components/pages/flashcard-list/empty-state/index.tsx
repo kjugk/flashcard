@@ -7,14 +7,18 @@ export const EmptyState: FC = () => {
   const history = useHistory();
 
   return (
-    <Box>
+    <Box style={{ textAlign: "center" }}>
       <Title
         text="最初の暗記カードを作成しよう"
         tag="h2"
-        size="l"
-        style={{ marginBottom: "16px" }}
+        size="xl"
+        style={{ marginBottom: "24px" }}
       />
-      <Button label="作成" onClick={() => history.push("/flashcard-create")} />
+      <Button
+        label="カード作成"
+        size="xs"
+        onClick={() => history.push("/flashcard-create")}
+      />
     </Box>
   );
 };
