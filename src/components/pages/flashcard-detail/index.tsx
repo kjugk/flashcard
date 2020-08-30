@@ -96,6 +96,17 @@ export const FlashcardDetailPage: FunctionComponent = () => {
             <QaViewer qaList={flashcard.qaList}></QaViewer>
 
             {flashcard.description && <p>{flashcard.description}</p>}
+
+            <div style={{ textAlign: "center", margin: "24px 0" }}>
+              <Button
+                label="カード追加・編集"
+                size="xl"
+                outlined
+                onClick={() => {
+                  console.log("edit");
+                }}
+              />
+            </div>
           </>
         )}
       </Container>
@@ -106,7 +117,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           <Title text="削除しますがよろしいですか?" tag="h2" size="xl" />
           <div>一度削除したものは復元出来ません</div>
           <div>
-            <Button label="キャンセル" onClick={closeModal} />
+            <Button label="キャンセル" outlined onClick={closeModal} />
             <Button label="削除" onClick={handleConfirmDelete} />
           </div>
         </div>
