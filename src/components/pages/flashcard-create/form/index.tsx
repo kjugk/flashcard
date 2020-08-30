@@ -73,6 +73,7 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit }) => {
             <Textarea
               value={value}
               onChange={onChange}
+              rows={3}
               label="説明"
               placeholder="説明を入力してください"
               errorMessage={getErrorMessage(errors.description)}
@@ -103,6 +104,7 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit }) => {
               render={({ value, onChange }) => (
                 <Textarea
                   value={value}
+                  rows={3}
                   onChange={onChange}
                   label="問題"
                   errorMessage={getErrorMessage(
@@ -120,6 +122,7 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit }) => {
               render={({ value, onChange }) => (
                 <Textarea
                   value={value}
+                  rows={3}
                   onChange={onChange}
                   label="答え"
                   errorMessage={getErrorMessage(

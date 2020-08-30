@@ -31,7 +31,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
     setInTransition(true);
     setTimeout(() => {
       setInTransition(false);
-    }, 100);
+    }, 10);
   }, [currentPage]);
 
   return (
@@ -43,9 +43,12 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
           onClick={() => setShowAnswer(!showAnswer)}
         >
           <CardContent>
+            {!showAnswer && <CardDescription>問題</CardDescription>}
             <div>{currantQa.question}</div>
           </CardContent>
+
           <CardContent className="answer">
+            {showAnswer && <CardDescription>答え</CardDescription>}
             <div>{currantQa.answer}</div>
           </CardContent>
         </Card>
@@ -84,6 +87,16 @@ const CardWrapper = styled.div`
   margin: 0 auto;
 `;
 
+const CardDescription = styled.span`
+  display: inline-block;
+  position: absolute;
+  color: #858a8d;
+  left: 8px;
+  top: 8px;
+  font-size: 12px;
+  font-weight: bold;
+`;
+
 const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
   position: relative;
   width: 100%;
@@ -102,6 +115,7 @@ const CardContent = styled.div`
   align-items: center;
   justify-content: center;
   font-size: ${variables.fontSize.xxl};
+  font-weight: bold;
   position: absolute;
   top: 0;
   left: 0;
