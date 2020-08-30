@@ -61,7 +61,7 @@ const StyledTextarea = styled.div<{ hasError: boolean }>`
   textarea {
     resize: none;
     border: 1px solid #676d71;
-    font-size: ${variables.fontSize.s};
+    font-size: ${variables.fontSize.m};
     color: inherit;
     width: 100%;
     padding: 12px 8px;

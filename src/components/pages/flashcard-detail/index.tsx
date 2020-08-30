@@ -51,6 +51,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       });
       history.replace("/flashcard-list");
     } catch {
+      // エラーの種類で処理を分岐させる
       systemDispatch({
         type: "set-system-message",
         payload: {
