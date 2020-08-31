@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
+import styled from "styled-components";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
@@ -116,14 +117,26 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       {/* TODO SubmitModal に置き換える */}
       <Modal show={showModal} onClose={closeModal}>
         <div>
-          <Title text="削除しますがよろしいですか?" tag="h2" size="xl" />
+          <Title
+            text="削除しますがよろしいですか?"
+            tag="h2"
+            size="xl"
+            style={{ marginBottom: "16px" }}
+          />
           <div>一度削除したものは復元出来ません</div>
-          <div>
+          <ModalController>
             <Button label="キャンセル" outlined onClick={closeModal} />
             <Button label="削除" onClick={handleConfirmDelete} />
-          </div>
+          </ModalController>
         </div>
       </Modal>
     </div>
   );
 };
+
+const ModalController = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 16px;
+  margin-top: 26px;
+`;

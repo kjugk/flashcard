@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, CSSProperties } from "react";
 import styled from "styled-components";
 import { variables, FontSize } from "../../../styles/variables";
 
@@ -9,6 +9,7 @@ interface Props {
   size?: FontSize;
   type?: ButtonType;
   outlined?: boolean;
+  style?: CSSProperties;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -17,10 +18,17 @@ export const Button: FunctionComponent<Props> = ({
   size = "m",
   type = "button",
   outlined = false,
+  style,
   onClick,
 }) => {
   return (
-    <StyledButton size={size} type={type} outlined={outlined} onClick={onClick}>
+    <StyledButton
+      style={style}
+      size={size}
+      type={type}
+      outlined={outlined}
+      onClick={onClick}
+    >
       {label}
     </StyledButton>
   );
@@ -32,6 +40,7 @@ const StyledButton = styled.button<{ size: FontSize; outlined: boolean }>`
   font-size: ${(props) => variables.fontSize[props.size]};
   border-radius: 38px;
   font-weight: bold;
+  text-align: center;
   padding: 0.8rem 1.6rem;
   line-height: 1.5;
   border: 1px solid #333;
