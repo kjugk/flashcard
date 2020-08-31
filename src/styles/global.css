@@ -502,10 +502,16 @@ template {
  * Custom Styles.
  */
 html {
-  font-family: Meiryo, system-ui, -apple-system, sans-serif;
-  font-size: 16px;
+  font-size: 14px;
+  font-family: "Helvetica Neue",
+    Arial,
+    "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans",
+    Meiryo,
+    sans-serif;
+  line-height: 1.3125;
 }
 
 body {
-  background: #f4f4fb;
+  background: #E5E5E5;
 }

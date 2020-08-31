@@ -19,7 +19,7 @@ export const Header: FunctionComponent = () => {
 
   return (
     <StyledHeader>
-      <Container>
+      <Container style={{ padding: "0 16px" }}>
         <nav>
           <Link to="/flashcard-list">Flashcard</Link>
           <Link to="/flashcard-create">新規作成</Link>
@@ -36,5 +36,5 @@ const StyledHeader = styled.header`
   background: ${variables.colors.white};
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
   margin-bottom: 3px;
-  padding: 16px;
+  padding: 16px 0;
 `;
