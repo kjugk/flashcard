@@ -28,6 +28,6 @@ export const TextButton: FunctionComponent<Props> = ({
 };
 
 const StyledButton = styled.button<{ size: FontSize; disabled: boolean }>`
-  font-size: ${(props) => variables.fontSize[props.size]}
-    ${(props) => (props.disabled ? "color: grey" : "")};
+  font-size: ${(props) => variables.fontSize[props.size]};
+  ${(props) => (props.disabled ? `color: ${variables.colors.lightGrey}` : "")};
 `;

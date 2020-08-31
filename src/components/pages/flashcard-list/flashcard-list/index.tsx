@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FlashcardListItem } from "../store";
 import { Box } from "../../../lib/box";
-import { variables } from "../../../../styles/variables";
+import { Title } from "../../../lib/title";
 
 interface Props {
   items: FlashcardListItem[];
@@ -11,26 +11,36 @@ interface Props {
 
 export const FlashcardList: FunctionComponent<Props> = (props) => {
   return (
-    <ul>
+    <List>
       {props.items.map((item) => (
         <ListItem key={item.id}>
           <Link to={`/flashcard-detail/${item.id}`}>
             <Box>
-              <div className="name">{item.name}</div>
+              <Title
+                tag="div"
+                size="l"
+                text={item.name}
+                style={{ marginBottom: "16px" }}
+              />
               <div>{item.description}</div>
             </Box>
           </Link>
         </ListItem>
       ))}
-    </ul>
+    </List>
   );
 };
 
+const List = styled.ul`
+  display: grid;
+  grid-template-columns: 1fr;
+
+  @media only screen and (min-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 12px;
+  }
+`;
+
 const ListItem = styled.li`
   margin-bottom: 16px;
-  .name {
-    font-weight: bold;
-    font-size: ${variables.fontSize.l};
-    margin-bottom: 16px;
-  }
 `;

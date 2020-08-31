@@ -26,12 +26,17 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
     currentPage,
   ]);
 
+  const changeCurrentPage = (nextPage: number) => {
+    setCurrentPage(nextPage);
+    setShowAnswer(false);
+  };
+
   // ページ変更直後は css の animation を off にする。
   useEffect(() => {
     setInTransition(true);
     setTimeout(() => {
       setInTransition(false);
-    }, 100);
+    }, 150);
   }, [currentPage]);
 
   return (
@@ -43,21 +48,17 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
           onClick={() => setShowAnswer(!showAnswer)}
         >
           <CardContent>
-            {!inTransition && (
-              <>
-                {!showAnswer && <CardDescription>問題</CardDescription>}
-                <pre>{currantQa.question}</pre>
-              </>
-            )}
+            <>
+              {!showAnswer && <CardDescription>問題</CardDescription>}
+              <pre>{currantQa.question}</pre>
+            </>
           </CardContent>
 
           <CardContent className="answer">
-            {!inTransition && (
-              <>
-                {showAnswer && <CardDescription>答え</CardDescription>}
-                <pre>{currantQa.answer}</pre>
-              </>
-            )}
+            <>
+              {showAnswer && <CardDescription>答え</CardDescription>}
+              <pre>{currantQa.answer}</pre>
+            </>
           </CardContent>
         </Card>
       </CardWrapper>
@@ -65,10 +66,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
       <Controller>
         <TextButton
           disabled={currentPage === 1}
-          onClick={() => {
-            setCurrentPage(currentPage - 1);
-            setShowAnswer(false);
-          }}
+          onClick={() => changeCurrentPage(currentPage - 1)}
         >
           <ArrowBack />
         </TextButton>
@@ -77,10 +75,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
 
         <TextButton
           disabled={currentPage === qaList.length}
-          onClick={() => {
-            setCurrentPage(currentPage + 1);
-            setShowAnswer(false);
-          }}
+          onClick={() => changeCurrentPage(currentPage + 1)}
         >
           <ArrowFoward />
         </TextButton>
@@ -145,6 +140,7 @@ const Controller = styled.div`
   align-items: center;
   display: flex;
   justify-content: center;
+  font-size: 18px;
   margin-bottom: 24px;
   .pagenation {
     margin: 0 16px;

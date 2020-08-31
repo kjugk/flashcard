@@ -21,8 +21,8 @@ export const variables: CssVariables = {
     xxl: "24px",
     xl: "20px",
     l: "18px",
-    m: "16px",
-    s: "14px",
-    xs: "12px",
+    m: "14px",
+    s: "12px",
+    xs: "10px",
   },
 };

@@ -6,7 +6,8 @@ import { useSystemContext } from "../../../global/provider/system.provider";
 import { Header } from "../../shared";
 import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";
-import { Container, Button } from "../../lib";
+import { Button } from "../../lib/button";
+import { Container } from "../../lib/container";
 import { Modal } from "../../lib/modal";
 import { variables } from "../../../styles/variables";
 
