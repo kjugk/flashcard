@@ -6,6 +6,7 @@ import { useListPageReducer } from "./store";
 import { Container } from "../../lib/";
 import { EmptyState } from "./empty-state";
 import { Title } from "../../lib/title";
+import { FlashcardListPlaceholder } from "./placeholder";
 
 /**
  * カードリストページ。
@@ -37,15 +38,15 @@ export const FlashcardListPage: FunctionComponent = () => {
     <div>
       <Header />
       <Container tag="main" style={{ padding: "16px" }}>
-        {loading && <div>Loading...</div>}
+        <Title
+          text="カード一覧"
+          tag="h1"
+          size="xl"
+          style={{ marginBottom: "16px" }}
+        />
+        {loading && <FlashcardListPlaceholder />}
         {!loading && (
           <>
-            <Title
-              text="カード一覧"
-              tag="h1"
-              size="xl"
-              style={{ marginBottom: "16px" }}
-            />
             {flashcards.length <= 0 && <EmptyState />}
             {flashcards.length >= 1 && <FlashcardList items={flashcards} />}
           </>

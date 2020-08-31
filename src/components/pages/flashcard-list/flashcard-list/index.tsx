@@ -9,27 +9,25 @@ interface Props {
   items: FlashcardListItem[];
 }
 
-export const FlashcardList: FunctionComponent<Props> = (props) => {
-  return (
-    <List>
-      {props.items.map((item) => (
-        <ListItem key={item.id}>
-          <Link to={`/flashcard-detail/${item.id}`}>
-            <Box>
-              <Title
-                tag="div"
-                size="l"
-                text={item.name}
-                style={{ marginBottom: "16px" }}
-              />
-              <div>{item.description}</div>
-            </Box>
-          </Link>
-        </ListItem>
-      ))}
-    </List>
-  );
-};
+export const FlashcardList: FunctionComponent<Props> = (props) => (
+  <List>
+    {props.items.map((item) => (
+      <ListItem key={item.id}>
+        <Link to={`/flashcard-detail/${item.id}`}>
+          <Box>
+            <Title
+              tag="div"
+              size="l"
+              text={item.name}
+              style={{ marginBottom: "16px" }}
+            />
+            <div>{item.description}</div>
+          </Box>
+        </Link>
+      </ListItem>
+    ))}
+  </List>
+);
 
 const List = styled.ul`
   display: grid;
