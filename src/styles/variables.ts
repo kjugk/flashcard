@@ -18,9 +18,9 @@ export const variables: CssVariables = {
     lightGrey: "#CFCECE",
   },
   fontSize: {
-    xxl: "24px",
-    xl: "20px",
-    l: "18px",
+    xxl: "20px",
+    xl: "18px",
+    l: "16px",
     m: "14px",
     s: "12px",
     xs: "10px",

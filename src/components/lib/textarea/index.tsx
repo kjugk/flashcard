@@ -49,11 +49,11 @@ const Wrapper = styled.label<{ hasError: boolean }>`
   .label-text {
     font-weight: bold;
     margin-bottom: 4px;
-    font-size: ${variables.fontSize.s};
+    font-size: ${variables.fontSize.m};
   }
   .error {
     margin-top: 4px;
-    font-size: ${variables.fontSize.s};
+    font-size: ${variables.fontSize.m};
   }
 `;
 
