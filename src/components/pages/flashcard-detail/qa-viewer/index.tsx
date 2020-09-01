@@ -4,46 +4,83 @@ import ArrowFoward from "@material-ui/icons/ArrowForward";
 import styled from "styled-components";
 import { variables } from "../../../../styles/variables";
 import { TextButton } from "../../../lib/text-button";
+import { Button } from "../../../lib/button";
+
+interface Qa {
+  question: string;
+  answer: string;
+}
 
 interface Props {
-  qaList: {
-    question: string;
-    answer: string;
-  }[];
+  qaList: Qa[];
 }
 
 /**
  * QA を表示,制御するコンポーネント。
  */
 export const QaViewer: FunctionComponent<Props> = (props) => {
-  const { qaList } = props;
+  // TODO 同時に更新するstate が多いので、reducer 作る
   const [currentPage, setCurrentPage] = useState(1);
-  const [inTransition, setInTransition] = useState(false);
+  const [inPageTransition, setInPageTransition] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
+  const [qaList, setQaList] = useState<Qa[]>([]);
+  const [shuffling, setShuffling] = useState(false);
+
+  useEffect(() => setQaList([...props.qaList]), []);
 
   const currantQa = useMemo(() => qaList[currentPage - 1], [
     qaList,
     currentPage,
   ]);
 
+  // ページ変更直後は css の animation を off にする。
+  useEffect(() => {
+    setInPageTransition(true);
+    setTimeout(() => {
+      setInPageTransition(false);
+    }, 150);
+  }, [currentPage]);
+
   const changeCurrentPage = (nextPage: number) => {
     setCurrentPage(nextPage);
     setShowAnswer(false);
   };
 
-  // ページ変更直後は css の animation を off にする。
-  useEffect(() => {
-    setInTransition(true);
-    setTimeout(() => {
-      setInTransition(false);
-    }, 150);
-  }, [currentPage]);
+  function shuffle<T>(array: T[]): T[] {
+    if (array.length <= 1) return array;
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * i);
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+
+    return array;
+  }
+
+  const shuffleList = () => {
+    setQaList(
+      shuffle<Qa>([...qaList])
+    );
+    setCurrentPage(1);
+    setShuffling(true);
+    setShowAnswer(false);
+  };
+
+  const resetList = () => {
+    setQaList([...props.qaList]);
+    setCurrentPage(1);
+    setShuffling(false);
+    setShowAnswer(false);
+  };
+
+  if (currantQa === undefined) return null;
 
   return (
     <div>
       <CardWrapper>
         <Card
-          inTransition={inTransition}
+          inTransition={inPageTransition}
           showAnswer={showAnswer}
           onClick={() => setShowAnswer(!showAnswer)}
         >
@@ -80,6 +117,14 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
           <ArrowFoward />
         </TextButton>
       </Controller>
+      <div>
+        <Button
+          label={shuffling ? "シャッフル中" : "シャッフル"}
+          outlined
+          size="xs"
+          onClick={() => (shuffling ? resetList() : shuffleList())}
+        />
+      </div>
     </div>
   );
 };
