@@ -2,14 +2,22 @@ import React, { FC, CSSProperties } from "react";
 import styled from "styled-components";
 import { variables } from "../../../styles/variables";
 
+type Tag = "div" | "li";
+
 interface Props {
   style?: CSSProperties;
+  tag?: Tag;
   withShadow?: boolean;
 }
 
-export const Box: FC<Props> = ({ style, withShadow = true, children }) => {
+export const Box: FC<Props> = ({
+  style,
+  tag = "div",
+  withShadow = true,
+  children,
+}) => {
   return (
-    <StyledBox style={style} withShadow={withShadow}>
+    <StyledBox style={style} withShadow={withShadow} as={tag}>
       {children}
     </StyledBox>
   );

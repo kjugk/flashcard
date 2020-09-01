@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import styled from "styled-components";
 import {
   useForm,
   useFieldArray,
@@ -83,11 +84,12 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit }) => {
         />
       </Box>
 
-      <div style={{ padding: "16px" }}>
+      <QaListWrapper>
         {fields.map((field, index) => (
           <Box
             key={field.id}
             withShadow={false}
+            tag="li"
             style={{ marginBottom: "16px" }}
           >
             <Title
@@ -140,7 +142,7 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit }) => {
             </div>
           </Box>
         ))}
-      </div>
+      </QaListWrapper>
 
       <div style={{ textAlign: "center", marginBottom: "24px" }}>
         <Button
@@ -157,3 +159,10 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit }) => {
     </form>
   );
 };
+
+const QaListWrapper = styled.ul`
+  margin-top: 16px;
+  @media only screen and (max-width: 767px) {
+    padding: 0 16px;
+  }
+`;
