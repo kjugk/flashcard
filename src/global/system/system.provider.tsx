@@ -1,11 +1,6 @@
 // システム関連の global state を管理する
 import React, { createContext, useContext, Dispatch } from "react";
-
-import {
-  SystemState,
-  SystemAction,
-  useSystemReducer,
-} from "../store/system.store";
+import { SystemState, SystemAction, useSystemReducer } from "./system.store";
 
 interface IContextProps {
   systemState: SystemState;

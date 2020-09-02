@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
-import { useSystemContext } from "../../../global/provider/system.provider";
+import { useSystemContext } from "../../../global/system/system.provider";
 import { Header } from "../../shared";
 import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";

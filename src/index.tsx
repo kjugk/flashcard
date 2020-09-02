@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import "./styles/global.css";
 import { App } from "./components/app";
 import * as serviceWorker from "./serviceWorker";
-import { SystemProvider } from "./global/provider/system.provider";
-import { CurrentUserProvider } from "./global/provider/current-user.provider";
+import { SystemProvider } from "./global/system/system.provider";
+import { CurrentUserProvider } from "./global/current-user/current-user.provider";
 import { configureCognito } from "./lib/cognito";
 import { SystemMessage } from "./components/shared";
 

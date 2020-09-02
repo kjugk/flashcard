@@ -3,7 +3,7 @@ import {
   useCurrentUserReducer,
   CurrentUserState,
   CurrentUserAction,
-} from "../store/current-user.store";
+} from "./current-user.store";
 import { getCognitoUser } from "../../lib/cognito";
 
 // context
