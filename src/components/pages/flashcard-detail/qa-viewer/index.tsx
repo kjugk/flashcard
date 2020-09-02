@@ -5,11 +5,7 @@ import styled from "styled-components";
 import { variables } from "../../../../styles/variables";
 import { TextButton } from "../../../lib/text-button";
 import { Button } from "../../../lib/button";
-
-interface Qa {
-  question: string;
-  answer: string;
-}
+import { Qa } from "../store";
 
 interface Props {
   qaList: Qa[];
@@ -23,13 +19,13 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [inPageTransition, setInPageTransition] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
-  const [qaList, setQaList] = useState<Qa[]>([]);
   const [shuffling, setShuffling] = useState(false);
+  const [copiedQaList, setCopiedQaList] = useState<Qa[]>([]);
 
-  useEffect(() => setQaList([...props.qaList]), []);
+  useEffect(() => setCopiedQaList([...props.qaList]), []);
 
-  const currantQa = useMemo(() => qaList[currentPage - 1], [
-    qaList,
+  const currantQa = useMemo(() => copiedQaList[currentPage - 1], [
+    copiedQaList,
     currentPage,
   ]);
 
@@ -59,8 +55,8 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
   }
 
   const shuffleList = () => {
-    setQaList(
-      shuffle<Qa>([...qaList])
+    setCopiedQaList(
+      shuffle<Qa>([...copiedQaList])
     );
     setCurrentPage(1);
     setShuffling(true);
@@ -68,7 +64,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
   };
 
   const resetList = () => {
-    setQaList([...props.qaList]);
+    setCopiedQaList([...props.qaList]);
     setCurrentPage(1);
     setShuffling(false);
     setShowAnswer(false);
@@ -108,10 +104,10 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
           <ArrowBack />
         </TextButton>
 
-        <div className="pagenation">{`${currentPage}/${qaList.length}`}</div>
+        <div className="pagenation">{`${currentPage}/${copiedQaList.length}`}</div>
 
         <TextButton
-          disabled={currentPage === qaList.length}
+          disabled={currentPage === copiedQaList.length}
           onClick={() => changeCurrentPage(currentPage + 1)}
         >
           <ArrowFoward />

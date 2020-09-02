@@ -1,14 +1,17 @@
 import { useReducer } from "react";
 
 // State
+
+export interface Qa {
+  question: string;
+  answer: string;
+}
+
 export interface FlashcardDetail {
   id: string;
   name: string;
   description: string;
-  qaList: {
-    question: string;
-    answer: string;
-  }[];
+  qaList: Qa[];
 }
 
 interface FlashcardDetailPageState {
