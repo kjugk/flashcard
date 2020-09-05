@@ -108,7 +108,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
                 size="xl"
                 outlined
                 onClick={() => {
-                  console.log("edit");
+                  history.push(`/flashcard-edit/${id}`);
                 }}
               />
             </div>

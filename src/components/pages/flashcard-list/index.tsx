@@ -24,7 +24,8 @@ export const FlashcardListPage: FunctionComponent = () => {
         type: "store-flashcards",
         payload: list,
       });
-    } finally {
+      setLoading(false);
+    } catch {
       setLoading(false);
     }
   };
