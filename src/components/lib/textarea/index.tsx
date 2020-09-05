@@ -5,24 +5,22 @@ import TextareaAutosize from "react-textarea-autosize";
 
 interface Props {
   name: string;
-  value?: string;
   label: string;
+  inputRef: (ref: HTMLTextAreaElement) => void;
+  defaultValue?: string;
   rows?: number;
-  onChange: (v: string) => void;
   placeholder?: string;
   errorMessage?: string;
-  inputRef?: (ref: HTMLTextAreaElement) => void;
 }
 
 export const Textarea: FC<Props> = ({
-  value,
+  name,
   label,
+  inputRef,
+  defaultValue,
   rows = 1,
-  onChange,
   placeholder,
   errorMessage,
-  name,
-  inputRef,
 }) => {
   const hasError = useMemo(() => {
     return errorMessage !== undefined && errorMessage !== "";
@@ -34,11 +32,10 @@ export const Textarea: FC<Props> = ({
       <StyledTextarea hasError={hasError}>
         <TextareaAutosize
           name={name}
+          defaultValue={defaultValue}
           ref={inputRef}
-          value={value}
           minRows={rows}
           placeholder={placeholder}
-          onChange={(e) => onChange(e.target.value)}
         />
       </StyledTextarea>
 
