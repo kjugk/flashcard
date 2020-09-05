@@ -7,46 +7,60 @@ import { CreateFlashcardRequest } from "./create-flashcard-request";
 import { CreateFlashcardResponse } from "./response/create-flashcard-response";
 import { DeleteFlashcardResponse } from "./response/delete-flashcard-response";
 import { getCognitoIdToken } from "../../lib/cognito";
+import { NotFoundError, NetworkError, NotAuthorizedError } from "../../errors";
 
 class FlashcardRepository {
   // API のデータをアプリケーションで使える形式にして返す
   async getAll(): Promise<FlashcardListItem[]> {
     const http = await this.getHttpClient();
-    const response = await http.get<GetAllFlashcardResponse>("flashcards");
-    const { flashcards } = response.data;
 
-    return flashcards.map((flashcard) => {
-      return {
-        name: flashcard.name,
-        id: flashcard.id,
-        description: flashcard.description,
-      };
-    });
+    try {
+      const response = await http.get<GetAllFlashcardResponse>("flashcards");
+      const { flashcards } = response.data;
+
+      return flashcards.map((flashcard) => {
+        return {
+          name: flashcard.name,
+          id: flashcard.id,
+          description: flashcard.description,
+        };
+      });
+    } catch (e) {
+      return this.handleErrors(e);
+    }
   }
 
   async find(id: string): Promise<FlashcardDetail> {
     const http = await this.getHttpClient();
-    const response = await http.get<GetFlashcardResponse>(`flashcards/${id}`);
-    const { flashcard } = response.data;
 
-    return {
-      id: flashcard.id,
-      name: flashcard.name,
-      description: flashcard.description,
-      qaList: flashcard.qaList,
-    };
+    try {
+      const response = await http.get<GetFlashcardResponse>(`flashcards/${id}`);
+      const { flashcard } = response.data;
+
+      return {
+        id: flashcard.id,
+        name: flashcard.name,
+        description: flashcard.description,
+        qaList: flashcard.qaList,
+      };
+    } catch (e) {
+      return this.handleErrors(e);
+    }
   }
 
   async create(request: CreateFlashcardRequest): Promise<string> {
     const http = await this.getHttpClient();
     // TODO 空のqaは落とす(サーバーでやっても良い)
-    const response = await http.post<CreateFlashcardResponse>(
-      "flashcard",
-      request
-    );
-    const { flashcard } = response.data;
+    try {
+      const response = await http.post<CreateFlashcardResponse>(
+        "flashcard",
+        request
+      );
 
-    return flashcard.id;
+      return response.data.flashcard.id;
+    } catch (e) {
+      return this.handleErrors(e);
+    }
   }
 
   async delete(id: string): Promise<string> {
@@ -54,10 +68,24 @@ class FlashcardRepository {
     const response = await http.delete<DeleteFlashcardResponse>(
       `flashcards/${id}`
     );
-    const { flashcard } = response.data;
 
-    return flashcard.id;
+    return response.data.flashcard.id;
   }
+
+  private handleErrors = (e: any): never => {
+    if (!!e.isAxiosError && !e.response) {
+      throw new NetworkError();
+    }
+
+    switch (e.response.status) {
+      case 401:
+        throw new NotAuthorizedError();
+      case 404:
+        throw new NotFoundError();
+      default:
+        throw new Error();
+    }
+  };
 
   private getHttpClient = async () => {
     const token = await getCognitoIdToken();
