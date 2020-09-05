@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
 import { signInWithGoogle } from "../../../lib/cognito";
 import { SystemMessage } from "../../shared/system-message";
-import { useSignedInUserGuard } from "../../../global/store/current-user.store";
-import { useCurrentUserContext } from "../../../global/provider/current-user.provider";
+import { useSignedInUserGuard } from "../../../global/current-user/current-user.store";
+import { useCurrentUserContext } from "../../../global/current-user/current-user.provider";
 
 export const SignInPage: FunctionComponent = () => {
   const { currentUserState } = useCurrentUserContext();

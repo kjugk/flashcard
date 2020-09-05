@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import { Link } from "react-router-dom";
-import { useSignedInUserGuard } from "../../../global/store/current-user.store";
-import { useCurrentUserContext } from "../../../global/provider/current-user.provider";
+import { useSignedInUserGuard } from "../../../global/current-user/current-user.store";
+import { useCurrentUserContext } from "../../../global/current-user/current-user.provider";
 
 export const TopPage: FunctionComponent = () => {
   const { currentUserState } = useCurrentUserContext();

@@ -20,7 +20,7 @@ export function configureCognito() {
         scope: ["email", "profile", "openid", "aws.cognito.signin.user.admin"],
         redirectSignIn: process.env.REACT_APP_REDIRECT_SIGN_IN,
         redirectSignOut: process.env.REACT_APP_REDIRECT_SIGN_OUT,
-        responseType: "code", // or 'token', note that REFRESH token will only be generated when the responseType is code
+        responseType: "code",
       },
     },
   });

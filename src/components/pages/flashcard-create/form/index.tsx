@@ -1,89 +1,170 @@
-import React, { FunctionComponent } from "react";
-import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
-import { IFlashcardCreateForm, IFlashcardCreateFormErrors } from "../types";
-import { Box } from "../../../lib";
-import { Delete } from "@material-ui/icons";
+import React, { FC } from "react";
+import styled from "styled-components";
+import {
+  useForm,
+  useFieldArray,
+  Controller,
+  FieldError,
+} from "react-hook-form";
+import { FlashcardCreateFormValues } from "../types";
+import { Textarea } from "../../../lib/textarea";
+import { Box } from "../../../lib/box";
+import { Button } from "../../../lib/button";
+import { Title } from "../../../lib/title";
+import Delete from "@material-ui/icons/Delete";
 
 interface Props {
-  onSubmit: (params: IFlashcardCreateForm) => void;
+  defaultValues?: Partial<FlashcardCreateFormValues>;
+  onSubmit: (values: FlashcardCreateFormValues) => void;
 }
 
-export const FlashcardCreateForm: FunctionComponent<Props> = (props) => {
-  const initialValues: IFlashcardCreateForm = {
-    name: "",
-    description: "",
-    qaList: [
-      {
-        question: "",
-        answer: "",
-      },
-    ],
+export const FlashcardCreateForm: FC<Props> = ({ onSubmit, defaultValues }) => {
+  const { control, handleSubmit, errors } = useForm<FlashcardCreateFormValues>({
+    mode: "onSubmit",
+    defaultValues: defaultValues,
+  });
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "qaList",
+  });
+  const appendQuestion = () => append({ question: "", answer: "" });
+  const removeQuestion = (index: number) => {
+    if (fields.length <= 1) return;
+    remove(index);
+  };
+  const _onSubmit = handleSubmit((values) => onSubmit(values));
+
+  const getErrorMessage = (error?: FieldError) => {
+    if (error === undefined) return "";
+    switch (error.type) {
+      case "required":
+        return "必須項目です";
+      default:
+        return "";
+    }
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validate={(values) => {
-        const errors: IFlashcardCreateFormErrors = {};
-        if (!values.name) {
-          errors.name = "必須項目です";
-        }
-        // TODO QA が一つ以上存在する
-        return errors;
-      }}
-      onSubmit={(values) => {
-        props.onSubmit(values);
-      }}
-    >
-      {({ values }) => (
-        <Form>
-          <Box>
-            <div>
-              <Field type="text" name="name" placeholder="カードの名前" />
-              <ErrorMessage name="name" component="div" />
-            </div>
+    <form onSubmit={_onSubmit}>
+      <Box withShadow={false}>
+        <Controller
+          name="name"
+          control={control}
+          defaultValue=""
+          rules={{ required: true }}
+          render={({ onChange, value }) => (
+            <Textarea
+              value={value}
+              onChange={onChange}
+              label="名前"
+              placeholder="名前を入力してください"
+              errorMessage={getErrorMessage(errors.name)}
+            />
+          )}
+        />
+        <Controller
+          name="description"
+          control={control}
+          defaultValue=""
+          rules={{ required: true }}
+          render={({ onChange, value }) => (
+            <Textarea
+              value={value}
+              onChange={onChange}
+              rows={3}
+              label="説明"
+              placeholder="説明を入力してください"
+              errorMessage={getErrorMessage(errors.description)}
+            />
+          )}
+        />
+      </Box>
 
-            <div>
-              <Field
-                type="text"
-                name="description"
-                placeholder="カードの説明"
-              />
+      <QaListWrapper>
+        {fields.map((field, index) => (
+          <Box
+            key={field.id}
+            withShadow={false}
+            tag="li"
+            style={{ marginBottom: "16px" }}
+          >
+            <Title
+              text={`${index + 1}`}
+              size="xl"
+              tag="h2"
+              style={{ marginBottom: "16px" }}
+            />
+
+            <Controller
+              name={`qaList[${index}].question`}
+              defaultValue={
+                defaultValues?.qaList
+                  ? defaultValues.qaList[index].question
+                  : ""
+              }
+              control={control}
+              rules={{ required: true }}
+              render={({ value, onChange }) => (
+                <Textarea
+                  value={value}
+                  rows={3}
+                  onChange={onChange}
+                  label="問題"
+                  errorMessage={getErrorMessage(
+                    errors.qaList ? errors.qaList[index]?.question : undefined
+                  )}
+                />
+              )}
+            />
+
+            <Controller
+              name={`qaList[${index}].answer`}
+              defaultValue={
+                defaultValues?.qaList ? defaultValues.qaList[index].answer : ""
+              }
+              control={control}
+              rules={{ required: true }}
+              render={({ value, onChange }) => (
+                <Textarea
+                  value={value}
+                  rows={3}
+                  onChange={onChange}
+                  label="答え"
+                  errorMessage={getErrorMessage(
+                    errors.qaList ? errors.qaList[index]?.answer : undefined
+                  )}
+                />
+              )}
+            />
+
+            <div style={{ textAlign: "end" }}>
+              <button type="button" onClick={() => removeQuestion(index)}>
+                <Delete fontSize="inherit" />
+              </button>
             </div>
           </Box>
+        ))}
+      </QaListWrapper>
 
-          <FieldArray
-            name="qaList"
-            render={(arrayHelpers) => (
-              <div>
-                {values.qaList.map((qa, index) => (
-                  <Box key={index} style={{ marginBottom: "16px" }}>
-                    <Field name={`qaList.${index}.question`} type="text" />
-                    <Field name={`qaList.${index}.answer`} type="text" />
-                    <button
-                      type="button"
-                      disabled={values.qaList.length <= 1}
-                      onClick={() => arrayHelpers.remove(index)}
-                    >
-                      <Delete fontSize="small" />
-                    </button>
-                  </Box>
-                ))}
-                <button
-                  type="button"
-                  disabled={values.qaList.length >= 5}
-                  onClick={() => {
-                    arrayHelpers.push({ question: "", answer: "" });
-                  }}
-                >
-                  add
-                </button>
-              </div>
-            )}
-          />
-          <button type="submit">submit</button>
-        </Form>
-      )}
-    </Formik>
+      <div style={{ textAlign: "center", marginBottom: "24px" }}>
+        <Button
+          label="カードを追加"
+          outlined
+          size="xs"
+          onClick={appendQuestion}
+        />
+      </div>
+
+      <div style={{ textAlign: "center", marginBottom: "32px" }}>
+        <Button type="submit" label="作成" size="xl" />
+      </div>
+    </form>
   );
 };
+
+const QaListWrapper = styled.ul`
+  margin-top: 16px;
+  @media only screen and (max-width: 767px) {
+    padding: 0 16px;
+  }
+`;

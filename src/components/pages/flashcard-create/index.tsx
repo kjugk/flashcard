@@ -1,19 +1,19 @@
-import React, { FunctionComponent } from "react";
+import React, { FC } from "react";
 import { useHistory } from "react-router-dom";
-import { FlashcardCreateForm } from "./form";
-import { createFlashcard } from "./actions";
 import { Header } from "../../shared";
-import { IFlashcardCreateForm } from "./types";
+import { FlashcardCreateFormValues } from "./types";
 import { Container } from "../../lib";
+import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
+import { FlashcardCreateForm } from "./form";
 
 /**
  * カード作成ページ。
  */
-export const FlashcardCreatePage: FunctionComponent = () => {
+export const FlashcardCreatePage: FC = () => {
   const history = useHistory();
 
-  const handleSubmitForm = async (values: IFlashcardCreateForm) => {
-    const id = await createFlashcard(values);
+  const handleSubmitForm = async (values: FlashcardCreateFormValues) => {
+    const id = await flashcardRepository.create(values);
     history.push(`/flashcard-detail/${id}`);
   };
 
@@ -21,7 +21,15 @@ export const FlashcardCreatePage: FunctionComponent = () => {
     <div>
       <Header />
       <Container>
-        <FlashcardCreateForm onSubmit={handleSubmitForm} />
+        <FlashcardCreateForm
+          onSubmit={handleSubmitForm}
+          defaultValues={{
+            qaList: [
+              { question: "", answer: "" },
+              { question: "", answer: "" },
+            ],
+          }}
+        />
       </Container>
     </div>
   );

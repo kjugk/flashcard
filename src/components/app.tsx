@@ -6,12 +6,13 @@ import {
   RouteProps,
   Redirect,
 } from "react-router-dom";
-import { useCurrentUserContext } from "../global/provider/current-user.provider";
-import { useIsSignedIn } from "../global/store/current-user.store";
+import { useCurrentUserContext } from "../global/current-user/current-user.provider";
+import { useIsSignedIn } from "../global/current-user/current-user.store";
 import {
   FlashcardCreatePage,
   FlashcardListPage,
   FlashcardDetailPage,
+  FlashcardEditPage,
   SignInPage,
   TopPage,
   NotFoundPage,
@@ -27,6 +28,10 @@ export const App: FunctionComponent = () => {
 
         <PrivateRoute path="/flashcard-create">
           <FlashcardCreatePage />
+        </PrivateRoute>
+
+        <PrivateRoute path="/flashcard-edit/:id">
+          <FlashcardEditPage />
         </PrivateRoute>
 
         <PrivateRoute path="/flashcard-detail/:id">

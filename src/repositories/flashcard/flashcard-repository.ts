@@ -1,11 +1,11 @@
-import { FlashcardListItem } from "../../types/flashcard-list-item";
-import { FlashcardDetail } from "../../types/flashcard-detail";
+import { FlashcardListItem } from "../../components/pages/flashcard-list/store";
+import { FlashcardDetail } from "../../components/pages/flashcard-detail/store";
 import axios from "axios";
-import { GetAllFlashcardResponse } from "./get-all-flashcard-response";
-import { GetFlashcardResponse } from "./get-flashcard-response";
+import { GetAllFlashcardResponse } from "./response/get-all-flashcard-response";
+import { GetFlashcardResponse } from "./response/get-flashcard-response";
 import { CreateFlashcardRequest } from "./create-flashcard-request";
-import { CreateFlashcardResponse } from "./create-flashcard-response";
-import { DeleteFlashcardResponse } from "./delete-flashcard-response";
+import { CreateFlashcardResponse } from "./response/create-flashcard-response";
+import { DeleteFlashcardResponse } from "./response/delete-flashcard-response";
 import { getCognitoIdToken } from "../../lib/cognito";
 
 class FlashcardRepository {
@@ -19,6 +19,7 @@ class FlashcardRepository {
       return {
         name: flashcard.name,
         id: flashcard.id,
+        description: flashcard.description,
       };
     });
   }
@@ -58,7 +59,6 @@ class FlashcardRepository {
     return flashcard.id;
   }
 
-  // 他の repository が出てきたら共通化する
   private getHttpClient = async () => {
     const token = await getCognitoIdToken();
     return axios.create({
