@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FC } from "react";
 import { useHistory } from "react-router-dom";
 import { Header } from "../../shared";
 import { FlashcardCreateFormValues } from "./types";
@@ -9,7 +9,7 @@ import { FlashcardCreateForm } from "./form";
 /**
  * カード作成ページ。
  */
-export const FlashcardCreatePage: FunctionComponent = () => {
+export const FlashcardCreatePage: FC = () => {
   const history = useHistory();
 
   const handleSubmitForm = async (values: FlashcardCreateFormValues) => {
@@ -21,7 +21,15 @@ export const FlashcardCreatePage: FunctionComponent = () => {
     <div>
       <Header />
       <Container>
-        <FlashcardCreateForm onSubmit={handleSubmitForm} />
+        <FlashcardCreateForm
+          onSubmit={handleSubmitForm}
+          defaultValues={{
+            qaList: [
+              { question: "", answer: "" },
+              { question: "", answer: "" },
+            ],
+          }}
+        />
       </Container>
     </div>
   );

@@ -2,8 +2,8 @@ import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { signOut } from "../../../lib/cognito";
-import { useIsSignedIn } from "../../../global/store/current-user.store";
-import { useCurrentUserContext } from "../../../global/provider/current-user.provider";
+import { useIsSignedIn } from "../../../global/current-user/current-user.store";
+import { useCurrentUserContext } from "../../../global/current-user/current-user.provider";
 import { Button, Container } from "../../lib";
 import { variables } from "../../../styles/variables";
 
