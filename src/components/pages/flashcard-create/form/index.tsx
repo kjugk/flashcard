@@ -19,9 +19,12 @@ interface Props {
 }
 
 export const FlashcardCreateForm: FC<Props> = ({ onSubmit, defaultValues }) => {
-  const { control, handleSubmit, errors } = useForm<FlashcardCreateFormValues>({
+  const { control, handleSubmit, errors, register, formState } = useForm<
+    FlashcardCreateFormValues
+  >({
     mode: "onSubmit",
-    defaultValues: defaultValues,
+    defaultValues,
+    shouldFocusError: false,
   });
   const { fields, append, remove } = useFieldArray({
     control,
@@ -34,6 +37,7 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   };
   const _onSubmit = handleSubmit((values) => onSubmit(values));
 
+  // TODO これ本当に必要か調べる
   const getErrorMessage = (error?: FieldError) => {
     if (error === undefined) return "";
     switch (error.type) {
@@ -52,11 +56,12 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit, defaultValues }) => {
           control={control}
           defaultValue=""
           rules={{ required: true }}
-          render={({ onChange, value }) => (
+          render={({ onChange, value, name }) => (
             <Textarea
+              label="名前"
+              name={name}
               value={value}
               onChange={onChange}
-              label="名前"
               placeholder="名前を入力してください"
               errorMessage={getErrorMessage(errors.name)}
             />
@@ -66,13 +71,13 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit, defaultValues }) => {
           name="description"
           control={control}
           defaultValue=""
-          rules={{ required: true }}
-          render={({ onChange, value }) => (
+          render={({ onChange, value, name }) => (
             <Textarea
+              label="説明"
+              name={name}
               value={value}
               onChange={onChange}
               rows={3}
-              label="説明"
               placeholder="説明を入力してください"
               errorMessage={getErrorMessage(errors.description)}
             />
@@ -104,8 +109,9 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit, defaultValues }) => {
               }
               control={control}
               rules={{ required: true }}
-              render={({ value, onChange }) => (
+              render={({ value, onChange, name }) => (
                 <Textarea
+                  name={name}
                   value={value}
                   rows={3}
                   onChange={onChange}
@@ -124,12 +130,14 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit, defaultValues }) => {
               }
               control={control}
               rules={{ required: true }}
-              render={({ value, onChange }) => (
+              render={({ value, onChange, name }) => (
                 <Textarea
+                  name={name}
                   value={value}
                   rows={3}
                   onChange={onChange}
                   label="答え"
+                  inputRef={register()}
                   errorMessage={getErrorMessage(
                     errors.qaList ? errors.qaList[index]?.answer : undefined
                   )}
@@ -158,6 +166,8 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit, defaultValues }) => {
       <div style={{ textAlign: "center", marginBottom: "32px" }}>
         <Button type="submit" label="作成" size="xl" />
       </div>
+
+      {!formState.isValid && <div>エラーがあるよ</div>}
     </form>
   );
 };

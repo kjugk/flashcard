@@ -1,17 +1,5 @@
-export class NotAuthorizedError extends Error {
-  constructor(message?: string) {
-    super(message);
-  }
-}
+export class NotAuthorizedError extends Error {}
 
-export class NotFoundError extends Error {
-  constructor(message?: string) {
-    super(message);
-  }
-}
+export class NotFoundError extends Error {}
 
-export class NetworkError extends Error {
-  constructor(message?: string) {
-    super(message);
-  }
-}
+export class NetworkError extends Error {}
