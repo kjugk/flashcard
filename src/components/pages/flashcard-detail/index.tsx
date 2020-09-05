@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import styled from "styled-components";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
@@ -9,8 +8,8 @@ import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";
 import { Button } from "../../lib/button";
 import { Container } from "../../lib/container";
-import { Modal } from "../../lib/modal";
 import { variables } from "../../../styles/variables";
+import { ConfirmableModal } from "../../lib/confirmable-modal";
 
 /**
  * カードの詳細ページ。
@@ -21,7 +20,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
   const [state, dispatch] = useDetailPageReducer();
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
 
@@ -32,11 +31,11 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         type: "store-flashcard-detail",
         payload: item,
       });
+      setLoading(false);
     } catch (e) {
       // TODO グローバルのエラーハンドラーにエラー渡す
-      history.replace("/not-found");
-    } finally {
       setLoading(false);
+      history.replace("/not-found");
     }
   };
 
@@ -52,8 +51,12 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           message: "削除しました。",
         },
       });
+
+      setDeleting(false);
       history.replace("/flashcard-list");
     } catch {
+      setDeleting(false);
+
       // エラーの種類で処理を分岐させる
       systemDispatch({
         type: "set-system-message",
@@ -62,8 +65,6 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           message: "削除できませんでした。",
         },
       });
-    } finally {
-      setDeleting(false);
     }
   };
 
@@ -72,8 +73,8 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     getFlashcardDetail();
   }, []);
 
-  const closeModal = () => setShowModal(false);
-  const handleClickDeleteButton = () => setShowModal(true);
+  const closeModal = () => setShowDeleteConfirmModal(false);
+  const handleClickDeleteButton = () => setShowDeleteConfirmModal(true);
   const handleConfirmDelete = deleteFlashcard;
   const { flashcard } = state;
 
@@ -115,29 +116,15 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         )}
       </Container>
 
-      {/* TODO SubmitModal に置き換える */}
-      <Modal show={showModal} onClose={closeModal}>
-        <div>
-          <Title
-            text="削除しますがよろしいですか?"
-            tag="h2"
-            size="xl"
-            style={{ marginBottom: "16px" }}
-          />
-          <div>一度削除したものは復元出来ません</div>
-          <ModalController>
-            <Button label="キャンセル" outlined onClick={closeModal} />
-            <Button label="削除" onClick={handleConfirmDelete} />
-          </ModalController>
-        </div>
-      </Modal>
+      <ConfirmableModal
+        show={showDeleteConfirmModal}
+        title="削除しますがよろしいですか"
+        description="一度削除したものは復元出来ません"
+        submitLabel="削除"
+        onClose={closeModal}
+        onCancel={closeModal}
+        onSubmit={handleConfirmDelete}
+      />
     </div>
   );
 };
-
-const ModalController = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 16px;
-  margin-top: 26px;
-`;
