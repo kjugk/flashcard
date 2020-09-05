@@ -31,11 +31,11 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         type: "store-flashcard-detail",
         payload: item,
       });
+      setLoading(false);
     } catch (e) {
       // TODO グローバルのエラーハンドラーにエラー渡す
-      history.replace("/not-found");
-    } finally {
       setLoading(false);
+      history.replace("/not-found");
     }
   };
 
