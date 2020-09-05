@@ -32,8 +32,8 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         type: "store-flashcard-detail",
         payload: item,
       });
-    } catch {
-      // TODO コンテンツ置き換えるだけにする
+    } catch (e) {
+      // TODO グローバルのエラーハンドラーにエラー渡す
       history.replace("/not-found");
     } finally {
       setLoading(false);
