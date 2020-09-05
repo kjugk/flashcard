@@ -12,6 +12,7 @@ import {
   FlashcardCreatePage,
   FlashcardListPage,
   FlashcardDetailPage,
+  FlashcardEditPage,
   SignInPage,
   TopPage,
   NotFoundPage,
@@ -27,6 +28,10 @@ export const App: FunctionComponent = () => {
 
         <PrivateRoute path="/flashcard-create">
           <FlashcardCreatePage />
+        </PrivateRoute>
+
+        <PrivateRoute path="/flashcard-edit/:id">
+          <FlashcardEditPage />
         </PrivateRoute>
 
         <PrivateRoute path="/flashcard-detail/:id">

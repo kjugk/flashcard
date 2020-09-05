@@ -14,18 +14,14 @@ import { Title } from "../../../lib/title";
 import Delete from "@material-ui/icons/Delete";
 
 interface Props {
+  defaultValues?: Partial<FlashcardCreateFormValues>;
   onSubmit: (values: FlashcardCreateFormValues) => void;
 }
 
-export const FlashcardCreateForm: FC<Props> = ({ onSubmit }) => {
+export const FlashcardCreateForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const { control, handleSubmit, errors } = useForm<FlashcardCreateFormValues>({
     mode: "onSubmit",
-    defaultValues: {
-      qaList: [
-        { question: "", answer: "" },
-        { question: "", answer: "" },
-      ],
-    },
+    defaultValues: defaultValues,
   });
   const { fields, append, remove } = useFieldArray({
     control,
@@ -101,8 +97,12 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit }) => {
 
             <Controller
               name={`qaList[${index}].question`}
+              defaultValue={
+                defaultValues?.qaList
+                  ? defaultValues.qaList[index].question
+                  : ""
+              }
               control={control}
-              defaultValue=""
               rules={{ required: true }}
               render={({ value, onChange }) => (
                 <Textarea
@@ -119,8 +119,10 @@ export const FlashcardCreateForm: FC<Props> = ({ onSubmit }) => {
 
             <Controller
               name={`qaList[${index}].answer`}
+              defaultValue={
+                defaultValues?.qaList ? defaultValues.qaList[index].answer : ""
+              }
               control={control}
-              defaultValue=""
               rules={{ required: true }}
               render={({ value, onChange }) => (
                 <Textarea

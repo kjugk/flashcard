@@ -33,6 +33,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         payload: item,
       });
     } catch {
+      // TODO コンテンツ置き換えるだけにする
       history.replace("/not-found");
     } finally {
       setLoading(false);
