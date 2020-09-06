@@ -1,16 +1,19 @@
 import React, { FC, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Header } from "../../shared/header";
 import { Container } from "../../lib/container";
 import { FlashcardForm } from "../../shared/flashcard-form";
 import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
+import { useSystemContext } from "../../../global/system/system.provider";
 
 /**
  * カード編集ページ。
  */
 export const FlashcardEditPage: FC = () => {
   const { id } = useParams<{ id: string }>();
+  const history = useHistory();
+  const { systemDispatch } = useSystemContext();
   const [loading, setLoading] = useState(false);
   const [defaultValues, setDefaultValues] = useState<
     FlashcardFormValues | undefined
@@ -27,14 +30,25 @@ export const FlashcardEditPage: FC = () => {
       });
     } catch {
       // TODO コンテンツ置き換えるだけにする
-      alert("not found");
     } finally {
       setLoading(false);
     }
   };
 
   const updateFlashcard = async (values: FlashcardFormValues) => {
-    console.log(values);
+    try {
+      await flashcardRepository.update(id, values);
+      systemDispatch({
+        type: "set-system-message",
+        payload: {
+          messageType: "info",
+          message: "編集しました。",
+        },
+      });
+      history.replace(`/flashcard-detail/${id}`);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   useEffect(() => {
