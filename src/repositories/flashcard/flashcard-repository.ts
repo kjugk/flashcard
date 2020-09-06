@@ -1,11 +1,14 @@
 import { FlashcardListItem } from "../../components/pages/flashcard-list/store";
 import { FlashcardDetail } from "../../components/pages/flashcard-detail/store";
 import axios from "axios";
-import { GetAllFlashcardResponse } from "./response/get-all-flashcard-response";
-import { GetFlashcardResponse } from "./response/get-flashcard-response";
-import { CreateFlashcardRequest } from "./create-flashcard-request";
-import { CreateFlashcardResponse } from "./response/create-flashcard-response";
-import { DeleteFlashcardResponse } from "./response/delete-flashcard-response";
+import {
+  GetFlashcardListResponse,
+  GetFlashcardResponse,
+  CreateFlashcardResponse,
+  DeleteFlashcardResponse,
+  UpdateFlashcardResponse,
+} from "./response";
+import { CreateFlashcardRequest, UpdateFlashcardRequest } from "./request";
 import { getCognitoIdToken } from "../../lib/cognito";
 import { NotFoundError, NetworkError, NotAuthorizedError } from "../../errors";
 
@@ -15,7 +18,7 @@ class FlashcardRepository {
     const http = await this.getHttpClient();
 
     try {
-      const response = await http.get<GetAllFlashcardResponse>("flashcards");
+      const response = await http.get<GetFlashcardListResponse>("flashcards");
       const { flashcards } = response.data;
 
       return flashcards.map((flashcard) => {
@@ -54,6 +57,20 @@ class FlashcardRepository {
     try {
       const response = await http.post<CreateFlashcardResponse>(
         "flashcard",
+        request
+      );
+
+      return response.data.flashcard.id;
+    } catch (e) {
+      return this.handleErrors(e);
+    }
+  }
+
+  async update(id: string, request: UpdateFlashcardRequest): Promise<string> {
+    const http = await this.getHttpClient();
+    try {
+      const response = await http.put<UpdateFlashcardResponse>(
+        `flashcards/${id}`,
         request
       );
 

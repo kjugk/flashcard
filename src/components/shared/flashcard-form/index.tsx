@@ -1,27 +1,22 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import {
-  useForm,
-  useFieldArray,
-  Controller,
-  FieldError,
-} from "react-hook-form";
-import { FlashcardCreateFormValues } from "../types";
-import { Textarea } from "../../../lib/textarea";
-import { Box } from "../../../lib/box";
-import { Button } from "../../../lib/button";
-import { Title } from "../../../lib/title";
+import { useForm, useFieldArray, FieldError } from "react-hook-form";
+import { FlashcardFormValues } from "../../../global/flashcard/types";
+import { Textarea } from "../../lib/textarea";
+import { Box } from "../../lib/box";
+import { Button } from "../../lib/button";
+import { Title } from "../../lib/title";
 import Delete from "@material-ui/icons/Delete";
-import { Qa } from "../../flashcard-detail/store";
+import { Qa } from "../../pages/flashcard-detail/store";
 
 interface Props {
-  defaultValues?: Partial<FlashcardCreateFormValues>;
-  onSubmit: (values: FlashcardCreateFormValues) => void;
+  defaultValues?: Partial<FlashcardFormValues>;
+  onSubmit: (values: FlashcardFormValues) => void;
 }
 
-export const FlashcardCreateForm: FC<Props> = ({ onSubmit, defaultValues }) => {
-  const { control, handleSubmit, errors, register, formState } = useForm<
-    FlashcardCreateFormValues
+export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
+  const { control, handleSubmit, errors, register } = useForm<
+    FlashcardFormValues
   >({
     mode: "onSubmit",
     defaultValues,
