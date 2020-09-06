@@ -101,7 +101,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
           disabled={currentPage === 1}
           onClick={() => changeCurrentPage(currentPage - 1)}
         >
-          <ArrowBack />
+          <ArrowBack style={{ fontSize: 40 }} />
         </TextButton>
 
         <div className="pagenation">{`${currentPage}/${copiedQaList.length}`}</div>
@@ -110,9 +110,10 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
           disabled={currentPage === copiedQaList.length}
           onClick={() => changeCurrentPage(currentPage + 1)}
         >
-          <ArrowFoward />
+          <ArrowFoward style={{ fontSize: 40 }} />
         </TextButton>
       </Controller>
+
       <div>
         <Button
           label={shuffling ? "シャッフル中" : "シャッフル"}
