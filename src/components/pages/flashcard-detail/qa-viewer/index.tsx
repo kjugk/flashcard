@@ -114,7 +114,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
         </TextButton>
       </Controller>
 
-      <div>
+      <div style={{ textAlign: "center" }}>
         <Button
           label={shuffling ? "シャッフル中" : "シャッフル"}
           outlined
