@@ -2,8 +2,8 @@ import React, { FC, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Header } from "../../shared/header";
 import { Container } from "../../lib/container";
-import { FlashcardCreateForm } from "../flashcard-create/form";
-import { FlashcardCreateFormValues } from "../flashcard-create/types";
+import { FlashcardForm } from "../../shared/flashcard-form";
+import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 
 /**
@@ -13,7 +13,7 @@ export const FlashcardEditPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(false);
   const [defaultValues, setDefaultValues] = useState<
-    FlashcardCreateFormValues | undefined
+    FlashcardFormValues | undefined
   >(undefined);
 
   const getFlashcardDetail = async () => {
@@ -33,7 +33,7 @@ export const FlashcardEditPage: FC = () => {
     }
   };
 
-  const updateFlashcard = async (values: FlashcardCreateFormValues) => {
+  const updateFlashcard = async (values: FlashcardFormValues) => {
     console.log(values);
   };
 
@@ -49,7 +49,7 @@ export const FlashcardEditPage: FC = () => {
     <div>
       <Header />
       <Container>
-        <FlashcardCreateForm
+        <FlashcardForm
           defaultValues={defaultValues}
           onSubmit={updateFlashcard}
         />

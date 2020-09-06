@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import { useHistory } from "react-router-dom";
 import { Header } from "../../shared";
-import { FlashcardCreateFormValues } from "./types";
+import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { Container } from "../../lib";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
-import { FlashcardCreateForm } from "./form";
+import { FlashcardForm } from "../../shared/flashcard-form";
 
 /**
  * カード作成ページ。
@@ -12,7 +12,8 @@ import { FlashcardCreateForm } from "./form";
 export const FlashcardCreatePage: FC = () => {
   const history = useHistory();
 
-  const handleSubmitForm = async (values: FlashcardCreateFormValues) => {
+  const handleSubmitForm = async (values: FlashcardFormValues) => {
+    // TODO error handling
     const id = await flashcardRepository.create(values);
     history.push(`/flashcard-detail/${id}`);
   };
@@ -21,7 +22,7 @@ export const FlashcardCreatePage: FC = () => {
     <div>
       <Header />
       <Container>
-        <FlashcardCreateForm
+        <FlashcardForm
           onSubmit={handleSubmitForm}
           defaultValues={{
             qaList: [
