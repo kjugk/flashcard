@@ -22,7 +22,6 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
     mode: "onSubmit",
     defaultValues,
   });
-
   const { fields, append, remove } = useFieldArray<Qa>({
     control,
     name: "qaList",

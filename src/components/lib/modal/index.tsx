@@ -29,6 +29,7 @@ const BackDrop = styled.div`
   height: 100%;
   width: 100%;
   background: rgba(33, 33, 33, 0.3);
+  z-index: 9999;
 `;
 
 const ModalContainer = styled.div`
@@ -38,7 +39,7 @@ const ModalContainer = styled.div`
   left: 0;
   height: 100%;
   width: 100%;
-  z-index: 10;
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;

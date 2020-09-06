@@ -6,10 +6,9 @@ import { useSystemContext } from "../../../global/system/system.provider";
 import { Header } from "../../shared";
 import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";
-import { Button } from "../../lib/button";
 import { Container } from "../../lib/container";
 import { variables } from "../../../styles/variables";
-import { ConfirmableModal } from "../../lib/confirmable-modal";
+import { Controller } from "./controller";
 
 /**
  * カードの詳細ページ。
@@ -20,11 +19,11 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
   const [state, dispatch] = useDetailPageReducer();
-  const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [deleting, setDeleting] = useState(false);
 
   const getFlashcardDetail = async () => {
+    setLoading(true);
+
     try {
       const item = await flashcardRepository.find(id);
       dispatch({
@@ -40,8 +39,6 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   };
 
   const deleteFlashcard = async () => {
-    setDeleting(true);
-
     try {
       await flashcardRepository.delete(id);
       systemDispatch({
@@ -52,11 +49,8 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         },
       });
 
-      setDeleting(false);
       history.replace("/flashcard-list");
     } catch {
-      setDeleting(false);
-
       // エラーの種類で処理を分岐させる
       systemDispatch({
         type: "set-system-message",
@@ -73,9 +67,6 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     getFlashcardDetail();
   }, []);
 
-  const closeModal = () => setShowDeleteConfirmModal(false);
-  const handleClickDeleteButton = () => setShowDeleteConfirmModal(true);
-  const handleConfirmDelete = deleteFlashcard;
   const { flashcard } = state;
 
   return (
@@ -88,43 +79,19 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         {loading && <div>Loading</div>}
         {!loading && flashcard && (
           <>
-            <Title text={flashcard.name} tag="h1" size="xl" />
+            <Title text={flashcard.name} tag="h1" size="xxl" />
 
-            <button
-              type="button"
-              onClick={handleClickDeleteButton}
-              disabled={deleting}
-            >
-              delete
-            </button>
+            <Controller
+              onEdit={() => history.push(`/flashcard-edit/${id}`)}
+              onDelete={deleteFlashcard}
+            />
 
             <QaViewer qaList={flashcard.qaList}></QaViewer>
 
             {flashcard.description && <p>{flashcard.description}</p>}
-
-            <div style={{ textAlign: "center", margin: "24px 0" }}>
-              <Button
-                label="カード追加・編集"
-                size="xl"
-                outlined
-                onClick={() => {
-                  history.push(`/flashcard-edit/${id}`);
-                }}
-              />
-            </div>
           </>
         )}
       </Container>
-
-      <ConfirmableModal
-        show={showDeleteConfirmModal}
-        title="削除しますがよろしいですか"
-        description="一度削除したものは復元出来ません"
-        submitLabel="削除"
-        onClose={closeModal}
-        onCancel={closeModal}
-        onSubmit={handleConfirmDelete}
-      />
     </div>
   );
 };
