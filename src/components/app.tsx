@@ -17,32 +17,36 @@ import {
   TopPage,
   NotFoundPage,
 } from "./pages/index";
+import { LoadingModal } from "./shared/loading-modal";
 
 export const App: FunctionComponent = () => {
   return (
-    <Router>
-      <Switch>
-        <PrivateRoute path="/flashcard-list">
-          <FlashcardListPage />
-        </PrivateRoute>
+    <>
+      <Router>
+        <Switch>
+          <PrivateRoute path="/flashcard-list">
+            <FlashcardListPage />
+          </PrivateRoute>
 
-        <PrivateRoute path="/flashcard-create">
-          <FlashcardCreatePage />
-        </PrivateRoute>
+          <PrivateRoute path="/flashcard-create">
+            <FlashcardCreatePage />
+          </PrivateRoute>
 
-        <PrivateRoute path="/flashcard-edit/:id">
-          <FlashcardEditPage />
-        </PrivateRoute>
+          <PrivateRoute path="/flashcard-edit/:id">
+            <FlashcardEditPage />
+          </PrivateRoute>
 
-        <PrivateRoute path="/flashcard-detail/:id">
-          <FlashcardDetailPage />
-        </PrivateRoute>
+          <PrivateRoute path="/flashcard-detail/:id">
+            <FlashcardDetailPage />
+          </PrivateRoute>
 
-        <Route path="/sign-in" component={SignInPage}></Route>
-        <Route exact path="/" component={TopPage}></Route>
-        <Route path="*" component={NotFoundPage}></Route>
-      </Switch>
-    </Router>
+          <Route path="/sign-in" component={SignInPage}></Route>
+          <Route exact path="/" component={TopPage}></Route>
+          <Route path="*" component={NotFoundPage}></Route>
+        </Switch>
+      </Router>
+      <LoadingModal />
+    </>
   );
 };
 

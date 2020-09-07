@@ -40,6 +40,8 @@ export const FlashcardDetailPage: FunctionComponent = () => {
 
   const deleteFlashcard = async () => {
     try {
+      systemDispatch({ type: "update-loading", payload: true });
+
       await flashcardRepository.delete(id);
       systemDispatch({
         type: "set-system-message",
@@ -59,6 +61,8 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           message: "削除できませんでした。",
         },
       });
+    } finally {
+      systemDispatch({ type: "update-loading", payload: false });
     }
   };
 
