@@ -5,17 +5,26 @@ import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { Container } from "../../lib";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { FlashcardForm } from "../../shared/flashcard-form";
+import { useSystemContext } from "../../../global/system/system.provider";
 
 /**
  * カード作成ページ。
  */
 export const FlashcardCreatePage: FC = () => {
   const history = useHistory();
+  const { systemDispatch } = useSystemContext();
 
   const handleSubmitForm = async (values: FlashcardFormValues) => {
-    // TODO error handling
-    const id = await flashcardRepository.create(values);
-    history.push(`/flashcard-detail/${id}`);
+    try {
+      systemDispatch({ type: "update-loading", payload: true });
+
+      const id = await flashcardRepository.create(values);
+      history.push(`/flashcard-detail/${id}`);
+    } catch {
+      // TODO エラーハンドリング
+    } finally {
+      systemDispatch({ type: "update-loading", payload: false });
+    }
   };
 
   return (

@@ -50,7 +50,10 @@ export const Controller: FC<Props> = ({ onEdit, onDelete }) => {
         submitLabel="削除"
         onClose={closeDeleteConfirmModal}
         onCancel={closeDeleteConfirmModal}
-        onSubmit={onDelete}
+        onSubmit={() => {
+          setShowDeleteConfirmModal(false);
+          onDelete();
+        }}
       />
     </>
   );

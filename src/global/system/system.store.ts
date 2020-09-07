@@ -12,17 +12,20 @@ export type SystemAction =
         message: string;
         messageType: MessageType;
       };
-    };
+    }
+  | { type: "update-loading"; payload: boolean };
 
 // State types
 export interface SystemState {
   message: string;
   messageType: MessageType;
+  loading: boolean;
 }
 
 const initialState: SystemState = {
   message: "",
   messageType: "info",
+  loading: false,
 };
 
 // reducer
@@ -39,6 +42,12 @@ function reducer(state: SystemState, action: SystemAction): SystemState {
       return {
         ...state,
         ...action.payload,
+      };
+
+    case "update-loading":
+      return {
+        ...state,
+        loading: action.payload,
       };
   }
 }

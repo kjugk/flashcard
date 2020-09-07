@@ -37,6 +37,8 @@ export const FlashcardEditPage: FC = () => {
 
   const updateFlashcard = async (values: FlashcardFormValues) => {
     try {
+      systemDispatch({ type: "update-loading", payload: true });
+
       await flashcardRepository.update(id, values);
       systemDispatch({
         type: "set-system-message",
@@ -48,6 +50,8 @@ export const FlashcardEditPage: FC = () => {
       history.replace(`/flashcard-detail/${id}`);
     } catch (e) {
       console.error(e);
+    } finally {
+      systemDispatch({ type: "update-loading", payload: false });
     }
   };
 

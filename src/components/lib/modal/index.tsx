@@ -23,7 +23,7 @@ export const Modal: FC<Props> = ({ show, onClose, children }) => {
 };
 
 const BackDrop = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100%;
@@ -34,7 +34,7 @@ const BackDrop = styled.div`
 
 const ModalContainer = styled.div`
   background: transparent;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100%;
