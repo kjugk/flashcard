@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
+import styled from "styled-components";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
@@ -44,6 +45,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       systemDispatch({ type: "update-loading", payload: true });
 
       await flashcardRepository.delete(id);
+
       systemDispatch({
         type: "set-system-message",
         payload: {
@@ -83,20 +85,30 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           tag="main"
           style={{ padding: "16px", background: variables.colors.white }}
         >
-          <>
-            <Title text={flashcard.name} tag="h1" size="xxl" />
+          <TitleWrapper>
+            <Title
+              text={flashcard.name}
+              tag="h1"
+              size="xxl"
+              style={{ flex: 1 }}
+            />
 
             <Controller
               onEdit={() => history.push(`/flashcard-edit/${id}`)}
               onDelete={deleteFlashcard}
             />
+          </TitleWrapper>
 
-            <QaViewer qaList={flashcard.qaList}></QaViewer>
+          <QaViewer qaList={flashcard.qaList}></QaViewer>
 
-            {flashcard.description && <p>{flashcard.description}</p>}
-          </>
+          {flashcard.description && <p>{flashcard.description}</p>}
         </Container>
       )}
     </div>
   );
 };
+
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
+`;
