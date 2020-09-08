@@ -9,6 +9,7 @@ import { Title } from "../../lib/title";
 import Delete from "@material-ui/icons/Delete";
 import { Qa } from "../../pages/flashcard-detail/store";
 import { TextButton } from "../../lib/text-button";
+import { CSSTransitionGroup } from "react-transition-group";
 
 interface Props {
   defaultValues?: Partial<FlashcardFormValues>;
@@ -67,52 +68,54 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
       </Box>
 
       <QaListWrapper>
-        {fields.map((field, index) => (
-          <Box
-            key={field.id}
-            withShadow={false}
-            tag="li"
-            style={{ marginBottom: "16px" }}
-          >
-            <Title
-              text={`${index + 1}`}
-              size="xl"
-              tag="h2"
+        <CSSTransitionGroup transitionName="qaList">
+          {fields.map((field, index) => (
+            <Box
+              key={field.id}
+              withShadow={false}
+              tag="li"
               style={{ marginBottom: "16px" }}
-            />
+            >
+              <Title
+                text={`${index + 1}`}
+                size="xl"
+                tag="h2"
+                style={{ marginBottom: "16px" }}
+              />
 
-            <Textarea
-              name={`qaList[${index}].question`}
-              label="問題"
-              defaultValue={field.question}
-              rows={3}
-              inputRef={register({ required: true })}
-              errorMessage={getErrorMessage(
-                errors.qaList ? errors.qaList[index]?.question : undefined
-              )}
-            />
+              <Textarea
+                name={`qaList[${index}].question`}
+                label="問題"
+                defaultValue={field.question}
+                rows={3}
+                inputRef={register({ required: true })}
+                errorMessage={getErrorMessage(
+                  errors.qaList ? errors.qaList[index]?.question : undefined
+                )}
+              />
 
-            <Textarea
-              name={`qaList[${index}].answer`}
-              defaultValue={field.answer}
-              rows={3}
-              label="答え"
-              inputRef={register({ required: true })}
-              errorMessage={getErrorMessage(
-                errors.qaList ? errors.qaList[index]?.answer : undefined
-              )}
-            />
+              <Textarea
+                name={`qaList[${index}].answer`}
+                defaultValue={field.answer}
+                rows={3}
+                label="答え"
+                inputRef={register({ required: true })}
+                errorMessage={getErrorMessage(
+                  errors.qaList ? errors.qaList[index]?.answer : undefined
+                )}
+              />
 
-            <div style={{ textAlign: "end" }}>
-              <TextButton
-                onClick={() => removeQuestion(index)}
-                disabled={fields.length <= 1}
-              >
-                <Delete style={{ fontSize: 24 }} />
-              </TextButton>
-            </div>
-          </Box>
-        ))}
+              <div style={{ textAlign: "end" }}>
+                <TextButton
+                  onClick={() => removeQuestion(index)}
+                  disabled={fields.length <= 1}
+                >
+                  <Delete style={{ fontSize: 24 }} />
+                </TextButton>
+              </div>
+            </Box>
+          ))}
+        </CSSTransitionGroup>
       </QaListWrapper>
 
       <div style={{ textAlign: "center", marginBottom: "24px" }}>
@@ -135,5 +138,23 @@ const QaListWrapper = styled.ul`
   margin-top: 16px;
   @media only screen and (max-width: 767px) {
     padding: 0 16px;
+  }
+
+  .qaList-enter {
+    opacity: 0.01;
+  }
+
+  .qaList-enter.qaList-enter-active {
+    opacity: 1;
+    transition: opacity 200ms ease-in;
+  }
+
+  .qaList-leave {
+    opacity: 1;
+  }
+
+  .qaList-leave.qaList-leave-active {
+    opacity: 0.01;
+    transition: opacity 200ms ease-in;
   }
 `;
