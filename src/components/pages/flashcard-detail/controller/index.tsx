@@ -20,9 +20,9 @@ export const Controller: FC<Props> = ({ onEdit, onDelete }) => {
 
   return (
     <>
-      <div style={{ textAlign: "right", position: "relative" }}>
+      <div style={{ position: "relative" }}>
         <TextButton onClick={() => setShowPopover(true)} disabled={false}>
-          <MoreHoriz style={{ fontSize: 28 }} />
+          <MoreHoriz style={{ fontSize: 20 }} />
         </TextButton>
 
         <Popover show={showPopover} onClose={() => setShowPopover(false)}>
@@ -61,6 +61,7 @@ export const Controller: FC<Props> = ({ onEdit, onDelete }) => {
 
 const List = styled.ul`
   padding: 24px;
+  width: 124px;
   li {
     margin-bottom: 24px;
     display: flex;

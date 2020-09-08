@@ -6,7 +6,6 @@ import { useListPageReducer } from "./store";
 import { Container } from "../../lib/";
 import { EmptyState } from "./empty-state";
 import { Title } from "../../lib/title";
-import { FlashcardListPlaceholder } from "./placeholder";
 import { LoadingSpinner } from "../../shared/loading-spinner";
 
 /**
@@ -42,16 +41,14 @@ export const FlashcardListPage: FunctionComponent = () => {
       <LoadingSpinner show={loading} />
       {!loading && (
         <Container tag="main" style={{ padding: "16px" }}>
-          <>
-            <Title
-              text="カード一覧"
-              tag="h1"
-              size="xl"
-              style={{ marginBottom: "16px" }}
-            />
-            {flashcards.length <= 0 && <EmptyState />}
-            {flashcards.length >= 1 && <FlashcardList items={flashcards} />}
-          </>
+          <Title
+            text="カード一覧"
+            tag="h1"
+            size="xl"
+            style={{ marginBottom: "16px" }}
+          />
+          {flashcards.length <= 0 && <EmptyState />}
+          {flashcards.length >= 1 && <FlashcardList items={flashcards} />}
         </Container>
       )}
     </div>
