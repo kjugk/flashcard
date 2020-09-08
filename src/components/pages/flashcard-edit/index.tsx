@@ -6,6 +6,7 @@ import { FlashcardForm } from "../../shared/flashcard-form";
 import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useSystemContext } from "../../../global/system/system.provider";
+import { LoadingSpinner } from "../../shared/loading-spinner";
 
 /**
  * カード編集ページ。
@@ -59,19 +60,18 @@ export const FlashcardEditPage: FC = () => {
     getFlashcardDetail();
   }, []);
 
-  if (loading) {
-    return <div>Loading</div>;
-  }
-
   return (
     <div>
       <Header />
-      <Container>
-        <FlashcardForm
-          defaultValues={defaultValues}
-          onSubmit={updateFlashcard}
-        />
-      </Container>
+      <LoadingSpinner show={loading} />
+      {!loading && (
+        <Container>
+          <FlashcardForm
+            defaultValues={defaultValues}
+            onSubmit={updateFlashcard}
+          />
+        </Container>
+      )}
     </div>
   );
 };

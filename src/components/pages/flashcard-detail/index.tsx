@@ -9,6 +9,7 @@ import { Title } from "../../lib/title";
 import { Container } from "../../lib/container";
 import { variables } from "../../../styles/variables";
 import { Controller } from "./controller";
+import { LoadingSpinner } from "../../shared/loading-spinner";
 
 /**
  * カードの詳細ページ。
@@ -76,12 +77,12 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   return (
     <div>
       <Header />
-      <Container
-        tag="main"
-        style={{ padding: "16px", background: variables.colors.white }}
-      >
-        {loading && <div>Loading</div>}
-        {!loading && flashcard && (
+      <LoadingSpinner show={loading} />
+      {!loading && flashcard && (
+        <Container
+          tag="main"
+          style={{ padding: "16px", background: variables.colors.white }}
+        >
           <>
             <Title text={flashcard.name} tag="h1" size="xxl" />
 
@@ -94,8 +95,8 @@ export const FlashcardDetailPage: FunctionComponent = () => {
 
             {flashcard.description && <p>{flashcard.description}</p>}
           </>
-        )}
-      </Container>
+        </Container>
+      )}
     </div>
   );
 };
