@@ -16,14 +16,17 @@ export const FlashcardCreatePage: FC = () => {
 
   const handleSubmitForm = async (values: FlashcardFormValues) => {
     try {
-      systemDispatch({ type: "update-loading", payload: true });
+      systemDispatch({
+        type: "update-loading",
+        payload: { loading: true, message: "作成中" },
+      });
 
       const id = await flashcardRepository.create(values);
       history.push(`/flashcard-detail/${id}`);
     } catch {
       // TODO エラーハンドリング
     } finally {
-      systemDispatch({ type: "update-loading", payload: false });
+      systemDispatch({ type: "update-loading", payload: { loading: false } });
     }
   };
 
