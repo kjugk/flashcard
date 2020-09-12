@@ -6,6 +6,7 @@ import { variables } from "../../../../styles/variables";
 import { TextButton } from "../../../lib/text-button";
 import { Button } from "../../../lib/button";
 import { Qa } from "../store";
+import { shuffle } from "../../../../lib/util";
 
 interface Props {
   qaList: Qa[];
@@ -14,20 +15,37 @@ interface Props {
 /**
  * QA を表示,制御するコンポーネント。
  */
-export const QaViewer: FunctionComponent<Props> = (props) => {
-  // TODO 同時に更新するstate が多いので、reducer 作る
+export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [inPageTransition, setInPageTransition] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
   const [shuffling, setShuffling] = useState(false);
-  const [copiedQaList, setCopiedQaList] = useState<Qa[]>([]);
+  const [indexList, setIndexList] = useState<number[]>([]);
 
-  useEffect(() => setCopiedQaList([...props.qaList]), []);
+  const generateDefaultIndexList = () => {
+    return Array.from(Array(qaList.length).keys());
+  };
 
-  const currantQa = useMemo(() => copiedQaList[currentPage - 1], [
-    copiedQaList,
-    currentPage,
-  ]);
+  const changeCurrentPage = (nextPage: number) => {
+    setCurrentPage(nextPage);
+    setShowAnswer(false);
+  };
+
+  const shuffleList = () => {
+    setIndexList(shuffle<number>(indexList));
+    setCurrentPage(1);
+    setShuffling(true);
+    setShowAnswer(false);
+  };
+
+  const resetList = () => {
+    setIndexList(generateDefaultIndexList());
+    setCurrentPage(1);
+    setShuffling(false);
+    setShowAnswer(false);
+  };
+
+  useEffect(() => setIndexList(generateDefaultIndexList()), []);
 
   // ページ変更直後は css の animation を off にする。
   useEffect(() => {
@@ -37,39 +55,7 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
     }, 150);
   }, [currentPage]);
 
-  const changeCurrentPage = (nextPage: number) => {
-    setCurrentPage(nextPage);
-    setShowAnswer(false);
-  };
-
-  function shuffle<T>(array: T[]): T[] {
-    if (array.length <= 1) return array;
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * i);
-      const temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
-    }
-
-    return array;
-  }
-
-  const shuffleList = () => {
-    setCopiedQaList(
-      shuffle<Qa>([...copiedQaList])
-    );
-    setCurrentPage(1);
-    setShuffling(true);
-    setShowAnswer(false);
-  };
-
-  const resetList = () => {
-    setCopiedQaList([...props.qaList]);
-    setCurrentPage(1);
-    setShuffling(false);
-    setShowAnswer(false);
-  };
-
+  const currantQa = qaList[indexList[currentPage - 1]];
   if (currantQa === undefined) return null;
 
   return (
@@ -104,10 +90,10 @@ export const QaViewer: FunctionComponent<Props> = (props) => {
           <ArrowBack style={{ fontSize: 40 }} />
         </TextButton>
 
-        <div className="pagenation">{`${currentPage}/${copiedQaList.length}`}</div>
+        <div className="pagenation">{`${currentPage}/${qaList.length}`}</div>
 
         <TextButton
-          disabled={currentPage === copiedQaList.length}
+          disabled={currentPage === qaList.length}
           onClick={() => changeCurrentPage(currentPage + 1)}
         >
           <ArrowFoward style={{ fontSize: 40 }} />
