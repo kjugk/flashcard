@@ -38,7 +38,10 @@ export const FlashcardEditPage: FC = () => {
 
   const updateFlashcard = async (values: FlashcardFormValues) => {
     try {
-      systemDispatch({ type: "update-loading", payload: true });
+      systemDispatch({
+        type: "update-loading",
+        payload: { loading: true, message: "更新中" },
+      });
 
       await flashcardRepository.update(id, values);
       systemDispatch({
@@ -52,7 +55,7 @@ export const FlashcardEditPage: FC = () => {
     } catch (e) {
       console.error(e);
     } finally {
-      systemDispatch({ type: "update-loading", payload: false });
+      systemDispatch({ type: "update-loading", payload: { loading: false } });
     }
   };
 
