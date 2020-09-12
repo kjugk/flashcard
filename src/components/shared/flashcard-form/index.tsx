@@ -68,7 +68,11 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
       </Box>
 
       <QaListWrapper>
-        <CSSTransitionGroup transitionName="qaList">
+        <CSSTransitionGroup
+          transitionName="qaList"
+          transitionEnterTimeout={200}
+          transitionLeaveTimeout={200}
+        >
           {fields.map((field, index) => (
             <Box
               key={field.id}
