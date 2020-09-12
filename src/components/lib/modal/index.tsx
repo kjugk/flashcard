@@ -23,22 +23,23 @@ export const Modal: FC<Props> = ({ show, onClose, children }) => {
 };
 
 const BackDrop = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   background: rgba(33, 33, 33, 0.3);
+  z-index: 9999;
 `;
 
 const ModalContainer = styled.div`
   background: transparent;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  z-index: 10;
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;

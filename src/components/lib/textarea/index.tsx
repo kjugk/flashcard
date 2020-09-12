@@ -4,19 +4,21 @@ import { variables } from "../../../styles/variables";
 import TextareaAutosize from "react-textarea-autosize";
 
 interface Props {
-  value: string;
+  name: string;
   label: string;
+  inputRef: (ref: HTMLTextAreaElement) => void;
+  defaultValue?: string;
   rows?: number;
-  onChange: (v: string) => void;
   placeholder?: string;
   errorMessage?: string;
 }
 
 export const Textarea: FC<Props> = ({
-  value,
+  name,
   label,
+  inputRef,
+  defaultValue,
   rows = 1,
-  onChange,
   placeholder,
   errorMessage,
 }) => {
@@ -29,10 +31,11 @@ export const Textarea: FC<Props> = ({
       <div className="label-text">{label}</div>
       <StyledTextarea hasError={hasError}>
         <TextareaAutosize
-          value={value}
+          name={name}
+          defaultValue={defaultValue}
+          ref={inputRef}
           minRows={rows}
           placeholder={placeholder}
-          onChange={(e) => onChange(e.target.value)}
         />
       </StyledTextarea>
 
@@ -61,7 +64,7 @@ const StyledTextarea = styled.div<{ hasError: boolean }>`
   textarea {
     resize: none;
     border: 1px solid #676d71;
-    font-size: ${variables.fontSize.m};
+    font-size: ${variables.fontSize.l};
     color: inherit;
     width: 100%;
     padding: 12px 8px;

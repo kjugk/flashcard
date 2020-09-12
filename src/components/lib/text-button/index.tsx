@@ -4,13 +4,15 @@ import { variables } from "../../../styles/variables";
 import { FontSize } from "../../../styles/variables";
 
 interface Props {
-  disabled: boolean;
+  fullWidth?: boolean;
+  disabled?: boolean;
   size?: FontSize;
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const TextButton: FunctionComponent<Props> = ({
-  disabled,
+  fullWidth = false,
+  disabled = false,
   size = "m",
   onClick,
   children,
@@ -18,6 +20,7 @@ export const TextButton: FunctionComponent<Props> = ({
   return (
     <StyledButton
       type="button"
+      fullWidth={fullWidth}
       disabled={disabled}
       size={size}
       onClick={onClick}
@@ -27,7 +30,14 @@ export const TextButton: FunctionComponent<Props> = ({
   );
 };
 
-const StyledButton = styled.button<{ size: FontSize; disabled: boolean }>`
+const StyledButton = styled.button<{
+  size: FontSize;
+  disabled: boolean;
+  fullWidth: boolean;
+}>`
+  display: inline-block;
+  padding: 0.4em;
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
   font-size: ${(props) => variables.fontSize[props.size]};
   ${(props) => (props.disabled ? `color: ${variables.colors.lightGrey}` : "")};
 `;

@@ -1,19 +1,23 @@
 import React, { FC, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Header } from "../../shared/header";
 import { Container } from "../../lib/container";
-import { FlashcardCreateForm } from "../flashcard-create/form";
-import { FlashcardCreateFormValues } from "../flashcard-create/types";
+import { FlashcardForm } from "../../shared/flashcard-form";
+import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
+import { useSystemContext } from "../../../global/system/system.provider";
+import { LoadingSpinner } from "../../shared/loading-spinner";
 
 /**
  * カード編集ページ。
  */
 export const FlashcardEditPage: FC = () => {
   const { id } = useParams<{ id: string }>();
+  const history = useHistory();
+  const { systemDispatch } = useSystemContext();
   const [loading, setLoading] = useState(false);
   const [defaultValues, setDefaultValues] = useState<
-    FlashcardCreateFormValues | undefined
+    FlashcardFormValues | undefined
   >(undefined);
 
   const getFlashcardDetail = async () => {
@@ -27,33 +31,50 @@ export const FlashcardEditPage: FC = () => {
       });
     } catch {
       // TODO コンテンツ置き換えるだけにする
-      alert("not found");
     } finally {
       setLoading(false);
     }
   };
 
-  const updateFlashcard = async (values: FlashcardCreateFormValues) => {
-    console.log(values);
+  const updateFlashcard = async (values: FlashcardFormValues) => {
+    try {
+      systemDispatch({
+        type: "update-loading",
+        payload: { loading: true, message: "更新中" },
+      });
+
+      await flashcardRepository.update(id, values);
+      systemDispatch({
+        type: "set-system-message",
+        payload: {
+          messageType: "info",
+          message: "編集しました。",
+        },
+      });
+      history.replace(`/flashcard-detail/${id}`);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      systemDispatch({ type: "update-loading", payload: { loading: false } });
+    }
   };
 
   useEffect(() => {
     getFlashcardDetail();
   }, []);
 
-  if (loading) {
-    return <div>Loading</div>;
-  }
-
   return (
     <div>
       <Header />
-      <Container>
-        <FlashcardCreateForm
-          defaultValues={defaultValues}
-          onSubmit={updateFlashcard}
-        />
-      </Container>
+      <LoadingSpinner show={loading} />
+      {!loading && (
+        <Container>
+          <FlashcardForm
+            defaultValues={defaultValues}
+            onSubmit={updateFlashcard}
+          />
+        </Container>
+      )}
     </div>
   );
 };

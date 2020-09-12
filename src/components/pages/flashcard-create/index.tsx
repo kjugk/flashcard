@@ -1,27 +1,40 @@
 import React, { FC } from "react";
 import { useHistory } from "react-router-dom";
 import { Header } from "../../shared";
-import { FlashcardCreateFormValues } from "./types";
+import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { Container } from "../../lib";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
-import { FlashcardCreateForm } from "./form";
+import { FlashcardForm } from "../../shared/flashcard-form";
+import { useSystemContext } from "../../../global/system/system.provider";
 
 /**
  * カード作成ページ。
  */
 export const FlashcardCreatePage: FC = () => {
   const history = useHistory();
+  const { systemDispatch } = useSystemContext();
 
-  const handleSubmitForm = async (values: FlashcardCreateFormValues) => {
-    const id = await flashcardRepository.create(values);
-    history.push(`/flashcard-detail/${id}`);
+  const handleSubmitForm = async (values: FlashcardFormValues) => {
+    try {
+      systemDispatch({
+        type: "update-loading",
+        payload: { loading: true, message: "作成中" },
+      });
+
+      const id = await flashcardRepository.create(values);
+      history.push(`/flashcard-detail/${id}`);
+    } catch {
+      // TODO エラーハンドリング
+    } finally {
+      systemDispatch({ type: "update-loading", payload: { loading: false } });
+    }
   };
 
   return (
     <div>
       <Header />
       <Container>
-        <FlashcardCreateForm
+        <FlashcardForm
           onSubmit={handleSubmitForm}
           defaultValues={{
             qaList: [

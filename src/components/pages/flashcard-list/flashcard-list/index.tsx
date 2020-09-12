@@ -21,7 +21,7 @@ export const FlashcardList: FunctionComponent<Props> = (props) => (
               text={item.name}
               style={{ marginBottom: "16px" }}
             />
-            <div>{item.description}</div>
+            <div style={{ minHeight: "1.5em" }}>{item.description}</div>
           </Box>
         </Link>
       </ListItem>

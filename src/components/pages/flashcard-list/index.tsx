@@ -6,7 +6,7 @@ import { useListPageReducer } from "./store";
 import { Container } from "../../lib/";
 import { EmptyState } from "./empty-state";
 import { Title } from "../../lib/title";
-import { FlashcardListPlaceholder } from "./placeholder";
+import { LoadingSpinner } from "../../shared/loading-spinner";
 
 /**
  * カードリストページ。
@@ -24,7 +24,8 @@ export const FlashcardListPage: FunctionComponent = () => {
         type: "store-flashcards",
         payload: list,
       });
-    } finally {
+      setLoading(false);
+    } catch {
       setLoading(false);
     }
   };
@@ -37,21 +38,19 @@ export const FlashcardListPage: FunctionComponent = () => {
   return (
     <div>
       <Header />
-      <Container tag="main" style={{ padding: "16px" }}>
-        <Title
-          text="カード一覧"
-          tag="h1"
-          size="xl"
-          style={{ marginBottom: "16px" }}
-        />
-        {loading && <FlashcardListPlaceholder />}
-        {!loading && (
-          <>
-            {flashcards.length <= 0 && <EmptyState />}
-            {flashcards.length >= 1 && <FlashcardList items={flashcards} />}
-          </>
-        )}
-      </Container>
+      <LoadingSpinner show={loading} />
+      {!loading && (
+        <Container tag="main" style={{ padding: "16px" }}>
+          <Title
+            text="カード一覧"
+            tag="h1"
+            size="xl"
+            style={{ marginBottom: "16px" }}
+          />
+          {flashcards.length <= 0 && <EmptyState />}
+          {flashcards.length >= 1 && <FlashcardList items={flashcards} />}
+        </Container>
+      )}
     </div>
   );
 };

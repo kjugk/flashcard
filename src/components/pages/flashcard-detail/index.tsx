@@ -7,10 +7,10 @@ import { useSystemContext } from "../../../global/system/system.provider";
 import { Header } from "../../shared";
 import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";
-import { Button } from "../../lib/button";
 import { Container } from "../../lib/container";
-import { Modal } from "../../lib/modal";
 import { variables } from "../../../styles/variables";
+import { Controller } from "./controller";
+import { LoadingSpinner } from "../../shared/loading-spinner";
 
 /**
  * カードの詳細ページ。
@@ -21,30 +21,34 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
   const [state, dispatch] = useDetailPageReducer();
-  const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [deleting, setDeleting] = useState(false);
 
   const getFlashcardDetail = async () => {
+    setLoading(true);
+
     try {
       const item = await flashcardRepository.find(id);
       dispatch({
         type: "store-flashcard-detail",
         payload: item,
       });
-    } catch {
-      // TODO コンテンツ置き換えるだけにする
-      history.replace("/not-found");
-    } finally {
       setLoading(false);
+    } catch (e) {
+      // TODO グローバルのエラーハンドラーにエラー渡す
+      setLoading(false);
+      history.replace("/not-found");
     }
   };
 
   const deleteFlashcard = async () => {
-    setDeleting(true);
-
     try {
+      systemDispatch({
+        type: "update-loading",
+        payload: { loading: true, message: "削除中" },
+      });
+
       await flashcardRepository.delete(id);
+
       systemDispatch({
         type: "set-system-message",
         payload: {
@@ -52,6 +56,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           message: "削除しました。",
         },
       });
+
       history.replace("/flashcard-list");
     } catch {
       // エラーの種類で処理を分岐させる
@@ -63,7 +68,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         },
       });
     } finally {
-      setDeleting(false);
+      systemDispatch({ type: "update-loading", payload: { loading: false } });
     }
   };
 
@@ -72,72 +77,41 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     getFlashcardDetail();
   }, []);
 
-  const closeModal = () => setShowModal(false);
-  const handleClickDeleteButton = () => setShowModal(true);
-  const handleConfirmDelete = deleteFlashcard;
   const { flashcard } = state;
 
   return (
     <div>
       <Header />
-      <Container
-        tag="main"
-        style={{ padding: "16px", background: variables.colors.white }}
-      >
-        {loading && <div>Loading</div>}
-        {!loading && flashcard && (
-          <>
-            <Title text={flashcard.name} tag="h1" size="xl" />
+      <LoadingSpinner show={loading} />
+      {!loading && flashcard && (
+        <Container
+          tag="main"
+          style={{ padding: "16px", background: variables.colors.white }}
+        >
+          <TitleWrapper>
+            <Title
+              text={flashcard.name}
+              tag="h1"
+              size="xxl"
+              style={{ flex: 1 }}
+            />
 
-            <button
-              type="button"
-              onClick={handleClickDeleteButton}
-              disabled={deleting}
-            >
-              delete
-            </button>
+            <Controller
+              onEdit={() => history.push(`/flashcard-edit/${id}`)}
+              onDelete={deleteFlashcard}
+            />
+          </TitleWrapper>
 
-            <QaViewer qaList={flashcard.qaList}></QaViewer>
+          <QaViewer qaList={flashcard.qaList}></QaViewer>
 
-            {flashcard.description && <p>{flashcard.description}</p>}
-
-            <div style={{ textAlign: "center", margin: "24px 0" }}>
-              <Button
-                label="カード追加・編集"
-                size="xl"
-                outlined
-                onClick={() => {
-                  console.log("edit");
-                }}
-              />
-            </div>
-          </>
-        )}
-      </Container>
-
-      {/* TODO SubmitModal に置き換える */}
-      <Modal show={showModal} onClose={closeModal}>
-        <div>
-          <Title
-            text="削除しますがよろしいですか?"
-            tag="h2"
-            size="xl"
-            style={{ marginBottom: "16px" }}
-          />
-          <div>一度削除したものは復元出来ません</div>
-          <ModalController>
-            <Button label="キャンセル" outlined onClick={closeModal} />
-            <Button label="削除" onClick={handleConfirmDelete} />
-          </ModalController>
-        </div>
-      </Modal>
+          {flashcard.description && <p>{flashcard.description}</p>}
+        </Container>
+      )}
     </div>
   );
 };
 
-const ModalController = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 16px;
-  margin-top: 26px;
+const TitleWrapper = styled.div`
+  display: flex;
+  align-items: flex-start;
 `;
