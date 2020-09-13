@@ -61,7 +61,6 @@ function reducer(state: SystemState, action: SystemAction): SystemState {
   }
 }
 
-// custome hooks
 export const useSystemReducer = () => useReducer(reducer, initialState);
 
 // selectors

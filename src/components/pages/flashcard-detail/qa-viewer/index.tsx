@@ -16,6 +16,7 @@ interface Props {
  * QA を表示,制御するコンポーネント。
  */
 export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
+  // TODO 同時に更新する state が多いので、reducer 作る。
   const [currentPage, setCurrentPage] = useState(1);
   const [inPageTransition, setInPageTransition] = useState(false);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -56,7 +57,12 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
     }, 150);
   }, [currentPage]);
 
-  const currantQa = qaList[indexList[currentPage - 1]];
+  const currantQa = useMemo(() => qaList[indexList[currentPage - 1]], [
+    qaList,
+    indexList,
+    currentPage,
+  ]);
+
   if (currantQa === undefined) return null;
 
   return (
@@ -70,6 +76,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
                 label="最初から"
                 size="s"
                 onClick={() => {
+                  setShowAnswer(false);
                   setShowLastPage(false);
                   setCurrentPage(1);
                 }}
