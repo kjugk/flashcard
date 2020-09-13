@@ -1,12 +1,15 @@
 export function shuffle<T>(array: T[]): T[] {
-  if (array.length <= 1) return array;
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * i);
-    const temp = array[i];
+  // TODO deep copy するか検討
+  const copied = array.slice();
+  if (copied.length <= 1) return copied;
 
-    array[i] = array[j];
-    array[j] = temp;
+  for (let i = copied.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * i);
+    const temp = copied[i];
+
+    copied[i] = copied[j];
+    copied[j] = temp;
   }
 
-  return array;
+  return copied;
 }
