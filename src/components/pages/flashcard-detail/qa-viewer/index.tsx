@@ -37,6 +37,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
     setIndexList(shuffle<number>(indexList));
     setCurrentPage(1);
     setShuffling(true);
+    setShowLastPage(false);
     setShowAnswer(false);
   };
 
@@ -44,6 +45,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
     setIndexList(generateDefaultIndexList());
     setCurrentPage(1);
     setShuffling(false);
+    setShowLastPage(false);
     setShowAnswer(false);
   };
 
