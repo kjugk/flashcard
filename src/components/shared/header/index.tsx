@@ -77,7 +77,8 @@ const Nav = styled.nav`
 
 const ProfileIconWrapper = styled.div`
   position: relative;
-  margin-left: 8px;
+  margin-left: 12px;
+  line-height: 1;
 `;
 
 const ProfileIcon = styled.img`
