@@ -46,10 +46,10 @@ function reducer(
   }
 }
 
-// custom hooks
 export const useCurrentUserReducer = () => useReducer(reducer, initialState);
 
 // selectors
+// TODO ただのモジュールにまとめようかな
 export const useIsSignedIn = (currentUserState: CurrentUserState) => {
   return useMemo(
     () => currentUserState.initialized && currentUserState.name !== "",

@@ -2,8 +2,9 @@ import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FlashcardListItem } from "../store";
-import { Box } from "../../../lib/box";
 import { Title } from "../../../lib/title";
+import { variables } from "../../../../styles/variables";
+import Schedule from "@material-ui/icons/Schedule";
 
 interface Props {
   items: FlashcardListItem[];
@@ -14,15 +15,20 @@ export const FlashcardList: FunctionComponent<Props> = (props) => (
     {props.items.map((item) => (
       <ListItem key={item.id}>
         <Link to={`/flashcard-detail/${item.id}`}>
-          <Box>
-            <Title
-              tag="div"
-              size="l"
-              text={item.name}
-              style={{ marginBottom: "16px" }}
-            />
-            <div style={{ minHeight: "1.5em" }}>{item.description}</div>
-          </Box>
+          <Title
+            tag="div"
+            size="xl"
+            text={item.name}
+            style={{ marginBottom: "12px" }}
+          />
+          <div className="description">{item.description}</div>
+
+          <ListBottomContainer>
+            <div className="date">
+              <Schedule className="icon" />
+              2020/10/10
+            </div>
+          </ListBottomContainer>
         </Link>
       </ListItem>
     ))}
@@ -40,5 +46,32 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
+  padding: 24px 16px;
+  background: ${variables.colors.white};
+  border-radius: 6px;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1), 0px 4px 8px rgba(0, 0, 0, 0.08),
+    0px 1px 12px rgba(0, 0, 0, 0.04);
   margin-bottom: 16px;
+
+  .description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+`;
+
+const ListBottomContainer = styled.div`
+  display: flex;
+  margin-top: 20px;
+
+  .date {
+    color: ${variables.colors.darkGrey};
+    display: flex;
+    line-height: 1;
+    align-items: center;
+    .icon {
+      margin-right: 4px;s
+    }
+  }
 `;

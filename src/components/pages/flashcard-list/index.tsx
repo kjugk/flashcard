@@ -39,10 +39,11 @@ export const FlashcardListPage: FunctionComponent = () => {
     <div>
       <Header />
       <LoadingSpinner show={loading} />
+
       {!loading && (
         <Container tag="main" style={{ padding: "16px" }}>
           <Title
-            text="カード一覧"
+            text="問題集一覧"
             tag="h1"
             size="xl"
             style={{ marginBottom: "16px" }}

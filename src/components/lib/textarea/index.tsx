@@ -68,7 +68,6 @@ const StyledTextarea = styled.div<{ hasError: boolean }>`
     color: inherit;
     width: 100%;
     padding: 12px 8px;
-    line-height: 130%;
     ${(props) => (props.hasError ? "border-color: red;" : "")}
     &::placeholder {
       color: #aaa;
