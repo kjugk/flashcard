@@ -67,7 +67,6 @@ const List = styled.ul`
     display: flex;
     align-items: center;
     cursor: pointer;
-    line-height: 1.2;
     &:last-child {
       margin-bottom: 0px;
     }

@@ -4,6 +4,7 @@ interface CssVariables {
   colors: {
     white: string;
     grey: string;
+    lightBlue: string;
     lightGrey: string;
   };
   fontSize: {
@@ -15,6 +16,7 @@ export const variables: CssVariables = {
   colors: {
     white: "#FFFFFF",
     grey: "#F4F4FB",
+    lightBlue: "#509FF8",
     lightGrey: "#CFCECE",
   },
   fontSize: {
