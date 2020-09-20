@@ -8,6 +8,7 @@ import { IconButton } from "../../../lib/icon-button";
 import { Button } from "../../../lib/button";
 import { Qa } from "../store";
 import { shuffle } from "../../../../lib/util";
+import { ProgressBar } from "../progress-bar";
 
 interface Props {
   qaList: Qa[];
@@ -109,6 +110,12 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
           </Card>
         )}
       </CardWrapper>
+
+      <ProgressBar
+        currentPage={currentPage}
+        totalPage={qaList.length}
+        style={{ marginBottom: "12px" }}
+      />
 
       <Controller>
         <IconButton

@@ -30,7 +30,7 @@ export const IconButton: FunctionComponent<Props> = ({
       style={style}
       onClick={onClick}
     >
-      {icon}
+      <Wrapper>{icon}</Wrapper>
     </StyledButton>
   );
 };
@@ -42,10 +42,9 @@ const StyledButton = styled.button<{
 }>`
   background: transparent;
   display: inline-flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0.4em;
+  padding: 0.5em;
   font-size: ${(props) => variables.fontSize[props.size]};
   color: ${(props) =>
     props.disabled
@@ -53,11 +52,17 @@ const StyledButton = styled.button<{
       : variables.colors[props.color]};
   transition: background-color color 0.2s;
   border-radius: 9999px;
-
-  &:focus {
-    background: ${variables.colors.lightGrey};
-  }
+  text-align: center;
+  vertical-align: middle;
   &:active {
     background: ${variables.colors.lightGrey};
   }
+`;
+
+const Wrapper = styled.span`
+  display: flex;
+  font-size: 100%;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `;
