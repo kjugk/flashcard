@@ -4,7 +4,7 @@ import { flashcardRepository } from "../../../repositories/flashcard/flashcard-r
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
 import { useSystemContext } from "../../../global/system/system.provider";
-import { Header } from "../../shared";
+import { ClosableHeader } from "../../shared/closable-header";
 import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";
 import { Container } from "../../lib/container";
@@ -81,7 +81,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
 
   return (
     <div>
-      <Header />
+      <ClosableHeader title="問題集" />
       <LoadingSpinner show={loading} />
       {!loading && flashcard && (
         <Container

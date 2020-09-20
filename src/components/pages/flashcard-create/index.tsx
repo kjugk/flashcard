@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { useHistory } from "react-router-dom";
-import { Header } from "../../shared";
+import { ClosableHeader } from "../../shared/closable-header";
 import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { Container } from "../../lib";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
@@ -30,9 +30,11 @@ export const FlashcardCreatePage: FC = () => {
     }
   };
 
+  console.log(history.location.state);
+
   return (
     <div>
-      <Header />
+      <ClosableHeader title="問題集の作成" />
       <Container>
         <FlashcardForm
           onSubmit={handleSubmitForm}

@@ -41,7 +41,7 @@ const StyledButton = styled.button<{
   disabled: boolean;
 }>`
   background: transparent;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -54,6 +54,9 @@ const StyledButton = styled.button<{
   transition: background-color color 0.2s;
   border-radius: 9999px;
 
+  &:focus {
+    background: ${variables.colors.lightGrey};
+  }
   &:active {
     background: ${variables.colors.lightGrey};
   }

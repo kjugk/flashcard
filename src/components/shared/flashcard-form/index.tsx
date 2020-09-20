@@ -111,7 +111,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
                 )}
               />
 
-              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <div style={{ textAlign: "right" }}>
                 <IconButton
                   icon={<Delete />}
                   onClick={() => removeQuestion(index)}

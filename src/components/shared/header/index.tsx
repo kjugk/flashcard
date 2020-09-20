@@ -65,7 +65,6 @@ const StyledHeader = styled.header`
   background: ${variables.colors.lightBlue};
   color: ${variables.colors.white};
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
-  margin-bottom: 3px;
   padding: 12px 0;
 `;
 
@@ -74,6 +73,8 @@ const Nav = styled.nav`
   align-items: center;
   .brand {
     flex: 1;
+    font-weight: bold;
+    fint-size: 20px;
   }
 `;
 
