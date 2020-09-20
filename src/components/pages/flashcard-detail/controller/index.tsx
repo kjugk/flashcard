@@ -1,6 +1,5 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
-import { TextButton } from "../../../lib/text-button";
 import { IconButton } from "../../../lib/icon-button";
 import MoreVert from "@material-ui/icons/MoreVert";
 import { Popover } from "../../../lib/popover";
