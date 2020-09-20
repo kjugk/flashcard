@@ -36,7 +36,6 @@ const StyledButton = styled.button<{
   fullWidth: boolean;
 }>`
   display: inline-block;
-  line-height: 1;
   padding: 0.4em;
   font-size: ${(props) => variables.fontSize[props.size]};
   width: ${(props) => (props.fullWidth ? "100%" : "auto")};

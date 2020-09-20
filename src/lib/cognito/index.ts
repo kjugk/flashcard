@@ -38,10 +38,8 @@ export const signInWithFacebook = () => {
   });
 };
 
-export const getCognitoUser = async () => {
-  // currentAuthenticatedUser の戻り値 が Promise<any> なので、アノテーションを追加してからuserを返している。
-  const user: CognitoUser | undefined = await Auth.currentAuthenticatedUser();
-  return user;
+export const getCognitoUser = async (): Promise<CognitoUser | undefined> => {
+  return await Auth.currentAuthenticatedUser();
 };
 
 export const signOut = () => {

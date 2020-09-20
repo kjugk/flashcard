@@ -6,10 +6,10 @@ import { Link, useHistory } from "react-router-dom";
 import { signOut } from "../../../lib/cognito";
 import { useIsSignedIn } from "../../../global/current-user/current-user.store";
 import { useCurrentUserContext } from "../../../global/current-user/current-user.provider";
-import { Container } from "../../lib";
+import { Container } from "../../lib/container";
 import { Popover } from "../../lib/popover";
+import { IconButton } from "../../lib/icon-button";
 import { variables } from "../../../styles/variables";
-import { TextButton } from "../../lib/text-button";
 
 export const Header: FunctionComponent = () => {
   const { currentUserState, currentUserDispatch } = useCurrentUserContext();
@@ -32,9 +32,11 @@ export const Header: FunctionComponent = () => {
             Flashcard
           </Link>
 
-          <TextButton onClick={() => history.push("/flashcard-create")}>
-            <Add />
-          </TextButton>
+          <IconButton
+            icon={<Add />}
+            color="white"
+            onClick={() => history.push("/flashcard-create")}
+          />
 
           {isSignedIn && (
             <ProfileIconWrapper>
@@ -82,8 +84,8 @@ const ProfileIconWrapper = styled.div`
 `;
 
 const ProfileIcon = styled.img`
-  border-radius: 50%;
-  width: 24px;
+  border-radius: 9999px;
+  width: 32px;
 `;
 
 // TODO コンポーネントに切り出す

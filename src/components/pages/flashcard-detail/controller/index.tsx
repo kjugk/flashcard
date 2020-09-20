@@ -1,7 +1,8 @@
 import React, { FC, useState } from "react";
 import styled from "styled-components";
 import { TextButton } from "../../../lib/text-button";
-import MoreHoriz from "@material-ui/icons/MoreHoriz";
+import { IconButton } from "../../../lib/icon-button";
+import MoreVert from "@material-ui/icons/MoreVert";
 import { Popover } from "../../../lib/popover";
 import { ConfirmableModal } from "../../../lib/confirmable-modal";
 import Create from "@material-ui/icons/Create";
@@ -21,9 +22,7 @@ export const Controller: FC<Props> = ({ onEdit, onDelete }) => {
   return (
     <>
       <div style={{ position: "relative" }}>
-        <TextButton onClick={() => setShowPopover(true)} disabled={false}>
-          <MoreHoriz style={{ fontSize: 20 }} />
-        </TextButton>
+        <IconButton icon={<MoreVert />} onClick={() => setShowPopover(true)} />
 
         <Popover show={showPopover} onClose={() => setShowPopover(false)}>
           <List>
