@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { Header } from "../../shared/header";
+import { ClosableHeader } from "../../shared/closable-header";
 import { Container } from "../../lib/container";
 import { FlashcardForm } from "../../shared/flashcard-form";
 import { FlashcardFormValues } from "../../../global/flashcard/types";
@@ -65,7 +65,7 @@ export const FlashcardEditPage: FC = () => {
 
   return (
     <div>
-      <Header />
+      <ClosableHeader title="問題集の編集" />
       <LoadingSpinner show={loading} />
       {!loading && (
         <Container>
