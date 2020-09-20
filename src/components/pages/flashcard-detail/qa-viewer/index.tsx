@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useState, useMemo, useEffect } from "react";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import ArrowFoward from "@material-ui/icons/ArrowForward";
+import Shuffle from "@material-ui/icons/Shuffle";
 import styled from "styled-components";
 import { variables } from "../../../../styles/variables";
-import { TextButton } from "../../../lib/text-button";
+import { IconButton } from "../../../lib/icon-button";
 import { Button } from "../../../lib/button";
 import { Qa } from "../store";
 import { shuffle } from "../../../../lib/util";
@@ -110,7 +111,8 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
       </CardWrapper>
 
       <Controller>
-        <TextButton
+        <IconButton
+          icon={<ArrowBack />}
           disabled={currentPage === 1}
           onClick={() => {
             if (showLastPage) {
@@ -119,13 +121,12 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
               changeCurrentPage(currentPage - 1);
             }
           }}
-        >
-          <ArrowBack style={{ fontSize: 40 }} />
-        </TextButton>
+        />
 
-        <div className="pagenation">{`${currentPage}/${qaList.length}`}</div>
+        <div className="pagenation">{`${currentPage} / ${qaList.length}`}</div>
 
-        <TextButton
+        <IconButton
+          icon={<ArrowFoward />}
           disabled={showLastPage}
           onClick={() => {
             if (currentPage === qaList.length) {
@@ -134,19 +135,15 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
               changeCurrentPage(currentPage + 1);
             }
           }}
-        >
-          <ArrowFoward style={{ fontSize: 40 }} />
-        </TextButton>
-      </Controller>
+        />
 
-      <div style={{ textAlign: "center" }}>
-        <Button
-          label={shuffling ? "シャッフル中" : "シャッフル"}
-          outlined
-          size="xs"
+        <IconButton
+          style={{ position: "absolute", right: 0 }}
+          icon={<Shuffle />}
+          color={shuffling ? "lightBlue" : "darkGrey"}
           onClick={() => (shuffling ? resetList() : shuffleList())}
         />
-      </div>
+      </Controller>
     </div>
   );
 };
@@ -205,13 +202,15 @@ const CardContent = styled.div`
 `;
 
 const Controller = styled.div`
+  position: relative;
   align-items: center;
   display: flex;
   justify-content: center;
   font-size: 18px;
+  max-width: 500px;
+  margin: 0 auto;
   margin-bottom: 24px;
   .pagenation {
     margin: 0 16px;
-    letter-spacing: 0.6rem;
   }
 `;

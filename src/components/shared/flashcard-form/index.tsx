@@ -8,7 +8,7 @@ import { Button } from "../../lib/button";
 import { Title } from "../../lib/title";
 import Delete from "@material-ui/icons/Delete";
 import { Qa } from "../../pages/flashcard-detail/store";
-import { TextButton } from "../../lib/text-button";
+import { IconButton } from "../../lib/icon-button";
 import { CSSTransitionGroup } from "react-transition-group";
 
 interface Props {
@@ -44,6 +44,8 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
         return "";
     }
   };
+
+  console.log(fields.length);
 
   return (
     <form onSubmit={_onSubmit}>
@@ -109,13 +111,12 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
                 )}
               />
 
-              <div style={{ textAlign: "end" }}>
-                <TextButton
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <IconButton
+                  icon={<Delete />}
                   onClick={() => removeQuestion(index)}
                   disabled={fields.length <= 1}
-                >
-                  <Delete style={{ fontSize: 24 }} />
-                </TextButton>
+                />
               </div>
             </Box>
           ))}
