@@ -114,7 +114,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
       <ProgressBar
         currentPage={currentPage}
         totalPage={qaList.length}
-        style={{ marginBottom: "12px" }}
+        style={{ margin: "32px auto", maxWidth: "768px" }}
       />
 
       <Controller>
@@ -156,7 +156,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
 };
 
 const CardWrapper = styled.div`
-  max-width: 500px;
+  max-width: 768px;
   position: relative;
   margin: 0 auto;
 `;
@@ -214,7 +214,7 @@ const Controller = styled.div`
   display: flex;
   justify-content: center;
   font-size: 18px;
-  max-width: 500px;
+  max-width: 768px;
   margin: 0 auto;
   margin-bottom: 24px;
   .pagenation {
