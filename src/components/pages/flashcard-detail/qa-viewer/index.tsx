@@ -1,4 +1,10 @@
-import React, { FunctionComponent, useState, useMemo, useEffect } from "react";
+import React, {
+  FunctionComponent,
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+} from "react";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import ArrowFoward from "@material-ui/icons/ArrowForward";
 import Shuffle from "@material-ui/icons/Shuffle";
@@ -9,6 +15,7 @@ import { Button } from "../../../lib/button";
 import { Qa } from "../store";
 import { shuffle } from "../../../../lib/util";
 import { ProgressBar } from "../progress-bar";
+import Hammer from "hammerjs";
 
 interface Props {
   qaList: Qa[];
@@ -30,9 +37,24 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
     return Array.from(Array(qaList.length).keys());
   };
 
-  const changeCurrentPage = (nextPage: number) => {
-    setCurrentPage(nextPage);
+  const showNextPage = () => {
+    if (currentPage === qaList.length) {
+      setShowLastPage(true);
+      return;
+    }
+
+    setCurrentPage(currentPage + 1);
     setShowAnswer(false);
+  };
+
+  const showPrevPage = () => {
+    if (showLastPage) {
+      setShowLastPage(false);
+    }
+
+    if (currentPage <= 1) return;
+
+    setCurrentPage(currentPage - 1);
   };
 
   const shuffleList = () => {
@@ -55,11 +77,49 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
 
   // ページ変更直後は css の animation を off にする。
   useEffect(() => {
+    setShowAnswer(false);
+
     setInPageTransition(true);
     setTimeout(() => {
       setInPageTransition(false);
     }, 150);
   }, [currentPage]);
+
+  // スワイプジェスチャー対応
+  let hammer: HammerManager;
+  const ref = useRef<HTMLDivElement>(null);
+
+  const handleSwipe = (ev: HammerInput) => {
+    switch (ev.direction) {
+      case Hammer.DIRECTION_LEFT:
+        showNextPage();
+        break;
+      case Hammer.DIRECTION_RIGHT:
+        showPrevPage();
+        break;
+      default:
+    }
+  };
+
+  useEffect(() => {
+    if (ref.current === null) return;
+
+    hammer = new Hammer(ref.current);
+    hammer.on("swipe", handleSwipe);
+
+    return () => {
+      hammer.off("swipe", handleSwipe);
+    };
+  });
+
+  useEffect(() => {
+    return () => {
+      if (hammer) {
+        hammer.stop(true);
+        hammer.destroy();
+      }
+    };
+  }, []);
 
   const currantQa = useMemo(() => qaList[indexList[currentPage - 1]], [
     qaList,
@@ -71,63 +131,59 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
 
   return (
     <div>
-      <CardWrapper>
-        {showLastPage && (
-          <Card showAnswer={false} inTransition={false}>
-            <CardContent>
-              <pre>終了です！ お疲れさまでした！</pre>
-              <Button
-                label="最初から"
-                size="s"
-                onClick={() => {
-                  setShowAnswer(false);
-                  setShowLastPage(false);
-                  setCurrentPage(1);
-                }}
-              />
-            </CardContent>
-          </Card>
-        )}
-        {!showLastPage && (
-          <Card
-            inTransition={inPageTransition}
-            showAnswer={showAnswer}
-            onClick={() => setShowAnswer(!showAnswer)}
-          >
-            <CardContent>
-              <>
-                {!showAnswer && <CardDescription>問題</CardDescription>}
-                <pre>{currantQa.question}</pre>
-              </>
-            </CardContent>
+      <CardViewer ref={ref}>
+        <CardWrapper>
+          {showLastPage && (
+            <Card showAnswer={false} inTransition={false}>
+              <CardContent>
+                <pre>終了です！ お疲れさまでした！</pre>
+                <Button
+                  label="最初から"
+                  size="s"
+                  onClick={() => {
+                    setShowAnswer(false);
+                    setShowLastPage(false);
+                    setCurrentPage(1);
+                  }}
+                />
+              </CardContent>
+            </Card>
+          )}
+          {!showLastPage && (
+            <Card
+              inTransition={inPageTransition}
+              showAnswer={showAnswer}
+              onClick={() => setShowAnswer(!showAnswer)}
+            >
+              <CardContent>
+                <>
+                  {!showAnswer && <CardDescription>問題</CardDescription>}
+                  <pre>{currantQa.question}</pre>
+                </>
+              </CardContent>
 
-            <CardContent className="answer">
-              <>
-                {showAnswer && <CardDescription>答え</CardDescription>}
-                <pre>{currantQa.answer}</pre>
-              </>
-            </CardContent>
-          </Card>
-        )}
-      </CardWrapper>
+              <CardContent className="answer">
+                <>
+                  {showAnswer && <CardDescription>答え</CardDescription>}
+                  <pre>{currantQa.answer}</pre>
+                </>
+              </CardContent>
+            </Card>
+          )}
+        </CardWrapper>
+      </CardViewer>
 
       <ProgressBar
         currentPage={currentPage}
         totalPage={qaList.length}
-        style={{ marginBottom: "12px" }}
+        style={{ margin: "32px auto", maxWidth: "768px" }}
       />
 
       <Controller>
         <IconButton
           icon={<ArrowBack />}
           disabled={currentPage === 1}
-          onClick={() => {
-            if (showLastPage) {
-              setShowLastPage(false);
-            } else {
-              changeCurrentPage(currentPage - 1);
-            }
-          }}
+          onClick={showPrevPage}
         />
 
         <div className="pagenation">{`${currentPage} / ${qaList.length}`}</div>
@@ -135,13 +191,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
         <IconButton
           icon={<ArrowFoward />}
           disabled={showLastPage}
-          onClick={() => {
-            if (currentPage === qaList.length) {
-              setShowLastPage(true);
-            } else {
-              changeCurrentPage(currentPage + 1);
-            }
-          }}
+          onClick={showNextPage}
         />
 
         <IconButton
@@ -155,8 +205,10 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
   );
 };
 
+const CardViewer = styled.div``;
+
 const CardWrapper = styled.div`
-  max-width: 500px;
+  max-width: 768px;
   position: relative;
   margin: 0 auto;
 `;
@@ -214,7 +266,7 @@ const Controller = styled.div`
   display: flex;
   justify-content: center;
   font-size: 18px;
-  max-width: 500px;
+  max-width: 768px;
   margin: 0 auto;
   margin-bottom: 24px;
   .pagenation {
