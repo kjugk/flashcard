@@ -37,11 +37,24 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
     return Array.from(Array(qaList.length).keys());
   };
 
-  const changeCurrentPage = (nextPage: number) => {
-    if (nextPage <= 0 || nextPage > qaList.length) return;
+  const showNextPage = () => {
+    if (currentPage === qaList.length) {
+      setShowLastPage(true);
+      return;
+    }
 
-    setCurrentPage(nextPage);
+    setCurrentPage(currentPage + 1);
     setShowAnswer(false);
+  };
+
+  const showPrevPage = () => {
+    if (showLastPage) {
+      setShowLastPage(false);
+    }
+
+    if (currentPage <= 1) return;
+
+    setCurrentPage(currentPage - 1);
   };
 
   const shuffleList = () => {
@@ -64,6 +77,8 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
 
   // ページ変更直後は css の animation を off にする。
   useEffect(() => {
+    setShowAnswer(false);
+
     setInPageTransition(true);
     setTimeout(() => {
       setInPageTransition(false);
@@ -71,37 +86,37 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
   }, [currentPage]);
 
   // スワイプジェスチャー対応
-  let h: HammerManager;
+  let hammer: HammerManager;
   const ref = useRef<HTMLDivElement>(null);
 
   const handleSwipe = (ev: HammerInput) => {
     switch (ev.direction) {
       case Hammer.DIRECTION_LEFT:
-        setCurrentPage(currentPage + 1);
+        showNextPage();
+        break;
       case Hammer.DIRECTION_RIGHT:
-        setCurrentPage(currentPage - 1);
+        showPrevPage();
+        break;
       default:
-        return;
     }
   };
 
   useEffect(() => {
     if (ref.current === null) return;
 
-    h = new Hammer(ref.current);
-    h.on("swipe", handleSwipe);
+    hammer = new Hammer(ref.current);
+    hammer.on("swipe", handleSwipe);
 
     return () => {
-      h.off("swipe", handleSwipe);
+      hammer.off("swipe", handleSwipe);
     };
   });
 
   useEffect(() => {
     return () => {
-      if (h) {
-        console.log("destory");
-        h.stop(true);
-        h.destroy();
+      if (hammer) {
+        hammer.stop(true);
+        hammer.destroy();
       }
     };
   }, []);
@@ -116,7 +131,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
 
   return (
     <div>
-      <CardViewer ref={ref} onClick={() => console.log("clicked")}>
+      <CardViewer ref={ref}>
         <CardWrapper>
           {showLastPage && (
             <Card showAnswer={false} inTransition={false}>
@@ -168,13 +183,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
         <IconButton
           icon={<ArrowBack />}
           disabled={currentPage === 1}
-          onClick={() => {
-            if (showLastPage) {
-              setShowLastPage(false);
-            } else {
-              changeCurrentPage(currentPage - 1);
-            }
-          }}
+          onClick={showPrevPage}
         />
 
         <div className="pagenation">{`${currentPage} / ${qaList.length}`}</div>
@@ -182,13 +191,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
         <IconButton
           icon={<ArrowFoward />}
           disabled={showLastPage}
-          onClick={() => {
-            if (currentPage === qaList.length) {
-              setShowLastPage(true);
-            } else {
-              changeCurrentPage(currentPage + 1);
-            }
-          }}
+          onClick={showNextPage}
         />
 
         <IconButton
