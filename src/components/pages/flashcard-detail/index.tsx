@@ -83,6 +83,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     <div>
       <ClosableHeader title="問題集" />
       <LoadingSpinner show={loading} />
+
       {!loading && flashcard && (
         <Container
           tag="main"
