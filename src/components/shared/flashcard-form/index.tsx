@@ -45,8 +45,6 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
     }
   };
 
-  console.log(fields.length);
-
   return (
     <form onSubmit={_onSubmit}>
       <Box withShadow={false}>

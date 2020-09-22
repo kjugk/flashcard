@@ -83,6 +83,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     <div>
       <ClosableHeader title="問題集" />
       <LoadingSpinner show={loading} />
+
       {!loading && flashcard && (
         <Container
           tag="main"
@@ -102,7 +103,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
             />
           </TitleWrapper>
 
-          <QaViewer qaList={flashcard.qaList}></QaViewer>
+          <QaViewer qaList={flashcard.qaList} />
 
           {flashcard.description && <p>{flashcard.description}</p>}
         </Container>

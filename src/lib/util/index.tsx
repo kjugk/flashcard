@@ -13,3 +13,7 @@ export function shuffle<T>(array: T[]): T[] {
 
   return copied;
 }
+
+export function generateSequentialNumberList(length: number) {
+  return Array.from(Array(length).keys());
+}

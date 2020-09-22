@@ -1,7 +1,6 @@
 import { useReducer } from "react";
 
 // State
-
 export interface Qa {
   question: string;
   answer: string;
@@ -14,7 +13,8 @@ export interface FlashcardDetail {
   qaList: Qa[];
 }
 
-interface FlashcardDetailPageState {
+// TODO viewer の state と分離する
+export interface FlashcardDetailPageState {
   flashcard?: FlashcardDetail;
 }
 
@@ -32,17 +32,17 @@ export type FlashcardDetailPageAction = {
 export function reducer(
   state: FlashcardDetailPageState,
   action: FlashcardDetailPageAction
-) {
+): FlashcardDetailPageState {
   switch (action.type) {
     case "store-flashcard-detail":
       return {
         ...state,
         flashcard: action.payload,
       };
+
     default:
       return state;
   }
 }
 
-// custom hooks
 export const useDetailPageReducer = () => useReducer(reducer, initialState);
