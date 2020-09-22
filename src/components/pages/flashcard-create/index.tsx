@@ -30,8 +30,6 @@ export const FlashcardCreatePage: FC = () => {
     }
   };
 
-  console.log(history.location.state);
-
   return (
     <div>
       <ClosableHeader title="問題集の作成" />

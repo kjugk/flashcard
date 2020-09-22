@@ -1,10 +1,4 @@
-import React, {
-  FunctionComponent,
-  useState,
-  useEffect,
-  useRef,
-  Dispatch,
-} from "react";
+import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import ArrowFoward from "@material-ui/icons/ArrowForward";
 import Shuffle from "@material-ui/icons/Shuffle";
@@ -12,23 +6,21 @@ import styled from "styled-components";
 import { variables } from "../../../../styles/variables";
 import { IconButton } from "../../../lib/icon-button";
 import { Button } from "../../../lib/button";
-import {
-  useCurrentQa,
-  FlashcardDetailPageState,
-  FlashcardDetailPageAction,
-} from "../store";
+import { Qa } from "../store";
 import { ProgressBar } from "../progress-bar";
 import Hammer from "hammerjs";
 
+import { useCurrentQa, useQaViewerReducer } from "./store";
+
 interface Props {
-  state: FlashcardDetailPageState;
-  dispatch: Dispatch<FlashcardDetailPageAction>;
+  qaList: Qa[];
 }
 
 /**
  * QA を表示,制御するコンポーネント。
  */
-export const QaViewer: FunctionComponent<Props> = ({ state, dispatch }) => {
+export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
+  const [state, dispatch] = useQaViewerReducer(qaList);
   const currentQa = useCurrentQa(state);
   const [inPageTransition, setInPageTransition] = useState(false);
 
@@ -84,11 +76,7 @@ export const QaViewer: FunctionComponent<Props> = ({ state, dispatch }) => {
     };
   }, []);
 
-  if (state.flashcard === undefined) return null;
   if (currentQa === undefined) return null;
-
-  // TODO qaList をトップレベルにあげる
-  const { qaList } = state.flashcard;
 
   return (
     <div>

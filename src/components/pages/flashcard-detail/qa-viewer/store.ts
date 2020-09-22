@@ -1,22 +1,9 @@
-import { useReducer } from "react";
+import { useReducer, useMemo } from "react";
 import { shuffle, generateSequentialNumberList } from "../../../../lib/util";
+import { Qa } from "../store";
 
-// State
-export interface Qa {
-  question: string;
-  answer: string;
-}
-
-export interface FlashcardDetail {
-  id: string;
-  name: string;
-  description: string;
+export interface QaViewerState {
   qaList: Qa[];
-}
-
-// TODO viewer の state と分離する
-export interface FlashcardDetailPageState {
-  flashcard?: FlashcardDetail;
   currentPage: number;
   qaIndexList: number[];
   showEndOfQa: boolean;
@@ -24,8 +11,8 @@ export interface FlashcardDetailPageState {
   showAnswer: boolean;
 }
 
-export const initialState: FlashcardDetailPageState = {
-  flashcard: undefined,
+export const initialState: QaViewerState = {
+  qaList: [],
   currentPage: 1,
   qaIndexList: [],
   showEndOfQa: false,
@@ -36,11 +23,7 @@ export const initialState: FlashcardDetailPageState = {
 type QuestionAnswer = "question" | "answer";
 
 // Actions
-export type FlashcardDetailPageAction =
-  | {
-      type: "store-flashcard-detail";
-      payload: FlashcardDetail;
-    }
+export type QaViewerAction =
   | {
       type: "show-next-page";
     }
@@ -61,17 +44,10 @@ export type FlashcardDetailPageAction =
 
 // Reducer
 export function reducer(
-  state: FlashcardDetailPageState,
-  action: FlashcardDetailPageAction
-): FlashcardDetailPageState {
+  state: QaViewerState,
+  action: QaViewerAction
+): QaViewerState {
   switch (action.type) {
-    case "store-flashcard-detail":
-      return {
-        ...state,
-        flashcard: action.payload,
-        qaIndexList: generateSequentialNumberList(action.payload.qaList.length),
-      };
-
     case "show-next-page":
       if (state.currentPage === state.qaIndexList.length) {
         return {
@@ -127,13 +103,22 @@ export function reducer(
   }
 }
 
-export const useDetailPageReducer = () => useReducer(reducer, initialState);
+const init = (qaList: Qa[]): QaViewerState => {
+  return {
+    ...initialState,
+    qaList: qaList,
+    qaIndexList: generateSequentialNumberList(qaList.length),
+  };
+};
+
+export const useQaViewerReducer = (qaList: Qa[]) =>
+  useReducer(reducer, qaList, init);
 
 // selectors
-export const useCurrentQa = (state: FlashcardDetailPageState) => {
-  const { flashcard, qaIndexList, currentPage } = state;
+export const useCurrentQa = (state: QaViewerState) => {
+  const { qaList, qaIndexList, currentPage } = state;
 
-  if (flashcard === undefined) return undefined;
-
-  return flashcard.qaList[qaIndexList[currentPage - 1]];
+  return useMemo(() => {
+    return qaList[qaIndexList[currentPage - 1]];
+  }, [qaList, qaIndexList, currentPage]);
 };
