@@ -39,7 +39,6 @@ export type QaViewerAction =
     }
   | {
       type: "toggle-shuffle";
-      payload: boolean;
     };
 
 // Reducer
@@ -89,10 +88,10 @@ export function reducer(
     case "toggle-shuffle":
       return {
         ...state,
-        qaIndexList: action.payload
-          ? shuffle(state.qaIndexList)
-          : generateSequentialNumberList(state.qaIndexList.length),
-        shuffling: action.payload,
+        qaIndexList: state.shuffling
+          ? generateSequentialNumberList(state.qaIndexList.length)
+          : shuffle(state.qaIndexList),
+        shuffling: !state.shuffling,
         currentPage: 1,
         showEndOfQa: false,
         showAnswer: false,

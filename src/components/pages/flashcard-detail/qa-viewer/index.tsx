@@ -144,12 +144,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
           style={{ position: "absolute", right: 0 }}
           icon={<Shuffle />}
           color={state.shuffling ? "lightBlue" : "darkGrey"}
-          onClick={() =>
-            dispatch({
-              type: "toggle-shuffle",
-              payload: !state.shuffling,
-            })
-          }
+          onClick={() => dispatch({ type: "toggle-shuffle" })}
         />
       </Controller>
     </div>
