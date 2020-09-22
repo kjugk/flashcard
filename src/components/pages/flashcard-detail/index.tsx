@@ -103,7 +103,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
             />
           </TitleWrapper>
 
-          <QaViewer qaList={flashcard.qaList}></QaViewer>
+          <QaViewer state={state} dispatch={dispatch} />
 
           {flashcard.description && <p>{flashcard.description}</p>}
         </Container>
