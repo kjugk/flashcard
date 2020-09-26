@@ -9,17 +9,24 @@ import { Button } from "../../../lib/button";
 import { Qa } from "../store";
 import { ProgressBar } from "../progress-bar";
 import Hammer from "hammerjs";
+import { EditButton } from "../edit-button";
 
 import { useCurrentQa, useQaViewerReducer } from "./store";
 
 interface Props {
   qaList: Qa[];
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
 /**
  * QA を表示,制御するコンポーネント。
  */
-export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
+export const QaViewer: FunctionComponent<Props> = ({
+  qaList,
+  onEdit,
+  onDelete,
+}) => {
   const [state, dispatch] = useQaViewerReducer(qaList);
   const currentQa = useCurrentQa(state);
   const [inPageTransition, setInPageTransition] = useState(false);
@@ -80,7 +87,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
 
   return (
     <div>
-      <CardViewer ref={ref}>
+      <div ref={ref}>
         <CardWrapper>
           {state.showEndOfQa && (
             <Card showAnswer={false} inTransition={false}>
@@ -125,7 +132,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
             </Card>
           )}
         </CardWrapper>
-      </CardViewer>
+      </div>
 
       <ProgressBar
         currentPage={state.currentPage}
@@ -134,6 +141,14 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
       />
 
       <Controller>
+        <IconButton
+          style={{ position: "absolute", left: 0 }}
+          size="xxl"
+          icon={<Shuffle />}
+          color={state.shuffling ? "lightBlue" : "darkGrey"}
+          onClick={() => dispatch({ type: "toggle-shuffle" })}
+        />
+
         <IconButton
           icon={<ArrowBack />}
           disabled={state.currentPage === 1}
@@ -148,19 +163,15 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
           onClick={showNextPage}
         />
 
-        <IconButton
+        <EditButton
+          onDelete={onDelete}
+          onEdit={onEdit}
           style={{ position: "absolute", right: 0 }}
-          size="xxl"
-          icon={<Shuffle />}
-          color={state.shuffling ? "lightBlue" : "darkGrey"}
-          onClick={() => dispatch({ type: "toggle-shuffle" })}
         />
       </Controller>
     </div>
   );
 };
-
-const CardViewer = styled.div``;
 
 const CardWrapper = styled.div`
   max-width: 768px;
@@ -171,7 +182,7 @@ const CardWrapper = styled.div`
 const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
   position: relative;
   width: 100%;
-  padding-bottom: 80%;
+  padding-bottom: 86%;
   margin: 16px 0;
   transform-style: preserve-3d;
   ${(props) => (props.inTransition ? "" : "transition: transform 0.4s;")}
@@ -196,6 +207,7 @@ const CardContent = styled.div`
   }
   .sentence {
     font-weight: bold;
+    font-size: ${variables.fontSize.l};
     flex: 1;
     display: flex;
     flex-direction: colmun;
