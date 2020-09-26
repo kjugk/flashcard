@@ -9,17 +9,24 @@ import { Button } from "../../../lib/button";
 import { Qa } from "../store";
 import { ProgressBar } from "../progress-bar";
 import Hammer from "hammerjs";
+import { EditButton } from "../edit-button";
 
 import { useCurrentQa, useQaViewerReducer } from "./store";
 
 interface Props {
   qaList: Qa[];
+  onEdit: () => void;
+  onDelete: () => void;
 }
 
 /**
  * QA を表示,制御するコンポーネント。
  */
-export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
+export const QaViewer: FunctionComponent<Props> = ({
+  qaList,
+  onEdit,
+  onDelete,
+}) => {
   const [state, dispatch] = useQaViewerReducer(qaList);
   const currentQa = useCurrentQa(state);
   const [inPageTransition, setInPageTransition] = useState(false);
@@ -80,17 +87,19 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
 
   return (
     <div>
-      <CardViewer ref={ref}>
+      <div ref={ref}>
         <CardWrapper>
           {state.showEndOfQa && (
             <Card showAnswer={false} inTransition={false}>
               <CardContent>
-                <pre>終了です！ お疲れさまでした！</pre>
-                <Button
-                  label="最初から"
-                  size="s"
-                  onClick={() => dispatch({ type: "restart-qa" })}
-                />
+                <div className="sentence">
+                  <div>終了です！ お疲れさまでした！</div>
+                  <Button
+                    label="最初から"
+                    size="s"
+                    onClick={() => dispatch({ type: "restart-qa" })}
+                  />
+                </div>
               </CardContent>
             </Card>
           )}
@@ -103,17 +112,27 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
             >
               <CardContent>
                 <CardLabel color="lightBlue">問題</CardLabel>
-                <pre>{currentQa.question}</pre>
+                <div className="sentence">
+                  <div>{currentQa.question}</div>
+                </div>
+                {state.currentPage === 1 && (
+                  <div className="guide">答えを見る場合はカードをタップ</div>
+                )}
               </CardContent>
 
               <CardContent className="answer">
                 <CardLabel color="green">答え</CardLabel>
-                <pre>{currentQa.answer}</pre>
+                <div className="sentence">
+                  <div>{currentQa.answer}</div>
+                </div>
+                {state.currentPage === 1 && (
+                  <div className="guide">左スワイプで次の問題</div>
+                )}
               </CardContent>
             </Card>
           )}
         </CardWrapper>
-      </CardViewer>
+      </div>
 
       <ProgressBar
         currentPage={state.currentPage}
@@ -122,6 +141,14 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
       />
 
       <Controller>
+        <IconButton
+          style={{ position: "absolute", left: 0 }}
+          size="xxl"
+          icon={<Shuffle />}
+          color={state.shuffling ? "lightBlue" : "darkGrey"}
+          onClick={() => dispatch({ type: "toggle-shuffle" })}
+        />
+
         <IconButton
           icon={<ArrowBack />}
           disabled={state.currentPage === 1}
@@ -136,19 +163,15 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
           onClick={showNextPage}
         />
 
-        <IconButton
+        <EditButton
+          onDelete={onDelete}
+          onEdit={onEdit}
           style={{ position: "absolute", right: 0 }}
-          size="xxl"
-          icon={<Shuffle />}
-          color={state.shuffling ? "lightBlue" : "darkGrey"}
-          onClick={() => dispatch({ type: "toggle-shuffle" })}
         />
       </Controller>
     </div>
   );
 };
-
-const CardViewer = styled.div``;
 
 const CardWrapper = styled.div`
   max-width: 768px;
@@ -159,7 +182,7 @@ const CardWrapper = styled.div`
 const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
   position: relative;
   width: 100%;
-  padding-bottom: 80%;
+  padding-bottom: 86%;
   margin: 16px 0;
   transform-style: preserve-3d;
   ${(props) => (props.inTransition ? "" : "transition: transform 0.4s;")}
@@ -168,13 +191,12 @@ const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
 
 const CardContent = styled.div`
   background: ${variables.colors.white};
-  border: 0.5px solid ${variables.colors.lightGrey};
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  border: 0.5px solid ${variables.colors.lightGrey};
   border-radius: 6px;
   display: flex;
   flex-direction: column;
   position: absolute;
-  overflow-y: scroll;
   top: 0;
   left: 0;
   width: 100%;
@@ -183,13 +205,29 @@ const CardContent = styled.div`
   &.answer {
     transform: rotateY(-180deg);
   }
-  pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
+  .sentence {
+    font-weight: bold;
+    font-size: ${variables.fontSize.l};
     flex: 1;
     display: flex;
+    flex-direction: colmun;
     align-items: center;
     justify-content: center;
+    padding: 16px;
+    overflow: hidden;
+    div {
+      max-height: 100%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow: scroll;
+    }
+  }
+  .guide {
+    background: ${variables.colors.darkGrey};
+    color: ${variables.colors.white};
+    font-size: ${variables.fontSize.xs};
+    text-align: center;
+    padding: 4px 0;
   }
 `;
 
@@ -214,6 +252,7 @@ const Controller = styled.div`
   margin: 0 auto;
   margin-bottom: 24px;
   .pagenation {
+    font-size: ${variables.fontSize.m};
     margin: 0 16px;
   }
 `;

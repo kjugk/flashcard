@@ -22,9 +22,9 @@ export const variables: CssVariables = {
   colors: {
     white: "#FFFFFF",
     black: "#333333",
-    grey: "#F4F4FB",
+    grey: "#D9D9D9",
     lightGrey: "#CFCECE",
-    darkGrey: "#666666",
+    darkGrey: "#606368",
     lightBlue: "#4C7DDE",
     green: "#45C89A",
     red: "#E74C3C",

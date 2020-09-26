@@ -54,8 +54,9 @@ const StyledButton = styled.button<{
   border-radius: 9999px;
   text-align: center;
   vertical-align: middle;
-  &:active {
-    background: ${variables.colors.lightGrey};
+  &:active,
+  &:focus {
+    background: rgba(76, 125, 222, 0.2);
   }
 `;
 

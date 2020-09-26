@@ -50,27 +50,34 @@ const Wrapper = styled.label<{ hasError: boolean }>`
   color: #333;
   ${(props) => (props.hasError ? "color: red;" : "")}
   .label-text {
-    font-weight: bold;
     margin-bottom: 4px;
-    font-size: ${variables.fontSize.m};
+    font-size: ${variables.fontSize.s};
   }
   .error {
     margin-top: 4px;
-    font-size: ${variables.fontSize.m};
+    font-size: ${variables.fontSize.s};
   }
 `;
 
 const StyledTextarea = styled.div<{ hasError: boolean }>`
   textarea {
     resize: none;
-    border: 1px solid #676d71;
-    font-size: ${variables.fontSize.l};
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: ${variables.fontSize.m};
     color: inherit;
     width: 100%;
     padding: 12px 8px;
-    ${(props) => (props.hasError ? "border-color: red;" : "")}
+    border-color: ${(props) =>
+      props.hasError
+        ? `${variables.colors.red}!important`
+        : variables.colors.grey};
+    &:focus {
+      border-color: ${variables.colors.lightBlue};
+    }
+
     &::placeholder {
-      color: #aaa;
+      color: ${variables.colors.grey};
     }
   }
 `;

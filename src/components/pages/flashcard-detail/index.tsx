@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import styled from "styled-components";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
@@ -9,7 +8,6 @@ import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";
 import { Container } from "../../lib/container";
 import { variables } from "../../../styles/variables";
-import { Controller } from "./controller";
 import { LoadingSpinner } from "../../shared/loading-spinner";
 
 /**
@@ -89,16 +87,13 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           tag="main"
           style={{ padding: "16px", background: variables.colors.white }}
         >
-          <TitleWrapper>
-            <Title text={flashcard.name} tag="h1" style={{ flex: 1 }} />
+          <Title text={flashcard.name} tag="h1" size="l" />
 
-            <Controller
-              onEdit={() => history.push(`/flashcard-edit/${id}`)}
-              onDelete={deleteFlashcard}
-            />
-          </TitleWrapper>
-
-          <QaViewer qaList={flashcard.qaList} />
+          <QaViewer
+            qaList={flashcard.qaList}
+            onEdit={() => history.push(`/flashcard-edit/${id}`)}
+            onDelete={deleteFlashcard}
+          />
 
           {flashcard.description && <p>{flashcard.description}</p>}
         </Container>
@@ -106,8 +101,3 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     </div>
   );
 };
-
-const TitleWrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-`;

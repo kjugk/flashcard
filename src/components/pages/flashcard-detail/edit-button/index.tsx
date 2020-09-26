@@ -1,18 +1,20 @@
-import React, { FC, useState } from "react";
+import React, { CSSProperties, FC, useState } from "react";
 import styled from "styled-components";
+import { variables } from "../../../../styles/variables";
 import { IconButton } from "../../../lib/icon-button";
-import MoreVert from "@material-ui/icons/MoreVert";
+import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import { Popover } from "../../../lib/popover";
 import { ConfirmableModal } from "../../../lib/confirmable-modal";
 import Create from "@material-ui/icons/Create";
 import Delete from "@material-ui/icons/Delete";
 
 interface Props {
+  style: CSSProperties;
   onEdit: () => void;
   onDelete: () => void;
 }
 
-export const Controller: FC<Props> = ({ onEdit, onDelete }) => {
+export const EditButton: FC<Props> = ({ onEdit, onDelete, style }) => {
   const [showPopover, setShowPopover] = useState(false);
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const handleClickDeleteButton = () => setShowDeleteConfirmModal(true);
@@ -20,9 +22,8 @@ export const Controller: FC<Props> = ({ onEdit, onDelete }) => {
 
   return (
     <>
-      <div style={{ position: "relative" }}>
-        <IconButton icon={<MoreVert />} onClick={() => setShowPopover(true)} />
-
+      <div style={style}>
+        <IconButton icon={<MoreHoriz />} onClick={() => setShowPopover(true)} />
         <Popover show={showPopover} onClose={() => setShowPopover(false)}>
           <List>
             <li role="menuItem" onClick={onEdit}>
@@ -60,6 +61,7 @@ export const Controller: FC<Props> = ({ onEdit, onDelete }) => {
 const List = styled.ul`
   padding: 24px;
   width: 124px;
+  font-size: ${variables.fontSize.m};
   li {
     margin-bottom: 24px;
     display: flex;
