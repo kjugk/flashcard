@@ -85,12 +85,14 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
           {state.showEndOfQa && (
             <Card showAnswer={false} inTransition={false}>
               <CardContent>
-                <pre>終了です！ お疲れさまでした！</pre>
-                <Button
-                  label="最初から"
-                  size="s"
-                  onClick={() => dispatch({ type: "restart-qa" })}
-                />
+                <div className="sentence">
+                  <div>終了です！ お疲れさまでした！</div>
+                  <Button
+                    label="最初から"
+                    size="s"
+                    onClick={() => dispatch({ type: "restart-qa" })}
+                  />
+                </div>
               </CardContent>
             </Card>
           )}
@@ -103,12 +105,22 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
             >
               <CardContent>
                 <CardLabel color="lightBlue">問題</CardLabel>
-                <pre>{currentQa.question}</pre>
+                <div className="sentence">
+                  <div>{currentQa.question}</div>
+                </div>
+                {state.currentPage === 1 && (
+                  <div className="guide">答えを見る場合はカードをタップ</div>
+                )}
               </CardContent>
 
               <CardContent className="answer">
                 <CardLabel color="green">答え</CardLabel>
-                <pre>{currentQa.answer}</pre>
+                <div className="sentence">
+                  <div>{currentQa.answer}</div>
+                </div>
+                {state.currentPage === 1 && (
+                  <div className="guide">左スワイプで次の問題</div>
+                )}
               </CardContent>
             </Card>
           )}
@@ -168,13 +180,12 @@ const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
 
 const CardContent = styled.div`
   background: ${variables.colors.white};
-  border: 0.5px solid ${variables.colors.lightGrey};
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  border: 0.5px solid ${variables.colors.lightGrey};
   border-radius: 6px;
   display: flex;
   flex-direction: column;
   position: absolute;
-  overflow-y: scroll;
   top: 0;
   left: 0;
   width: 100%;
@@ -183,13 +194,28 @@ const CardContent = styled.div`
   &.answer {
     transform: rotateY(-180deg);
   }
-  pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
+  .sentence {
+    font-weight: bold;
     flex: 1;
     display: flex;
+    flex-direction: colmun;
     align-items: center;
     justify-content: center;
+    padding: 16px;
+    overflow: hidden;
+    div {
+      max-height: 100%;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow: scroll;
+    }
+  }
+  .guide {
+    background: ${variables.colors.darkGrey};
+    color: ${variables.colors.white};
+    font-size: ${variables.fontSize.xs};
+    text-align: center;
+    padding: 4px 0;
   }
 `;
 
@@ -214,6 +240,7 @@ const Controller = styled.div`
   margin: 0 auto;
   margin-bottom: 24px;
   .pagenation {
+    font-size: ${variables.fontSize.m};
     margin: 0 16px;
   }
 `;

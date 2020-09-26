@@ -24,7 +24,7 @@ export const variables: CssVariables = {
     black: "#333333",
     grey: "#F4F4FB",
     lightGrey: "#CFCECE",
-    darkGrey: "#666666",
+    darkGrey: "#606368",
     lightBlue: "#4C7DDE",
     green: "#45C89A",
     red: "#E74C3C",
