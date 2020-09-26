@@ -19,7 +19,10 @@ export const FlashcardList: FunctionComponent<Props> = (props) => (
             tag="div"
             size="l"
             text={item.name}
-            style={{ marginBottom: "12px" }}
+            ellipsis
+            style={{
+              marginBottom: "12px",
+            }}
           />
           <div className="description">{item.description}</div>
 
@@ -55,6 +58,7 @@ const ListItem = styled.li`
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1), 0px 4px 8px rgba(0, 0, 0, 0.08),
     0px 1px 12px rgba(0, 0, 0, 0.04);
   margin-bottom: 12px;
+  overflow: hidden;
 
   .description {
     display: -webkit-box;

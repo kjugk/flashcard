@@ -78,7 +78,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const { flashcard } = state;
 
   return (
-    <div>
+    <div style={{ paddingBottom: "96px" }}>
       <ClosableHeader title="問題集" />
       <LoadingSpinner show={loading} />
 
