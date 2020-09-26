@@ -102,17 +102,13 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
               onClick={flipQa}
             >
               <CardContent>
-                <>
-                  {!state.showAnswer && <CardDescription>問題</CardDescription>}
-                  <pre>{currentQa.question}</pre>
-                </>
+                <CardLabel color="lightBlue">問題</CardLabel>
+                <pre>{currentQa.question}</pre>
               </CardContent>
 
               <CardContent className="answer">
-                <>
-                  {state.showAnswer && <CardDescription>答え</CardDescription>}
-                  <pre>{currentQa.answer}</pre>
-                </>
+                <CardLabel color="green">答え</CardLabel>
+                <pre>{currentQa.answer}</pre>
               </CardContent>
             </Card>
           )}
@@ -142,6 +138,7 @@ export const QaViewer: FunctionComponent<Props> = ({ qaList }) => {
 
         <IconButton
           style={{ position: "absolute", right: 0 }}
+          size="xxl"
           icon={<Shuffle />}
           color={state.shuffling ? "lightBlue" : "darkGrey"}
           onClick={() => dispatch({ type: "toggle-shuffle" })}
@@ -159,16 +156,6 @@ const CardWrapper = styled.div`
   margin: 0 auto;
 `;
 
-const CardDescription = styled.span`
-  display: inline-block;
-  position: absolute;
-  color: #858a8d;
-  left: 8px;
-  top: 8px;
-  font-size: 12px;
-  font-weight: bold;
-`;
-
 const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
   position: relative;
   width: 100%;
@@ -183,14 +170,10 @@ const CardContent = styled.div`
   background: ${variables.colors.white};
   border: 0.5px solid ${variables.colors.lightGrey};
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: ${variables.fontSize.xxl};
-  font-weight: bold;
   position: absolute;
-  padding: 16px;
   overflow-y: scroll;
   top: 0;
   left: 0;
@@ -203,7 +186,22 @@ const CardContent = styled.div`
   pre {
     white-space: pre-wrap;
     word-wrap: break-word;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
+`;
+
+const CardLabel = styled.div<{ color: "lightBlue" | "green" }>`
+  background: ${(props) => variables.colors[props.color]};
+  color: ${variables.colors.white};
+  font-size: ${variables.fontSize.m};
+  font-weight: bold;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Controller = styled.div`

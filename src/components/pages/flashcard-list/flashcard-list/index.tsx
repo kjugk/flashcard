@@ -17,7 +17,7 @@ export const FlashcardList: FunctionComponent<Props> = (props) => (
         <Link to={`/flashcard-detail/${item.id}`}>
           <Title
             tag="div"
-            size="xl"
+            size="l"
             text={item.name}
             style={{ marginBottom: "12px" }}
           />
@@ -25,7 +25,10 @@ export const FlashcardList: FunctionComponent<Props> = (props) => (
 
           <ListBottomContainer>
             <div className="date">
-              <Schedule className="icon" />
+              <Schedule
+                className="icon"
+                style={{ fontSize: variables.fontSize.l }}
+              />
               2020/10/10
             </div>
           </ListBottomContainer>
@@ -51,7 +54,7 @@ const ListItem = styled.li`
   border-radius: 6px;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1), 0px 4px 8px rgba(0, 0, 0, 0.08),
     0px 1px 12px rgba(0, 0, 0, 0.04);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 
   .description {
     display: -webkit-box;
@@ -71,7 +74,7 @@ const ListBottomContainer = styled.div`
     line-height: 1;
     align-items: center;
     .icon {
-      margin-right: 4px;s
+      margin-right: 6px;
     }
   }
 `;

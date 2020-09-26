@@ -45,7 +45,7 @@ export const FlashcardListPage: FunctionComponent = () => {
           <Title
             text="問題集一覧"
             tag="h1"
-            size="xl"
+            size="l"
             style={{ marginBottom: "16px" }}
           />
           {flashcards.length <= 0 && <EmptyState />}

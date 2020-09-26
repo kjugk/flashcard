@@ -90,12 +90,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           style={{ padding: "16px", background: variables.colors.white }}
         >
           <TitleWrapper>
-            <Title
-              text={flashcard.name}
-              tag="h1"
-              size="xxl"
-              style={{ flex: 1 }}
-            />
+            <Title text={flashcard.name} tag="h1" style={{ flex: 1 }} />
 
             <Controller
               onEdit={() => history.push(`/flashcard-edit/${id}`)}
