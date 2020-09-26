@@ -13,7 +13,6 @@ export interface FlashcardDetail {
   qaList: Qa[];
 }
 
-// TODO viewer の state と分離する
 export interface FlashcardDetailPageState {
   flashcard?: FlashcardDetail;
 }

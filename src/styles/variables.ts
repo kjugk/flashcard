@@ -5,7 +5,9 @@ export type Color =
   | "grey"
   | "lightBlue"
   | "lightGrey"
-  | "darkGrey";
+  | "darkGrey"
+  | "green"
+  | "red";
 
 interface CssVariables {
   colors: {
@@ -23,14 +25,16 @@ export const variables: CssVariables = {
     grey: "#F4F4FB",
     lightGrey: "#CFCECE",
     darkGrey: "#666666",
-    lightBlue: "#509FF8",
+    lightBlue: "#4C7DDE",
+    green: "#45C89A",
+    red: "#E74C3C",
   },
   fontSize: {
-    xxl: "20px",
-    xl: "18px",
-    l: "16px",
-    m: "14px",
-    s: "12px",
-    xs: "10px",
+    xxl: "28px",
+    xl: "20px",
+    l: "18px",
+    m: "16px",
+    s: "14px",
+    xs: "12px",
   },
 };
