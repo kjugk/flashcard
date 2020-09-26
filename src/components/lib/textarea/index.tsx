@@ -62,18 +62,19 @@ const Wrapper = styled.label<{ hasError: boolean }>`
 const StyledTextarea = styled.div<{ hasError: boolean }>`
   textarea {
     resize: none;
-    border: 1px solid ${variables.colors.grey};
+    border: 1px solid;
     border-radius: 4px;
     font-size: ${variables.fontSize.m};
     color: inherit;
     width: 100%;
     padding: 12px 8px;
+    border-color: ${(props) =>
+      props.hasError
+        ? `${variables.colors.red}!important`
+        : variables.colors.grey};
     &:focus {
-      border: 1px solid ${variables.colors.lightBlue};
+      border-color: ${variables.colors.lightBlue};
     }
-
-    ${(props) =>
-      props.hasError ? `border-color: ${variables.colors.red};` : ""}
 
     &::placeholder {
       color: ${variables.colors.grey};
