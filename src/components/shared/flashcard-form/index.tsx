@@ -130,8 +130,10 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
         />
       </div>
 
-      <div style={{ textAlign: "center", marginBottom: "32px" }}>
-        <Button type="submit" label="作成" size="xl" />
+      <div
+        style={{ textAlign: "center", marginBottom: "96px", padding: "0 16px" }}
+      >
+        <Button type="submit" label="作成" fullWidth />
       </div>
     </form>
   );
