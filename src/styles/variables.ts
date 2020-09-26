@@ -21,7 +21,7 @@ interface CssVariables {
 export const variables: CssVariables = {
   colors: {
     white: "#FFFFFF",
-    black: "#606368",
+    black: "#333333",
     grey: "#F4F4FB",
     lightGrey: "#CFCECE",
     darkGrey: "#666666",

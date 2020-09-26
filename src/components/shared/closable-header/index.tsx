@@ -19,13 +19,9 @@ export const ClosableHeader: FC<Props> = ({ title }) => {
       <Container style={{ padding: "0 16px" }}>
         <Content>
           <Link to="/flashcard-list" style={{ flex: 1 }}>
-            <Title text={title} tag="h1" size="xxl" />
+            <Title text={title} tag="h1" size="xl" />
           </Link>
-          <IconButton
-            icon={<Close />}
-            color="white"
-            onClick={() => history.goBack()}
-          />
+          <IconButton icon={<Close />} onClick={() => history.goBack()} />
         </Content>
       </Container>
     </StyledHeader>
@@ -33,10 +29,10 @@ export const ClosableHeader: FC<Props> = ({ title }) => {
 };
 
 const StyledHeader = styled.header`
-  background: ${variables.colors.lightBlue};
-  color: ${variables.colors.white};
+  background: ${variables.colors.white};
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
   padding: 12px 0;
+  margin-bottom: 3px;
 `;
 
 const Content = styled.nav`

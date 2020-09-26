@@ -29,12 +29,11 @@ export const Header: FunctionComponent = () => {
       <Container style={{ padding: "0 16px" }}>
         <Nav>
           <Link to="/flashcard-list" className="brand">
-            Flashcard
+            <img src="/brand.png" alt="brand logo" width="163x" />
           </Link>
 
           <IconButton
             icon={<Add />}
-            color="white"
             onClick={() => history.push("/flashcard-create")}
           />
 
@@ -62,8 +61,7 @@ export const Header: FunctionComponent = () => {
 };
 
 const StyledHeader = styled.header`
-  background: ${variables.colors.lightBlue};
-  color: ${variables.colors.white};
+  background: ${variables.colors.white};
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
   padding: 12px 0;
 `;
@@ -73,8 +71,7 @@ const Nav = styled.nav`
   align-items: center;
   .brand {
     flex: 1;
-    font-weight: bold;
-    fint-size: 20px;
+    line-height: 1;
   }
 `;
 
