@@ -1,5 +1,6 @@
 import React, { CSSProperties, FC, useState } from "react";
 import styled from "styled-components";
+import { variables } from "../../../../styles/variables";
 import { IconButton } from "../../../lib/icon-button";
 import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import { Popover } from "../../../lib/popover";
@@ -60,6 +61,7 @@ export const EditButton: FC<Props> = ({ onEdit, onDelete, style }) => {
 const List = styled.ul`
   padding: 24px;
   width: 124px;
+  font-size: ${variables.fontSize.m};
   li {
     margin-bottom: 24px;
     display: flex;

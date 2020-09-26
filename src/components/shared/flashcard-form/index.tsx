@@ -81,8 +81,8 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
               style={{ marginBottom: "16px" }}
             >
               <Title
-                text={`${index + 1}`}
-                size="xl"
+                text={`カード${index + 1}`}
+                size="l"
                 tag="h2"
                 style={{ marginBottom: "16px" }}
               />
