@@ -2,6 +2,7 @@ import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import ArrowFoward from "@material-ui/icons/ArrowForward";
 import Shuffle from "@material-ui/icons/Shuffle";
+import Replay from "@material-ui/icons/Replay";
 import styled from "styled-components";
 import { variables } from "../../../../styles/variables";
 import { IconButton } from "../../../lib/icon-button";
@@ -93,10 +94,14 @@ export const QaViewer: FunctionComponent<Props> = ({
             <Card showAnswer={false} inTransition={false}>
               <CardContent>
                 <div className="sentence">
-                  <div>終了です！ お疲れさまでした！</div>
+                  <div style={{ marginBottom: "16px" }}>
+                    終了です！ お疲れさまでした！
+                  </div>
                   <Button
-                    label="最初から"
-                    size="s"
+                    label="最初からやり直す"
+                    icon={<Replay fontSize="small" />}
+                    outlined
+                    size="xs"
                     onClick={() => dispatch({ type: "restart-qa" })}
                   />
                 </div>
@@ -210,7 +215,7 @@ const CardContent = styled.div`
     font-size: ${variables.fontSize.l};
     flex: 1;
     display: flex;
-    flex-direction: colmun;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 16px;

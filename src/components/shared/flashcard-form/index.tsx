@@ -7,6 +7,7 @@ import { Box } from "../../lib/box";
 import { Button } from "../../lib/button";
 import { Title } from "../../lib/title";
 import Delete from "@material-ui/icons/Delete";
+import Add from "@material-ui/icons/Add";
 import { Qa } from "../../pages/flashcard-detail/store";
 import { IconButton } from "../../lib/icon-button";
 import { CSSTransitionGroup } from "react-transition-group";
@@ -121,18 +122,18 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
         </CSSTransitionGroup>
       </QaListWrapper>
 
-      <div style={{ textAlign: "center", marginBottom: "24px" }}>
+      <div style={{ marginBottom: "32px" }}>
         <Button
           label="カードを追加"
           outlined
-          size="xs"
+          icon={<Add fontSize="small" />}
+          size="s"
+          style={{ margin: "0 auto" }}
           onClick={appendQuestion}
         />
       </div>
 
-      <div
-        style={{ textAlign: "center", marginBottom: "96px", padding: "0 16px" }}
-      >
+      <div style={{ marginBottom: "96px", padding: "0 16px" }}>
         <Button type="submit" label="作成" fullWidth />
       </div>
     </form>

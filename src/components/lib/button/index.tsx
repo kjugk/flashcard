@@ -1,3 +1,4 @@
+import { SvgIconProps } from "@material-ui/core";
 import React, { FunctionComponent, CSSProperties } from "react";
 import styled from "styled-components";
 import { variables, FontSize, Color } from "../../../styles/variables";
@@ -13,6 +14,7 @@ interface Props {
   fullWidth?: boolean;
   color?: Color;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  icon?: SvgIconProps;
 }
 
 export const Button: FunctionComponent<Props> = ({
@@ -24,6 +26,7 @@ export const Button: FunctionComponent<Props> = ({
   style,
   color = "lightBlue",
   onClick,
+  icon,
 }) => {
   return (
     <StyledButton
@@ -35,6 +38,7 @@ export const Button: FunctionComponent<Props> = ({
       onClick={onClick}
       fullWidth={fullWidth}
     >
+      {icon}
       {label}
     </StyledButton>
   );
@@ -49,9 +53,10 @@ const StyledButton = styled.button<{
   font-size: ${(props) => variables.fontSize[props.size]};
   border-radius: 38px;
   font-weight: bold;
-  text-align: center;
-  padding: 0.8rem 1.6rem;
-  line-height: 1.5;
+  padding: 0.8em 1.6em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid;
   filter: brightness(1);
   transition: filter 0.1s;
@@ -59,6 +64,9 @@ const StyledButton = styled.button<{
   &:active,
   &:focus {
     filter: brightness(0.85);
+  }
+  svg {
+    margin-right: 6px;
   }
   ${(props) =>
     props.outlined
