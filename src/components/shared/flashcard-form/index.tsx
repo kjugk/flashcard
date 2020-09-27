@@ -122,13 +122,12 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
         </CSSTransitionGroup>
       </QaListWrapper>
 
-      <div style={{ marginBottom: "32px" }}>
+      <div style={{ textAlign: "center", marginBottom: "32px" }}>
         <Button
           label="カードを追加"
           outlined
-          icon={<Add fontSize="small" />}
+          icon={<Add fontSize="inherit" />}
           size="s"
-          style={{ margin: "0 auto" }}
           onClick={appendQuestion}
         />
       </div>

@@ -1,4 +1,10 @@
-import React, { FunctionComponent, useState, useEffect, useRef } from "react";
+import React, {
+  FunctionComponent,
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+} from "react";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import ArrowFoward from "@material-ui/icons/ArrowForward";
 import Shuffle from "@material-ui/icons/Shuffle";
@@ -64,6 +70,10 @@ export const QaViewer: FunctionComponent<Props> = ({
     }
   };
 
+  const isFirstPage = useMemo(() => state.currentPage === 1, [
+    state.currentPage,
+  ]);
+
   useEffect(() => {
     if (ref.current === null) return;
 
@@ -118,9 +128,9 @@ export const QaViewer: FunctionComponent<Props> = ({
               <CardContent>
                 <CardLabel color="lightBlue">問題</CardLabel>
                 <div className="sentence">
-                  <div>{currentQa.question}</div>
+                  <pre>{currentQa.question}</pre>
                 </div>
-                {state.currentPage === 1 && (
+                {isFirstPage && (
                   <div className="guide">答えを見る場合はカードをタップ</div>
                 )}
               </CardContent>
@@ -128,9 +138,9 @@ export const QaViewer: FunctionComponent<Props> = ({
               <CardContent className="answer">
                 <CardLabel color="green">答え</CardLabel>
                 <div className="sentence">
-                  <div>{currentQa.answer}</div>
+                  <pre>{currentQa.answer}</pre>
                 </div>
-                {state.currentPage === 1 && (
+                {isFirstPage && (
                   <div className="guide">左スワイプで次の問題</div>
                 )}
               </CardContent>
@@ -212,7 +222,6 @@ const CardContent = styled.div`
   }
   .sentence {
     font-weight: bold;
-    font-size: ${variables.fontSize.l};
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -220,7 +229,9 @@ const CardContent = styled.div`
     justify-content: center;
     padding: 16px;
     overflow: hidden;
-    div {
+    pre {
+      font-size: ${variables.fontSize.l};
+      font-weight: bold;
       max-height: 100%;
       white-space: pre-wrap;
       word-wrap: break-word;
@@ -233,6 +244,7 @@ const CardContent = styled.div`
     font-size: ${variables.fontSize.xs};
     text-align: center;
     padding: 4px 0;
+    border-radius: 0 0 6px 6px;
   }
 `;
 
@@ -245,6 +257,7 @@ const CardLabel = styled.div<{ color: "lightBlue" | "green" }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 6px 6px 0 0;
 `;
 
 const Controller = styled.div`

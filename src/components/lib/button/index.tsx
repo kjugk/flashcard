@@ -38,8 +38,10 @@ export const Button: FunctionComponent<Props> = ({
       onClick={onClick}
       fullWidth={fullWidth}
     >
-      {icon}
-      {label}
+      <Inner>
+        {icon}
+        {label}
+      </Inner>
     </StyledButton>
   );
 };
@@ -54,9 +56,7 @@ const StyledButton = styled.button<{
   border-radius: 38px;
   font-weight: bold;
   padding: 0.8em 1.6em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
   border: 1px solid;
   filter: brightness(1);
   transition: filter 0.1s;
@@ -64,9 +64,6 @@ const StyledButton = styled.button<{
   &:active,
   &:focus {
     filter: brightness(0.85);
-  }
-  svg {
-    margin-right: 6px;
   }
   ${(props) =>
     props.outlined
@@ -80,4 +77,13 @@ const StyledButton = styled.button<{
     border-color: ${variables.colors[props.color]};
     color: ${variables.colors.white};
       `}
+`;
+
+const Inner = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    margin-right: 6px;
+  }
 `;
