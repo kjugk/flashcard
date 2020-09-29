@@ -56,28 +56,24 @@ const Wrapper = styled.div`
   position: fixed;
   bottom: 16px;
   left: 0;
-  width: 100%;
+  right: 0;
 
   &.systemMessage-enter {
-    opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(200%);
   }
 
   &.systemMessage-enter-active {
-    opacity: 1;
     transform: translateY(0);
-    transition: opacity 300ms, transform 300ms;
+    transition: transform 300ms;
   }
 
   &.systemMessage-exit {
-    opacity: 1;
     transform: translateY(0);
   }
 
   &.systemMessage-exit-active {
-    opacity: 0;
-    transform: translateY(100%);
-    transition: opacity 300ms, transform 300ms;
+    transform: translateY(200%);
+    transition: transform 300ms;
   }
 
   @media only screen and (min-width: 768px) {
