@@ -197,11 +197,15 @@ const CardWrapper = styled.div`
 const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
   position: relative;
   width: 100%;
-  padding-bottom: 86%;
   margin: 16px 0;
   transform-style: preserve-3d;
-  ${(props) => (props.inTransition ? "" : "transition: transform 0.4s;")}
-  ${(props) => (props.showAnswer ? "transform: rotateY(-180deg);" : "")}
+  ${(props) => (props.inTransition ? "" : "transition: transform 0.4s;")};
+  ${(props) => (props.showAnswer ? "transform: rotateY(-180deg);" : "")};
+
+  padding-bottom: 70%;
+  @media only screen and (max-width: 767px) {
+    padding-bottom: 86%;
+  }
 `;
 
 const CardContent = styled.div`
