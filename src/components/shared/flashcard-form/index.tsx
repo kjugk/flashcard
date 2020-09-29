@@ -10,7 +10,7 @@ import Delete from "@material-ui/icons/Delete";
 import Add from "@material-ui/icons/Add";
 import { Qa } from "../../pages/flashcard-detail/store";
 import { IconButton } from "../../lib/icon-button";
-import { CSSTransitionGroup } from "react-transition-group";
+import { TransitionGroup } from "react-transition-group";
 
 interface Props {
   defaultValues?: Partial<FlashcardFormValues>;
@@ -69,57 +69,51 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
       </Box>
 
       <QaListWrapper>
-        <CSSTransitionGroup
-          transitionName="qaList"
-          transitionEnterTimeout={200}
-          transitionLeaveTimeout={200}
-        >
-          {fields.map((field, index) => (
-            <Box
-              key={field.id}
-              withShadow={false}
-              tag="li"
+        {fields.map((field, index) => (
+          <Box
+            key={field.id}
+            withShadow={false}
+            tag="li"
+            style={{ marginBottom: "16px" }}
+          >
+            <Title
+              text={`カード${index + 1}`}
+              size="l"
+              tag="h2"
               style={{ marginBottom: "16px" }}
-            >
-              <Title
-                text={`カード${index + 1}`}
-                size="l"
-                tag="h2"
-                style={{ marginBottom: "16px" }}
-              />
+            />
 
-              <Textarea
-                name={`qaList[${index}].question`}
-                label="問題"
-                defaultValue={field.question}
-                rows={3}
-                inputRef={register({ required: true })}
-                errorMessage={getErrorMessage(
-                  errors.qaList ? errors.qaList[index]?.question : undefined
-                )}
-              />
+            <Textarea
+              name={`qaList[${index}].question`}
+              label="問題"
+              defaultValue={field.question}
+              rows={3}
+              inputRef={register({ required: true })}
+              errorMessage={getErrorMessage(
+                errors.qaList ? errors.qaList[index]?.question : undefined
+              )}
+            />
 
-              <Textarea
-                name={`qaList[${index}].answer`}
-                defaultValue={field.answer}
-                rows={3}
-                label="答え"
-                inputRef={register({ required: true })}
-                errorMessage={getErrorMessage(
-                  errors.qaList ? errors.qaList[index]?.answer : undefined
-                )}
-              />
+            <Textarea
+              name={`qaList[${index}].answer`}
+              defaultValue={field.answer}
+              rows={3}
+              label="答え"
+              inputRef={register({ required: true })}
+              errorMessage={getErrorMessage(
+                errors.qaList ? errors.qaList[index]?.answer : undefined
+              )}
+            />
 
-              <div style={{ textAlign: "right" }}>
-                <IconButton
-                  icon={<Delete />}
-                  onClick={() => removeQuestion(index)}
-                  disabled={fields.length <= 1}
-                />
-              </div>
-            </Box>
-          ))}
-        </CSSTransitionGroup>
+            <div style={{ textAlign: "right" }}>
+              <IconButton
+                icon={<Delete />}
+                onClick={() => removeQuestion(index)}
+                disabled={fields.length <= 1}
+              />
+            </div>
+          </Box>
+        ))}
       </QaListWrapper>
 
       <div style={{ textAlign: "center", marginBottom: "32px" }}>
@@ -132,7 +126,9 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
         />
       </div>
 
-      <div style={{ marginBottom: "96px", padding: "0 16px" }}>
+      <div
+        style={{ marginBottom: "96px", padding: "0 16px", textAlign: "center" }}
+      >
         <Button type="submit" label="作成" fullWidth />
       </div>
     </form>

@@ -22,7 +22,15 @@ export const FlashcardCreatePage: FC = () => {
       });
 
       const id = await flashcardRepository.create(values);
-      history.push(`/flashcard-detail/${id}`);
+      systemDispatch({
+        type: "set-system-message",
+        payload: {
+          messageType: "info",
+          message: "作成しました。",
+        },
+      });
+
+      history.replace(`/flashcard-detail/${id}`);
     } catch {
       // TODO エラーハンドリング
     } finally {
