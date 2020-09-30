@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import { useForm, useFieldArray, FieldError } from "react-hook-form";
 import { FlashcardFormValues } from "../../../global/flashcard/types";
