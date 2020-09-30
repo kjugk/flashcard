@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { variables } from "../../../../styles/variables";
 import { useHistory } from "react-router-dom";
-import { Button } from "../../../lib";
+import { Box, Button } from "../../../lib";
 import { Title } from "../../../lib/title";
 import Add from "@material-ui/icons/Add";
 
@@ -9,11 +9,10 @@ export const EmptyState: FC = () => {
   const history = useHistory();
 
   return (
-    <div
+    <Box
       style={{
         textAlign: "center",
         background: variables.colors.lightBlue,
-        padding: "24px",
         borderRadius: "6px",
         color: variables.colors.white,
       }}
@@ -32,6 +31,6 @@ export const EmptyState: FC = () => {
         style={{ margin: "0 auto" }}
         onClick={() => history.push("/flashcard-create")}
       />
-    </div>
+    </Box>
   );
 };

@@ -1,4 +1,4 @@
-import React, { FC, useRef } from "react";
+import React, { FC } from "react";
 import styled from "styled-components";
 import { useForm, useFieldArray, FieldError } from "react-hook-form";
 import { FlashcardFormValues } from "../../../global/flashcard/types";
@@ -28,7 +28,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
     control,
     name: "qaList",
   });
-  const appendQuestion = () => append({ question: "", answer: "" });
+  const appendQuestion = () => append({ question: "", answer: "" }, false);
   const removeQuestion = (index: number) => {
     if (fields.length <= 1) return;
     remove(index);
