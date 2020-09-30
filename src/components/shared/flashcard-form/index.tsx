@@ -28,7 +28,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
     control,
     name: "qaList",
   });
-  const appendQuestion = () => append({ question: "", answer: "" });
+  const appendQuestion = () => append({ question: "", answer: "" }, false);
   const removeQuestion = (index: number) => {
     if (fields.length <= 1) return;
     remove(index);
