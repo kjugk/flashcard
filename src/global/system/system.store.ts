@@ -19,12 +19,17 @@ export type SystemAction =
         loading: boolean;
         message?: string;
       };
+    }
+  | {
+      type: "system/set-not-found-error";
+      payload: boolean;
     };
 
 // State types
 export interface SystemState {
   message: string;
   messageType: MessageType;
+  hasNotFoundError: boolean;
   loading: boolean;
   loadingMessage: string;
 }
@@ -32,6 +37,7 @@ export interface SystemState {
 const initialState: SystemState = {
   message: "",
   messageType: "info",
+  hasNotFoundError: false,
   loading: false,
   loadingMessage: "",
 };
@@ -50,6 +56,12 @@ function reducer(state: SystemState, action: SystemAction): SystemState {
       return {
         ...state,
         ...action.payload,
+      };
+
+    case "system/set-not-found-error":
+      return {
+        ...state,
+        hasNotFoundError: action.payload,
       };
 
     case "update-loading":

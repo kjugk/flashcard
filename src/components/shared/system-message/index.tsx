@@ -59,7 +59,7 @@ const Wrapper = styled.div`
   right: 0;
 
   &.systemMessage-enter {
-    transform: translateY(200%);
+    transform: translateY(150%);
   }
 
   &.systemMessage-enter-active {
@@ -72,7 +72,7 @@ const Wrapper = styled.div`
   }
 
   &.systemMessage-exit-active {
-    transform: translateY(200%);
+    transform: translateY(150%);
     transition: transform 300ms;
   }
 
