@@ -15,40 +15,38 @@ import {
   FlashcardEditPage,
   SignInPage,
   TopPage,
-  NotFoundPage,
 } from "./pages/index";
 import { LoadingModal } from "./shared/loading-modal";
+import { NotFound } from "./shared/not-found";
 
-export const App: FunctionComponent = () => {
-  return (
-    <>
-      <Router>
-        <Switch>
-          <PrivateRoute path="/flashcard-list">
-            <FlashcardListPage />
-          </PrivateRoute>
+export const App: FunctionComponent = () => (
+  <>
+    <Router>
+      <Switch>
+        <PrivateRoute path="/flashcard-list">
+          <FlashcardListPage />
+        </PrivateRoute>
 
-          <PrivateRoute path="/flashcard-create">
-            <FlashcardCreatePage />
-          </PrivateRoute>
+        <PrivateRoute path="/flashcard-create">
+          <FlashcardCreatePage />
+        </PrivateRoute>
 
-          <PrivateRoute path="/flashcard-edit/:id">
-            <FlashcardEditPage />
-          </PrivateRoute>
+        <PrivateRoute path="/flashcard-edit/:id">
+          <FlashcardEditPage />
+        </PrivateRoute>
 
-          <PrivateRoute path="/flashcard-detail/:id">
-            <FlashcardDetailPage />
-          </PrivateRoute>
+        <PrivateRoute path="/flashcard-detail/:id">
+          <FlashcardDetailPage />
+        </PrivateRoute>
 
-          <Route path="/sign-in" component={SignInPage}></Route>
-          <Route exact path="/" component={TopPage}></Route>
-          <Route path="*" component={NotFoundPage}></Route>
-        </Switch>
-      </Router>
-      <LoadingModal />
-    </>
-  );
-};
+        <Route path="/sign-in" component={SignInPage}></Route>
+        <Route exact path="/" component={TopPage}></Route>
+        <Route path="*" component={NotFound}></Route>
+      </Switch>
+    </Router>
+    <LoadingModal />
+  </>
+);
 
 // ログイン「必須」ページのRoute
 const PrivateRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {

@@ -7,6 +7,8 @@ import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useSystemContext } from "../../../global/system/system.provider";
 import { LoadingSpinner } from "../../shared/loading-spinner";
+import { Layout } from "../../shared/layout";
+import { handleHttpError } from "../../../lib/util/http-error-handler";
 
 /**
  * カード編集ページ。
@@ -21,28 +23,29 @@ export const FlashcardEditPage: FC = () => {
   >(undefined);
 
   const getFlashcardDetail = async () => {
+    setLoading(true);
+
     try {
-      setLoading(true);
       const item = await flashcardRepository.find(id);
       setDefaultValues({
         name: item.name,
         description: item.description,
         qaList: item.qaList,
       });
-    } catch {
-      // TODO コンテンツ置き換えるだけにする
+    } catch (e) {
+      handleHttpError(e, systemDispatch);
     } finally {
       setLoading(false);
     }
   };
 
   const updateFlashcard = async (values: FlashcardFormValues) => {
-    try {
-      systemDispatch({
-        type: "update-loading",
-        payload: { loading: true, message: "更新中" },
-      });
+    systemDispatch({
+      type: "update-loading",
+      payload: { loading: true, message: "更新中" },
+    });
 
+    try {
       await flashcardRepository.update(id, values);
       systemDispatch({
         type: "set-system-message",
@@ -53,7 +56,13 @@ export const FlashcardEditPage: FC = () => {
       });
       history.replace(`/flashcard-detail/${id}`);
     } catch (e) {
-      console.error(e);
+      systemDispatch({
+        type: "set-system-message",
+        payload: {
+          messageType: "error",
+          message: "編集できませんでした。",
+        },
+      });
     } finally {
       systemDispatch({ type: "update-loading", payload: { loading: false } });
     }
@@ -64,17 +73,19 @@ export const FlashcardEditPage: FC = () => {
   }, []);
 
   return (
-    <div>
-      <ClosableHeader title="問題集の編集" />
-      <LoadingSpinner show={loading} />
-      {!loading && (
-        <Container>
-          <FlashcardForm
-            defaultValues={defaultValues}
-            onSubmit={updateFlashcard}
-          />
-        </Container>
-      )}
-    </div>
+    <Layout>
+      <div>
+        <ClosableHeader title="問題集の編集" />
+        <LoadingSpinner show={loading} />
+        {!loading && (
+          <Container>
+            <FlashcardForm
+              defaultValues={defaultValues}
+              onSubmit={updateFlashcard}
+            />
+          </Container>
+        )}
+      </div>
+    </Layout>
   );
 };

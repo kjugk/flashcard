@@ -9,10 +9,11 @@ import { Title } from "../../lib/title";
 import { Container } from "../../lib/container";
 import { variables } from "../../../styles/variables";
 import { LoadingSpinner } from "../../shared/loading-spinner";
+import { Layout } from "../../shared/layout";
+import { handleHttpError } from "../../../lib/util/http-error-handler";
 
 /**
  * カードの詳細ページ。
- * 子コンポーネントの副作用を伴うaction は全てここで処理する。
  */
 export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
@@ -30,21 +31,20 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         type: "store-flashcard-detail",
         payload: item,
       });
-      setLoading(false);
     } catch (e) {
-      // TODO グローバルのエラーハンドラーにエラー渡す
+      handleHttpError(e, systemDispatch);
+    } finally {
       setLoading(false);
-      history.replace("/not-found");
     }
   };
 
   const deleteFlashcard = async () => {
-    try {
-      systemDispatch({
-        type: "update-loading",
-        payload: { loading: true, message: "削除中" },
-      });
+    systemDispatch({
+      type: "update-loading",
+      payload: { loading: true, message: "削除中" },
+    });
 
+    try {
       await flashcardRepository.delete(id);
 
       systemDispatch({
@@ -57,7 +57,6 @@ export const FlashcardDetailPage: FunctionComponent = () => {
 
       history.replace("/flashcard-list");
     } catch {
-      // エラーの種類で処理を分岐させる
       systemDispatch({
         type: "set-system-message",
         payload: {
@@ -78,26 +77,28 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const { flashcard } = state;
 
   return (
-    <div style={{ paddingBottom: "96px" }}>
-      <ClosableHeader title="問題集" />
-      <LoadingSpinner show={loading} />
+    <Layout>
+      <div style={{ paddingBottom: "96px" }}>
+        <ClosableHeader title="問題集" />
+        <LoadingSpinner show={loading} />
 
-      {!loading && flashcard && (
-        <Container
-          tag="main"
-          style={{ padding: "16px", background: variables.colors.white }}
-        >
-          <Title text={flashcard.name} tag="h1" size="l" />
+        {!loading && flashcard && (
+          <Container
+            tag="main"
+            style={{ padding: "16px", background: variables.colors.white }}
+          >
+            <Title text={flashcard.name} tag="h1" size="l" />
 
-          <QaViewer
-            qaList={flashcard.qaList}
-            onEdit={() => history.push(`/flashcard-edit/${id}`)}
-            onDelete={deleteFlashcard}
-          />
+            <QaViewer
+              qaList={flashcard.qaList}
+              onEdit={() => history.push(`/flashcard-edit/${id}`)}
+              onDelete={deleteFlashcard}
+            />
 
-          {flashcard.description && <p>{flashcard.description}</p>}
-        </Container>
-      )}
-    </div>
+            {flashcard.description && <p>{flashcard.description}</p>}
+          </Container>
+        )}
+      </div>
+    </Layout>
   );
 };

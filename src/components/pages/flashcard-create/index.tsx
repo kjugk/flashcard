@@ -32,7 +32,13 @@ export const FlashcardCreatePage: FC = () => {
 
       history.replace(`/flashcard-detail/${id}`);
     } catch {
-      // TODO エラーハンドリング
+      systemDispatch({
+        type: "set-system-message",
+        payload: {
+          messageType: "error",
+          message: "作成できませんでした。",
+        },
+      });
     } finally {
       systemDispatch({ type: "update-loading", payload: { loading: false } });
     }
