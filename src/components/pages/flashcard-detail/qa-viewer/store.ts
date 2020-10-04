@@ -35,7 +35,6 @@ export type QaViewerAction =
     }
   | {
       type: "flip-qa";
-      payload: QuestionAnswer;
     }
   | {
       type: "toggle-shuffle";
@@ -64,6 +63,13 @@ export function reducer(
     case "show-prev-page":
       if (state.currentPage <= 1) return state;
 
+      if (state.showEndOfQa)
+        return {
+          ...state,
+          showEndOfQa: false,
+          showAnswer: false,
+        };
+
       return {
         ...state,
         currentPage: state.currentPage - 1,
@@ -72,9 +78,11 @@ export function reducer(
       };
 
     case "flip-qa":
+      if (state.showEndOfQa) return state;
+
       return {
         ...state,
-        showAnswer: action.payload === "answer",
+        showAnswer: !state.showAnswer,
       };
 
     case "restart-qa":
