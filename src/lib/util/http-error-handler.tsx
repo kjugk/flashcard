@@ -1,5 +1,5 @@
 import React from "react";
-import { NotFoundError } from "../../errors";
+import { NotFoundError, NetworkError } from "../../errors";
 import { SystemAction } from "../../global/system/system.store";
 
 export const handleHttpError = (
@@ -8,8 +8,22 @@ export const handleHttpError = (
 ) => {
   if (e instanceof NotFoundError) {
     systemDispatch({
-      type: "system/set-not-found-error",
-      payload: true,
+      type: "system/set-system-error",
+      payload: "notFound",
     });
+    return;
   }
+
+  if (e instanceof NetworkError) {
+    systemDispatch({
+      type: "system/set-system-error",
+      payload: "network",
+    });
+    return;
+  }
+
+  // Not Authorized は ログインページに遷移させる
+
+  // ここで処理しないエラーを再送する
+  throw e;
 };

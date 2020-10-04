@@ -17,7 +17,7 @@ import {
   TopPage,
 } from "./pages/index";
 import { LoadingModal } from "./shared/loading-modal";
-import { NotFound } from "./shared/not-found";
+import { NotFoundErrorPage } from "./pages/errors/not-found-error";
 
 export const App: FunctionComponent = () => (
   <>
@@ -41,7 +41,7 @@ export const App: FunctionComponent = () => (
 
         <Route path="/sign-in" component={SignInPage}></Route>
         <Route exact path="/" component={TopPage}></Route>
-        <Route path="*" component={NotFound}></Route>
+        <Route path="*" component={NotFoundErrorPage}></Route>
       </Switch>
     </Router>
     <LoadingModal />

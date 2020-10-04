@@ -1,18 +1,18 @@
 import React, { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSystemContext } from "../../../global/system/system.provider";
-import { Container } from "../../lib";
-import { Title } from "../../lib/title";
-import { Header } from "../header";
+import { useSystemContext } from "../../../../global/system/system.provider";
+import { Container } from "../../../lib";
+import { Title } from "../../../lib/title";
+import { Header } from "../../../shared/header";
 
-export const NotFound: FC = () => {
+export const NotFoundErrorPage: FC = () => {
   const { systemDispatch } = useSystemContext();
 
   useEffect(() => {
     return () => {
       systemDispatch({
-        type: "system/set-not-found-error",
-        payload: false,
+        type: "system/set-system-error",
+        payload: undefined,
       });
     };
   }, []);
