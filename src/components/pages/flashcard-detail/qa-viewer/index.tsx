@@ -1,10 +1,4 @@
-import React, {
-  FunctionComponent,
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-} from "react";
+import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import ArrowFoward from "@material-ui/icons/ArrowForward";
 import Shuffle from "@material-ui/icons/Shuffle";
@@ -35,29 +29,15 @@ export const QaViewer: FunctionComponent<Props> = ({
   onDelete,
 }) => {
   const [state, dispatch] = useQaViewerReducer(qaList);
-  const currentQa = useCurrentQa(state);
   const [inPageTransition, setInPageTransition] = useState(false);
 
   const showNextPage = () => dispatch({ type: "show-next-page" });
   const showPrevPage = () => dispatch({ type: "show-prev-page" });
-  const flipQa = () =>
-    dispatch({
-      type: "flip-qa",
-      payload: state.showAnswer ? "question" : "answer",
-    });
-
-  // ページ変更直後は css の animation を off にする。
-  useEffect(() => {
-    setInPageTransition(true);
-    setTimeout(() => {
-      setInPageTransition(false);
-    }, 150);
-  }, [state.currentPage]);
+  const flipQa = () => dispatch({ type: "flip-qa" });
 
   // スワイプジェスチャー対応
   let hammer: HammerManager;
   const ref = useRef<HTMLDivElement>(null);
-
   const handleSwipe = (ev: HammerInput) => {
     switch (ev.direction) {
       case Hammer.DIRECTION_LEFT:
@@ -70,29 +50,53 @@ export const QaViewer: FunctionComponent<Props> = ({
     }
   };
 
-  const isFirstPage = useMemo(() => state.currentPage === 1, [
-    state.currentPage,
-  ]);
+  const handleKeyPress = (e: KeyboardEvent) => {
+    // TODO 最新の state が取れない問題について調べる。
+    switch (e.key) {
+      case "Enter":
+        flipQa();
+        break;
+      case "ArrowLeft":
+        showPrevPage();
+        break;
+      case "ArrowRight":
+        showNextPage();
+        break;
+
+      default:
+    }
+  };
+
+  // ページ変更直後は css の animation を off にする。
+  useEffect(() => {
+    setInPageTransition(true);
+    setTimeout(() => {
+      setInPageTransition(false);
+    }, 200);
+  }, [state.currentPage]);
 
   useEffect(() => {
     if (ref.current === null) return;
 
     hammer = new Hammer(ref.current);
     hammer.on("swipe", handleSwipe);
-
-    return () => {
-      hammer.off("swipe", handleSwipe);
-    };
   });
 
   useEffect(() => {
+    window.addEventListener("keyup", handleKeyPress, false);
+
     return () => {
+      window.removeEventListener("keyup", handleKeyPress, false);
+
       if (hammer) {
         hammer.stop(true);
         hammer.destroy();
       }
     };
   }, []);
+
+  const currentQa = useCurrentQa(state);
+  const isFirstPage = state.currentPage === 1;
 
   if (currentQa === undefined) return null;
 
@@ -130,7 +134,7 @@ export const QaViewer: FunctionComponent<Props> = ({
                 <div className="sentence">
                   <pre>{currentQa.question}</pre>
                 </div>
-                {isFirstPage && (
+                {isFirstPage && !state.showAnswer && (
                   <div className="guide">答えを見る場合はカードをタップ</div>
                 )}
               </CardContent>
@@ -140,9 +144,6 @@ export const QaViewer: FunctionComponent<Props> = ({
                 <div className="sentence">
                   <pre>{currentQa.answer}</pre>
                 </div>
-                {isFirstPage && (
-                  <div className="guide">左スワイプで次の問題</div>
-                )}
               </CardContent>
             </Card>
           )}
@@ -243,6 +244,10 @@ const CardContent = styled.div`
     }
   }
   .guide {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background: ${variables.colors.darkGrey};
     color: ${variables.colors.white};
     font-size: ${variables.fontSize.xs};

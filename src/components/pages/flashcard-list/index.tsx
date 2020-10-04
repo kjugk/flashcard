@@ -7,6 +7,9 @@ import { Container } from "../../lib/";
 import { EmptyState } from "./empty-state";
 import { Title } from "../../lib/title";
 import { LoadingSpinner } from "../../shared/loading-spinner";
+import { Layout } from "../../shared/layout";
+import { handleHttpError } from "../../../lib/util/http-error-handler";
+import { useSystemContext } from "../../../global/system/system.provider";
 
 /**
  * カードリストページ。
@@ -16,6 +19,7 @@ import { LoadingSpinner } from "../../shared/loading-spinner";
 export const FlashcardListPage: FunctionComponent = () => {
   const [{ flashcards }, dispatch] = useListPageReducer();
   const [loading, setLoading] = useState(true);
+  const { systemDispatch } = useSystemContext();
 
   const getFlashcards = async () => {
     try {
@@ -25,7 +29,9 @@ export const FlashcardListPage: FunctionComponent = () => {
         payload: list,
       });
       setLoading(false);
-    } catch {
+    } catch (e) {
+      handleHttpError(e, systemDispatch);
+    } finally {
       setLoading(false);
     }
   };
@@ -36,22 +42,24 @@ export const FlashcardListPage: FunctionComponent = () => {
   }, []);
 
   return (
-    <div>
-      <Header />
-      <LoadingSpinner show={loading} />
+    <Layout>
+      <div>
+        <Header />
+        <LoadingSpinner show={loading} />
 
-      {!loading && (
-        <Container tag="main" style={{ padding: "16px" }}>
-          <Title
-            text="問題集一覧"
-            tag="h1"
-            size="l"
-            style={{ marginBottom: "16px" }}
-          />
-          {flashcards.length <= 0 && <EmptyState />}
-          {flashcards.length >= 1 && <FlashcardList items={flashcards} />}
-        </Container>
-      )}
-    </div>
+        {!loading && (
+          <Container tag="main" style={{ padding: "16px" }}>
+            <Title
+              text="問題集一覧"
+              tag="h1"
+              size="l"
+              style={{ marginBottom: "16px" }}
+            />
+            {flashcards.length <= 0 && <EmptyState />}
+            {flashcards.length >= 1 && <FlashcardList items={flashcards} />}
+          </Container>
+        )}
+      </div>
+    </Layout>
   );
 };

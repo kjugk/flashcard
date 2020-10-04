@@ -2,6 +2,7 @@
 import { useReducer, useMemo } from "react";
 
 type MessageType = "info" | "error";
+type ErrorType = "notFound" | "network";
 
 // actions
 export type SystemAction =
@@ -21,15 +22,15 @@ export type SystemAction =
       };
     }
   | {
-      type: "system/set-not-found-error";
-      payload: boolean;
+      type: "system/set-system-error";
+      payload: ErrorType | undefined;
     };
 
 // State types
 export interface SystemState {
   message: string;
   messageType: MessageType;
-  hasNotFoundError: boolean;
+  errorType: ErrorType | undefined;
   loading: boolean;
   loadingMessage: string;
 }
@@ -37,7 +38,7 @@ export interface SystemState {
 const initialState: SystemState = {
   message: "",
   messageType: "info",
-  hasNotFoundError: false,
+  errorType: undefined,
   loading: false,
   loadingMessage: "",
 };
@@ -57,13 +58,11 @@ function reducer(state: SystemState, action: SystemAction): SystemState {
         ...state,
         ...action.payload,
       };
-
-    case "system/set-not-found-error":
+    case "system/set-system-error":
       return {
         ...state,
-        hasNotFoundError: action.payload,
+        errorType: action.payload,
       };
-
     case "update-loading":
       return {
         ...state,

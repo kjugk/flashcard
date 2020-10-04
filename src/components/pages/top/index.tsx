@@ -1,12 +1,7 @@
-import React, { FunctionComponent } from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { useSignedInUserGuard } from "../../../global/current-user/current-user.store";
-import { useCurrentUserContext } from "../../../global/current-user/current-user.provider";
 
-export const TopPage: FunctionComponent = () => {
-  const { currentUserState } = useCurrentUserContext();
-  useSignedInUserGuard(currentUserState);
-
+export const TopPage: FC = () => {
   return (
     <div>
       <h1>Flashcard</h1>
