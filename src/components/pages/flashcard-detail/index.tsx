@@ -48,7 +48,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       await flashcardRepository.delete(id);
 
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "info",
           message: "削除しました。",
@@ -58,7 +58,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       history.replace("/flashcard-list");
     } catch {
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "error",
           message: "削除できませんでした。",

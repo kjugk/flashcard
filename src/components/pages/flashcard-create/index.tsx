@@ -23,7 +23,7 @@ export const FlashcardCreatePage: FC = () => {
 
       const id = await flashcardRepository.create(values);
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "info",
           message: "作成しました。",
@@ -33,7 +33,7 @@ export const FlashcardCreatePage: FC = () => {
       history.replace(`/flashcard-detail/${id}`);
     } catch {
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "error",
           message: "作成できませんでした。",

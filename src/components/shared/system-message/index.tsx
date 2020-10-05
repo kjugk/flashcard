@@ -2,7 +2,6 @@ import React, { FunctionComponent, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { variables } from "../../../styles/variables";
 import { useSystemContext } from "../../../global/system/system.provider";
-import { useHasAnyMessage } from "../../../global/system/system.store";
 import { CSSTransition } from "react-transition-group";
 
 /**
@@ -11,32 +10,31 @@ import { CSSTransition } from "react-transition-group";
 export const SystemMessage: FunctionComponent = () => {
   const { systemState, systemDispatch } = useSystemContext();
   const nodeRef = useRef(null);
-  const hasAnyMessage = useHasAnyMessage(systemState);
 
   function cleanupMessage() {
     systemDispatch({
-      type: "cleanup-message",
+      type: "system/hide-system-message",
     });
   }
 
   // TODO message を queue にする。
   // 消す時に、messageID をしてする。
   useEffect(() => {
-    if (hasAnyMessage) {
+    if (systemState.showMessage) {
       setTimeout(cleanupMessage, 2500);
     }
 
     return () => {
       // メッセージが残ってたら削除する。
-      if (hasAnyMessage) cleanupMessage();
+      if (systemState.showMessage) cleanupMessage();
     };
     // eslint-disable-next-line
-  }, [hasAnyMessage]);
+  }, [systemState.showMessage]);
 
   return (
     <CSSTransition
       nodeRef={nodeRef}
-      in={hasAnyMessage}
+      in={systemState.showMessage}
       mountOnEnter
       unmountOnExit
       timeout={300}

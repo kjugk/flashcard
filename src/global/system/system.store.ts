@@ -6,13 +6,15 @@ type ErrorType = "notFound" | "network";
 
 // actions
 export type SystemAction =
-  | { type: "cleanup-message" }
   | {
-      type: "set-system-message";
+      type: "system/set-system-message";
       payload: {
         message: string;
         messageType: MessageType;
       };
+    }
+  | {
+      type: "system/hide-system-message";
     }
   | {
       type: "update-loading";
@@ -30,6 +32,7 @@ export type SystemAction =
 export interface SystemState {
   message: string;
   messageType: MessageType;
+  showMessage: boolean;
   errorType: ErrorType | undefined;
   loading: boolean;
   loadingMessage: string;
@@ -38,6 +41,7 @@ export interface SystemState {
 const initialState: SystemState = {
   message: "",
   messageType: "info",
+  showMessage: false,
   errorType: undefined,
   loading: false,
   loadingMessage: "",
@@ -46,18 +50,19 @@ const initialState: SystemState = {
 // reducer
 function reducer(state: SystemState, action: SystemAction): SystemState {
   switch (action.type) {
-    case "cleanup-message":
-      return {
-        ...state,
-        message: "",
-        messageType: "info",
-      };
-
-    case "set-system-message":
+    case "system/set-system-message":
       return {
         ...state,
         ...action.payload,
+        showMessage: true,
       };
+    case "system/hide-system-message":
+      return {
+        ...state,
+        messageType: "info",
+        showMessage: false,
+      };
+
     case "system/set-system-error":
       return {
         ...state,

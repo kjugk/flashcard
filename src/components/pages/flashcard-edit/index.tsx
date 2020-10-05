@@ -48,7 +48,7 @@ export const FlashcardEditPage: FC = () => {
     try {
       await flashcardRepository.update(id, values);
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "info",
           message: "編集しました。",
@@ -57,7 +57,7 @@ export const FlashcardEditPage: FC = () => {
       history.replace(`/flashcard-detail/${id}`);
     } catch (e) {
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "error",
           message: "編集できませんでした。",
