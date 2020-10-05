@@ -40,7 +40,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
 
   const deleteFlashcard = async () => {
     systemDispatch({
-      type: "update-loading",
+      type: "system/update-loading",
       payload: { loading: true, message: "削除中" },
     });
 
@@ -65,7 +65,10 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         },
       });
     } finally {
-      systemDispatch({ type: "update-loading", payload: { loading: false } });
+      systemDispatch({
+        type: "system/update-loading",
+        payload: { loading: false },
+      });
     }
   };
 

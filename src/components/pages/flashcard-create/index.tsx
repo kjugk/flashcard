@@ -17,7 +17,7 @@ export const FlashcardCreatePage: FC = () => {
   const handleSubmitForm = async (values: FlashcardFormValues) => {
     try {
       systemDispatch({
-        type: "update-loading",
+        type: "system/update-loading",
         payload: { loading: true, message: "作成中" },
       });
 
@@ -40,7 +40,10 @@ export const FlashcardCreatePage: FC = () => {
         },
       });
     } finally {
-      systemDispatch({ type: "update-loading", payload: { loading: false } });
+      systemDispatch({
+        type: "system/update-loading",
+        payload: { loading: false },
+      });
     }
   };
 

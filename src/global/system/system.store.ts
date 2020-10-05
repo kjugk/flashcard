@@ -17,7 +17,7 @@ export type SystemAction =
       type: "system/hide-system-message";
     }
   | {
-      type: "update-loading";
+      type: "system/update-loading";
       payload: {
         loading: boolean;
         message?: string;
@@ -68,7 +68,7 @@ function reducer(state: SystemState, action: SystemAction): SystemState {
         ...state,
         errorType: action.payload,
       };
-    case "update-loading":
+    case "system/update-loading":
       return {
         ...state,
         loading: action.payload.loading,
@@ -78,8 +78,3 @@ function reducer(state: SystemState, action: SystemAction): SystemState {
 }
 
 export const useSystemReducer = () => useReducer(reducer, initialState);
-
-// selectors
-export const useHasAnyMessage = (state: SystemState) => {
-  return useMemo(() => state.message !== "", [state]);
-};

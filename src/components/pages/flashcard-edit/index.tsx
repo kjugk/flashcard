@@ -41,7 +41,7 @@ export const FlashcardEditPage: FC = () => {
 
   const updateFlashcard = async (values: FlashcardFormValues) => {
     systemDispatch({
-      type: "update-loading",
+      type: "system/update-loading",
       payload: { loading: true, message: "更新中" },
     });
 
@@ -64,7 +64,10 @@ export const FlashcardEditPage: FC = () => {
         },
       });
     } finally {
-      systemDispatch({ type: "update-loading", payload: { loading: false } });
+      systemDispatch({
+        type: "system/update-loading",
+        payload: { loading: false },
+      });
     }
   };
 
