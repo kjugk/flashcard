@@ -40,7 +40,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
 
   const deleteFlashcard = async () => {
     systemDispatch({
-      type: "update-loading",
+      type: "system/update-loading",
       payload: { loading: true, message: "削除中" },
     });
 
@@ -48,7 +48,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       await flashcardRepository.delete(id);
 
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "info",
           message: "削除しました。",
@@ -58,14 +58,17 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       history.replace("/flashcard-list");
     } catch {
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "error",
           message: "削除できませんでした。",
         },
       });
     } finally {
-      systemDispatch({ type: "update-loading", payload: { loading: false } });
+      systemDispatch({
+        type: "system/update-loading",
+        payload: { loading: false },
+      });
     }
   };
 

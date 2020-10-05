@@ -41,14 +41,14 @@ export const FlashcardEditPage: FC = () => {
 
   const updateFlashcard = async (values: FlashcardFormValues) => {
     systemDispatch({
-      type: "update-loading",
+      type: "system/update-loading",
       payload: { loading: true, message: "更新中" },
     });
 
     try {
       await flashcardRepository.update(id, values);
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "info",
           message: "編集しました。",
@@ -57,14 +57,17 @@ export const FlashcardEditPage: FC = () => {
       history.replace(`/flashcard-detail/${id}`);
     } catch (e) {
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "error",
           message: "編集できませんでした。",
         },
       });
     } finally {
-      systemDispatch({ type: "update-loading", payload: { loading: false } });
+      systemDispatch({
+        type: "system/update-loading",
+        payload: { loading: false },
+      });
     }
   };
 

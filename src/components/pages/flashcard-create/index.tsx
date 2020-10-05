@@ -17,13 +17,13 @@ export const FlashcardCreatePage: FC = () => {
   const handleSubmitForm = async (values: FlashcardFormValues) => {
     try {
       systemDispatch({
-        type: "update-loading",
+        type: "system/update-loading",
         payload: { loading: true, message: "作成中" },
       });
 
       const id = await flashcardRepository.create(values);
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "info",
           message: "作成しました。",
@@ -33,14 +33,17 @@ export const FlashcardCreatePage: FC = () => {
       history.replace(`/flashcard-detail/${id}`);
     } catch {
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "error",
           message: "作成できませんでした。",
         },
       });
     } finally {
-      systemDispatch({ type: "update-loading", payload: { loading: false } });
+      systemDispatch({
+        type: "system/update-loading",
+        payload: { loading: false },
+      });
     }
   };
 

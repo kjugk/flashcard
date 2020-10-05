@@ -9,19 +9,21 @@ import { useHistory, Link } from "react-router-dom";
 
 interface Props {
   title: string;
+  onClose?: () => void;
 }
 
-export const ClosableHeader: FC<Props> = ({ title }) => {
+export const ClosableHeader: FC<Props> = ({ title, onClose }) => {
   const history = useHistory();
 
   return (
     <StyledHeader>
       <Container style={{ padding: "0 16px" }}>
         <Content>
-          <Link to="/flashcard-list" style={{ flex: 1 }}>
-            <Title text={title} tag="h1" size="xl" />
-          </Link>
-          <IconButton icon={<Close />} onClick={() => history.goBack()} />
+          <Title text={title} tag="h1" size="xl" style={{ flex: 1 }} />
+          <IconButton
+            icon={<Close />}
+            onClick={() => (onClose ? onClose() : history.goBack())}
+          />
         </Content>
       </Container>
     </StyledHeader>

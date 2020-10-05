@@ -6,16 +6,18 @@ type ErrorType = "notFound" | "network";
 
 // actions
 export type SystemAction =
-  | { type: "cleanup-message" }
   | {
-      type: "set-system-message";
+      type: "system/set-system-message";
       payload: {
         message: string;
         messageType: MessageType;
       };
     }
   | {
-      type: "update-loading";
+      type: "system/hide-system-message";
+    }
+  | {
+      type: "system/update-loading";
       payload: {
         loading: boolean;
         message?: string;
@@ -30,6 +32,7 @@ export type SystemAction =
 export interface SystemState {
   message: string;
   messageType: MessageType;
+  showMessage: boolean;
   errorType: ErrorType | undefined;
   loading: boolean;
   loadingMessage: string;
@@ -38,6 +41,7 @@ export interface SystemState {
 const initialState: SystemState = {
   message: "",
   messageType: "info",
+  showMessage: false,
   errorType: undefined,
   loading: false,
   loadingMessage: "",
@@ -46,24 +50,25 @@ const initialState: SystemState = {
 // reducer
 function reducer(state: SystemState, action: SystemAction): SystemState {
   switch (action.type) {
-    case "cleanup-message":
-      return {
-        ...state,
-        message: "",
-        messageType: "info",
-      };
-
-    case "set-system-message":
+    case "system/set-system-message":
       return {
         ...state,
         ...action.payload,
+        showMessage: true,
       };
+    case "system/hide-system-message":
+      return {
+        ...state,
+        messageType: "info",
+        showMessage: false,
+      };
+
     case "system/set-system-error":
       return {
         ...state,
         errorType: action.payload,
       };
-    case "update-loading":
+    case "system/update-loading":
       return {
         ...state,
         loading: action.payload.loading,
@@ -73,8 +78,3 @@ function reducer(state: SystemState, action: SystemAction): SystemState {
 }
 
 export const useSystemReducer = () => useReducer(reducer, initialState);
-
-// selectors
-export const useHasAnyMessage = (state: SystemState) => {
-  return useMemo(() => state.message !== "", [state]);
-};
