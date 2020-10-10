@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FlashcardListItem } from "../store";
+import { FlashcardListItemState } from "../store";
 import { Title } from "../../../lib/title";
 import { variables } from "../../../../styles/variables";
 import Schedule from "@material-ui/icons/Schedule";
+import { numberToDateString } from "../../../../lib/util/date";
 
 interface Props {
-  items: FlashcardListItem[];
+  items: FlashcardListItemState[];
 }
 
 export const FlashcardList: FunctionComponent<Props> = (props) => (
@@ -32,7 +33,7 @@ export const FlashcardList: FunctionComponent<Props> = (props) => (
                 className="icon"
                 style={{ fontSize: variables.fontSize.l }}
               />
-              2020/10/10
+              {numberToDateString(item.createdAt)}
             </div>
           </ListBottomContainer>
         </Link>

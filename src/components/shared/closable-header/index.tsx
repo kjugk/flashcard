@@ -5,7 +5,7 @@ import { Container } from "../../lib/container";
 import { Title } from "../../lib/title";
 import { IconButton } from "../../lib/icon-button";
 import { variables } from "../../../styles/variables";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 interface Props {
   title: string;

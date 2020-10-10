@@ -18,7 +18,7 @@ export const SignInPage: FunctionComponent = () => {
       <Container tag="main" style={{ padding: "16px", textAlign: "center" }}>
         <p>初めてご利用される方はログインが会員登録になります。</p>
         <StyledButton onClick={signInWithGoogle}>
-          <img src="sign_in_with_google@2x.png" />
+          <img src="sign_in_with_google@2x.png" alt="sign in with google" />
         </StyledButton>
       </Container>
     </div>

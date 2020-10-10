@@ -3,18 +3,19 @@ import { useReducer } from "react";
 // actions
 export type FlashcardListPageAction = {
   type: "store-flashcards";
-  payload: FlashcardListItem[];
+  payload: FlashcardListItemState[];
 };
 
 // State types
-export interface FlashcardListItem {
+export interface FlashcardListItemState {
   id: string;
   name: string;
   description: string;
+  createdAt: number;
 }
 
 interface FlashcardListPageState {
-  flashcards: FlashcardListItem[];
+  flashcards: FlashcardListItemState[];
 }
 
 const initialState: FlashcardListPageState = {

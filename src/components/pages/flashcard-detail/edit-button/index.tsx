@@ -26,15 +26,11 @@ export const EditButton: FC<Props> = ({ onEdit, onDelete, style }) => {
         <IconButton icon={<MoreHoriz />} onClick={() => setShowPopover(true)} />
         <Popover show={showPopover} onClose={() => setShowPopover(false)}>
           <List>
-            <li role="menuItem" onClick={onEdit}>
+            <li onClick={onEdit}>
               <Create className="icon" />
               <span>編集</span>
             </li>
-            <li
-              onClick={handleClickDeleteButton}
-              role="menuItem"
-              style={{ color: "red" }}
-            >
+            <li onClick={handleClickDeleteButton} style={{ color: "red" }}>
               <Delete className="icon" />
               <span>削除</span>
             </li>
