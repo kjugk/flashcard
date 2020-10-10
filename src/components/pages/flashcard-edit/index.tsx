@@ -9,6 +9,7 @@ import { useSystemContext } from "../../../global/system/system.provider";
 import { LoadingSpinner } from "../../shared/loading-spinner";
 import { Layout } from "../../shared/layout";
 import { handleHttpError } from "../../../lib/util/http-error-handler";
+import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
 
 /**
  * カード編集ページ。
@@ -18,6 +19,7 @@ export const FlashcardEditPage: FC = () => {
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
   const [loading, setLoading] = useState(false);
+  const { flashcardLisrPageDispatch } = useFlashcardListPageContext();
   const [defaultValues, setDefaultValues] = useState<
     FlashcardFormValues | undefined
   >(undefined);
@@ -54,6 +56,12 @@ export const FlashcardEditPage: FC = () => {
           message: "編集しました。",
         },
       });
+
+      flashcardLisrPageDispatch({
+        type: "set-stale",
+        payload: true,
+      });
+
       history.replace(`/flashcard-detail/${id}`);
     } catch (e) {
       systemDispatch({

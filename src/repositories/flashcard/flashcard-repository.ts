@@ -1,4 +1,4 @@
-import { FlashcardListItemState } from "../../components/pages/flashcard-list/store";
+import { FlashcardListItemState } from "../../global/flashcard-list/flashcard-list.store";
 import { FlashcardDetail } from "../../components/pages/flashcard-detail/store";
 import axios from "axios";
 import {

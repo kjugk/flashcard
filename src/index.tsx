@@ -7,6 +7,7 @@ import { SystemProvider } from "./global/system/system.provider";
 import { CurrentUserProvider } from "./global/current-user/current-user.provider";
 import { configureCognito } from "./lib/cognito";
 import { SystemMessage } from "./components/shared";
+import { FlashcardListPageProvider } from "./global/flashcard-list/flashcard-list.provider";
 
 configureCognito();
 
@@ -15,8 +16,10 @@ ReactDOM.render(
     {/* グローバルな context は、ここでネストして渡す */}
     <SystemProvider>
       <CurrentUserProvider>
-        <App />
-        <SystemMessage />
+        <FlashcardListPageProvider>
+          <App />
+          <SystemMessage />
+        </FlashcardListPageProvider>
       </CurrentUserProvider>
     </SystemProvider>
   </React.StrictMode>,

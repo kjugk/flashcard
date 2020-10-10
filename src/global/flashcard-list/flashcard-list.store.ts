@@ -1,10 +1,15 @@
 import { useReducer } from "react";
 
 // actions
-export type FlashcardListPageAction = {
-  type: "store-flashcards";
-  payload: FlashcardListItemState[];
-};
+export type FlashcardListPageAction =
+  | {
+      type: "store-flashcards";
+      payload: FlashcardListItemState[];
+    }
+  | {
+      type: "set-stale";
+      payload: boolean;
+    };
 
 // State types
 export interface FlashcardListItemState {
@@ -14,12 +19,14 @@ export interface FlashcardListItemState {
   createdAt: number;
 }
 
-interface FlashcardListPageState {
+export interface FlashcardListPageState {
   flashcards: FlashcardListItemState[];
+  stale: boolean;
 }
 
 const initialState: FlashcardListPageState = {
   flashcards: [],
+  stale: true,
 };
 
 // reducer
@@ -32,6 +39,12 @@ function reducer(
       return {
         ...state,
         flashcards: action.payload,
+        stale: false,
+      };
+    case "set-stale":
+      return {
+        ...state,
+        stale: action.payload,
       };
     default:
       return state;
