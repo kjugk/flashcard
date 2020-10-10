@@ -1,5 +1,5 @@
 // システム関連の global state を管理する
-import { useReducer, useMemo } from "react";
+import { useReducer } from "react";
 
 type MessageType = "info" | "error";
 type ErrorType = "notFound" | "network";

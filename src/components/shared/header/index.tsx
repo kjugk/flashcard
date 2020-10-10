@@ -46,7 +46,7 @@ export const Header: FunctionComponent = () => {
               />
               <Popover show={showPopover} onClose={() => setShowPopover(false)}>
                 <List>
-                  <li role="menuItem" onClick={handleSignOut}>
+                  <li onClick={handleSignOut}>
                     <ExitToApp className="icon" />
                     <span>ログアウト</span>
                   </li>

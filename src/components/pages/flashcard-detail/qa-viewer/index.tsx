@@ -36,9 +36,10 @@ export const QaViewer: FunctionComponent<Props> = ({
   const flipQa = () => dispatch({ type: "flip-qa" });
 
   // スワイプジェスチャー対応
-  let hammer: HammerManager;
-  const ref = useRef<HTMLDivElement>(null);
+  const hammerRef = useRef<HammerManager>();
   const handleSwipe = (ev: HammerInput) => {
+    console.log(JSON.stringify(state, null, 2));
+
     switch (ev.direction) {
       case Hammer.DIRECTION_LEFT:
         showNextPage();
@@ -76,24 +77,21 @@ export const QaViewer: FunctionComponent<Props> = ({
   }, [state.currentPage]);
 
   useEffect(() => {
-    if (ref.current === null) return;
+    if (hammerRef.current !== undefined) {
+      hammerRef.current.on("swipe", handleSwipe);
+    }
 
-    hammer = new Hammer(ref.current);
-    hammer.on("swipe", handleSwipe);
-  });
-
-  useEffect(() => {
     window.addEventListener("keyup", handleKeyPress, false);
 
     return () => {
       window.removeEventListener("keyup", handleKeyPress, false);
 
-      if (hammer) {
-        hammer.stop(true);
-        hammer.destroy();
+      if (hammerRef.current !== undefined) {
+        hammerRef.current.stop(true);
+        hammerRef.current.destroy();
       }
     };
-  }, []);
+  });
 
   const currentQa = useCurrentQa(state);
   const isFirstPage = state.currentPage === 1;
@@ -102,7 +100,7 @@ export const QaViewer: FunctionComponent<Props> = ({
 
   return (
     <div>
-      <div ref={ref}>
+      <div ref={(e) => e && (hammerRef.current = new Hammer(e))}>
         <CardWrapper>
           {state.showEndOfQa && (
             <Card showAnswer={false} inTransition={false}>
