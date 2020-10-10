@@ -21,7 +21,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   const { control, handleSubmit, errors, register } = useForm<
     FlashcardFormValues
   >({
-    mode: "onSubmit",
+    mode: "onBlur",
     defaultValues,
   });
   const { fields, append, remove } = useFieldArray<Qa>({
@@ -35,12 +35,14 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   };
   const _onSubmit = handleSubmit((values) => onSubmit(values));
 
-  // TODO これ本当に必要か調べる
   const getErrorMessage = (error?: FieldError) => {
     if (error === undefined) return "";
+
     switch (error.type) {
       case "required":
         return "必須項目です";
+      case "maxLength":
+        return `${error.message}文字以内で入力してください`;
       default:
         return "";
     }
@@ -52,7 +54,9 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
         <Textarea
           name="name"
           defaultValue=""
-          inputRef={register({ required: true })}
+          inputRef={register({
+            maxLength: { value: 10, message: "10" },
+          })}
           label="名前"
           placeholder="名前を入力してください"
           errorMessage={getErrorMessage(errors.name)}
@@ -62,7 +66,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
           defaultValue=""
           label="説明"
           rows={3}
-          inputRef={register}
+          inputRef={register({ maxLength: { value: 100, message: "100" } })}
           placeholder="説明を入力してください"
           errorMessage={getErrorMessage(errors.description)}
         />
@@ -92,7 +96,10 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
                   label="問題"
                   defaultValue={field.question}
                   rows={3}
-                  inputRef={register({ required: true })}
+                  inputRef={register({
+                    required: true,
+                    maxLength: { value: 100, message: "100" },
+                  })}
                   errorMessage={getErrorMessage(
                     errors.qaList ? errors.qaList[index]?.question : undefined
                   )}
@@ -103,7 +110,10 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
                   defaultValue={field.answer}
                   rows={3}
                   label="答え"
-                  inputRef={register({ required: true })}
+                  inputRef={register({
+                    required: true,
+                    maxLength: { value: 100, message: "100" },
+                  })}
                   errorMessage={getErrorMessage(
                     errors.qaList ? errors.qaList[index]?.answer : undefined
                   )}
