@@ -8,7 +8,7 @@ import { Button } from "../../lib/button";
 import { Title } from "../../lib/title";
 import Delete from "@material-ui/icons/Delete";
 import Add from "@material-ui/icons/Add";
-import { Qa } from "../../pages/flashcard-detail/store";
+import { QaState } from "../../pages/flashcard-detail/store";
 import { IconButton } from "../../lib/icon-button";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
@@ -24,7 +24,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
     mode: "onBlur",
     defaultValues,
   });
-  const { fields, append, remove } = useFieldArray<Qa>({
+  const { fields, append, remove } = useFieldArray<QaState>({
     control,
     name: "qaList",
   });

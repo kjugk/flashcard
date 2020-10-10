@@ -1,9 +1,9 @@
 import { useReducer, useMemo } from "react";
 import { shuffle, generateSequentialNumberList } from "../../../../lib/util";
-import { Qa } from "../store";
+import { QaState } from "../store";
 
 export interface QaViewerState {
-  qaList: Qa[];
+  qaList: QaState[];
   currentPage: number;
   qaIndexList: number[];
   showEndOfQa: boolean;
@@ -19,8 +19,6 @@ export const initialState: QaViewerState = {
   shuffling: false,
   showAnswer: false,
 };
-
-type QuestionAnswer = "question" | "answer";
 
 // Actions
 export type QaViewerAction =
@@ -110,7 +108,7 @@ export function reducer(
   }
 }
 
-const init = (qaList: Qa[]): QaViewerState => {
+const init = (qaList: QaState[]): QaViewerState => {
   return {
     ...initialState,
     qaList: qaList,
@@ -118,7 +116,7 @@ const init = (qaList: Qa[]): QaViewerState => {
   };
 };
 
-export const useQaViewerReducer = (qaList: Qa[]) =>
+export const useQaViewerReducer = (qaList: QaState[]) =>
   useReducer(reducer, qaList, init);
 
 // selectors

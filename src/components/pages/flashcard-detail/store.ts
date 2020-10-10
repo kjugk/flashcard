@@ -1,20 +1,20 @@
 import { useReducer } from "react";
 
 // State
-export interface Qa {
+export interface QaState {
   question: string;
   answer: string;
 }
 
-export interface FlashcardDetail {
+export interface FlashcardDetailState {
   id: string;
   name: string;
   description: string;
-  qaList: Qa[];
+  qaList: QaState[];
 }
 
 export interface FlashcardDetailPageState {
-  flashcard?: FlashcardDetail;
+  flashcard?: FlashcardDetailState;
 }
 
 export const initialState: FlashcardDetailPageState = {
@@ -24,7 +24,7 @@ export const initialState: FlashcardDetailPageState = {
 // Actions
 export type FlashcardDetailPageAction = {
   type: "store-flashcard-detail";
-  payload: FlashcardDetail;
+  payload: FlashcardDetailState;
 };
 
 // Reducer
