@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { variables } from "../../../../styles/variables";
 import { IconButton } from "../../../lib/icon-button";
 import { Button } from "../../../lib/button";
-import { Qa } from "../store";
+import { QaState } from "../store";
 import { ProgressBar } from "../progress-bar";
 import Hammer from "hammerjs";
 import { EditButton } from "../edit-button";
@@ -15,7 +15,7 @@ import { EditButton } from "../edit-button";
 import { useCurrentQa, useQaViewerReducer } from "./store";
 
 interface Props {
-  qaList: Qa[];
+  qaList: QaState[];
   onEdit: () => void;
   onDelete: () => void;
 }

@@ -11,6 +11,7 @@ import { variables } from "../../../styles/variables";
 import { LoadingSpinner } from "../../shared/loading-spinner";
 import { Layout } from "../../shared/layout";
 import { handleHttpError } from "../../../lib/util/http-error-handler";
+import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
 
 /**
  * カードの詳細ページ。
@@ -20,6 +21,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
   const [state, dispatch] = useDetailPageReducer();
+  const { flashcardLisrPageDispatch } = useFlashcardListPageContext();
   const [loading, setLoading] = useState(true);
 
   const getFlashcardDetail = async () => {
@@ -53,6 +55,11 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           messageType: "info",
           message: "削除しました。",
         },
+      });
+
+      flashcardLisrPageDispatch({
+        type: "set-stale",
+        payload: true,
       });
 
       history.replace("/flashcard-list");

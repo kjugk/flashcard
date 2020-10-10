@@ -6,6 +6,7 @@ import { Container } from "../../lib";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { FlashcardForm } from "../../shared/flashcard-form";
 import { useSystemContext } from "../../../global/system/system.provider";
+import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
 
 /**
  * カード作成ページ。
@@ -13,6 +14,7 @@ import { useSystemContext } from "../../../global/system/system.provider";
 export const FlashcardCreatePage: FC = () => {
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
+  const { flashcardLisrPageDispatch } = useFlashcardListPageContext();
 
   const handleSubmitForm = async (values: FlashcardFormValues) => {
     try {
@@ -28,6 +30,11 @@ export const FlashcardCreatePage: FC = () => {
           messageType: "info",
           message: "作成しました。",
         },
+      });
+
+      flashcardLisrPageDispatch({
+        type: "set-stale",
+        payload: true,
       });
 
       history.replace(`/flashcard-detail/${id}`);

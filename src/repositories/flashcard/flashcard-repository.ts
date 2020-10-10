@@ -1,5 +1,5 @@
-import { FlashcardListItemState } from "../../components/pages/flashcard-list/store";
-import { FlashcardDetail } from "../../components/pages/flashcard-detail/store";
+import { FlashcardListItemState } from "../../global/flashcard-list/flashcard-list.store";
+import { FlashcardDetailState } from "../../components/pages/flashcard-detail/store";
 import axios from "axios";
 import {
   GetFlashcardListResponse,
@@ -35,7 +35,7 @@ class FlashcardRepository {
     }
   }
 
-  async find(id: string): Promise<FlashcardDetail> {
+  async find(id: string): Promise<FlashcardDetailState> {
     const http = await this.getHttpClient();
 
     try {
