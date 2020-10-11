@@ -47,6 +47,8 @@ const ModalContainer = styled.div`
 
 const ModalContent = styled.div`
   background: ${variables.colors.white};
+  font-size: ${variables.fontSize.m};
+  border-radius: 6px;
   padding: 32px 16px;
   max-width: 500px;
   width: 90%;

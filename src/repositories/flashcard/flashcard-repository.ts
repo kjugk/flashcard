@@ -1,5 +1,5 @@
-import { FlashcardListItem } from "../../components/pages/flashcard-list/store";
-import { FlashcardDetail } from "../../components/pages/flashcard-detail/store";
+import { FlashcardListItemState } from "../../global/flashcard-list/flashcard-list.store";
+import { FlashcardDetailState } from "../../components/pages/flashcard-detail/store";
 import axios from "axios";
 import {
   GetFlashcardListResponse,
@@ -14,18 +14,20 @@ import { NotFoundError, NetworkError, NotAuthorizedError } from "../../errors";
 
 class FlashcardRepository {
   // API のデータをアプリケーションで使える形式にして返す
-  async getAll(): Promise<FlashcardListItem[]> {
+  async getAll(): Promise<FlashcardListItemState[]> {
     const http = await this.getHttpClient();
 
     try {
       const response = await http.get<GetFlashcardListResponse>("flashcards");
       const { flashcards } = response.data;
 
+      // TODO Reducer に移動
       return flashcards.map((flashcard) => {
         return {
           name: flashcard.name,
           id: flashcard.id,
           description: flashcard.description,
+          createdAt: flashcard.createdAt,
         };
       });
     } catch (e) {
@@ -33,7 +35,7 @@ class FlashcardRepository {
     }
   }
 
-  async find(id: string): Promise<FlashcardDetail> {
+  async find(id: string): Promise<FlashcardDetailState> {
     const http = await this.getHttpClient();
 
     try {

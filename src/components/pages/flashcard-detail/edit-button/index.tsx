@@ -1,6 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { CSSProperties, FC, useState } from "react";
 import styled from "styled-components";
-import { TextButton } from "../../../lib/text-button";
+import { variables } from "../../../../styles/variables";
+import { IconButton } from "../../../lib/icon-button";
 import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import { Popover } from "../../../lib/popover";
 import { ConfirmableModal } from "../../../lib/confirmable-modal";
@@ -8,11 +9,12 @@ import Create from "@material-ui/icons/Create";
 import Delete from "@material-ui/icons/Delete";
 
 interface Props {
+  style: CSSProperties;
   onEdit: () => void;
   onDelete: () => void;
 }
 
-export const Controller: FC<Props> = ({ onEdit, onDelete }) => {
+export const EditButton: FC<Props> = ({ onEdit, onDelete, style }) => {
   const [showPopover, setShowPopover] = useState(false);
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState(false);
   const handleClickDeleteButton = () => setShowDeleteConfirmModal(true);
@@ -20,22 +22,15 @@ export const Controller: FC<Props> = ({ onEdit, onDelete }) => {
 
   return (
     <>
-      <div style={{ position: "relative" }}>
-        <TextButton onClick={() => setShowPopover(true)} disabled={false}>
-          <MoreHoriz style={{ fontSize: 20 }} />
-        </TextButton>
-
+      <div style={style}>
+        <IconButton icon={<MoreHoriz />} onClick={() => setShowPopover(true)} />
         <Popover show={showPopover} onClose={() => setShowPopover(false)}>
           <List>
-            <li role="menuItem" onClick={onEdit}>
+            <li onClick={onEdit}>
               <Create className="icon" />
               <span>編集</span>
             </li>
-            <li
-              onClick={handleClickDeleteButton}
-              role="menuItem"
-              style={{ color: "red" }}
-            >
+            <li onClick={handleClickDeleteButton} style={{ color: "red" }}>
               <Delete className="icon" />
               <span>削除</span>
             </li>
@@ -62,12 +57,12 @@ export const Controller: FC<Props> = ({ onEdit, onDelete }) => {
 const List = styled.ul`
   padding: 24px;
   width: 124px;
+  font-size: ${variables.fontSize.m};
   li {
     margin-bottom: 24px;
     display: flex;
     align-items: center;
     cursor: pointer;
-    line-height: 1.2;
     &:last-child {
       margin-bottom: 0px;
     }

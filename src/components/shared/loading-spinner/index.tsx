@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import Cached from "@material-ui/icons/Cached";
+import { variables } from "../../../styles/variables";
 
 interface Props {
   show: boolean;
@@ -19,6 +20,7 @@ export const LoadingSpinner: FC<Props> = ({ show }) => {
 const Wrapper = styled.div`
   text-align: center;
   background: transparent;
+  color: ${variables.colors.lightBlue};
   padding: 16px;
   .icon {
     animation: spin-animation 1.4s infinite;

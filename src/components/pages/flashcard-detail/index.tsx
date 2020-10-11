@@ -1,26 +1,27 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import styled from "styled-components";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
 import { useSystemContext } from "../../../global/system/system.provider";
-import { Header } from "../../shared";
+import { ClosableHeader } from "../../shared/closable-header";
 import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";
 import { Container } from "../../lib/container";
 import { variables } from "../../../styles/variables";
-import { Controller } from "./controller";
 import { LoadingSpinner } from "../../shared/loading-spinner";
+import { Layout } from "../../shared/layout";
+import { handleHttpError } from "../../../lib/util/http-error-handler";
+import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
 
 /**
  * カードの詳細ページ。
- * 子コンポーネントの副作用を伴うaction は全てここで処理する。
  */
 export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
   const [state, dispatch] = useDetailPageReducer();
+  const { flashcardLisrPageDispatch } = useFlashcardListPageContext();
   const [loading, setLoading] = useState(true);
 
   const getFlashcardDetail = async () => {
@@ -32,44 +33,54 @@ export const FlashcardDetailPage: FunctionComponent = () => {
         type: "store-flashcard-detail",
         payload: item,
       });
-      setLoading(false);
     } catch (e) {
-      // TODO グローバルのエラーハンドラーにエラー渡す
+      handleHttpError(e, systemDispatch);
+    } finally {
       setLoading(false);
-      history.replace("/not-found");
     }
   };
 
   const deleteFlashcard = async () => {
-    try {
-      systemDispatch({
-        type: "update-loading",
-        payload: { loading: true, message: "削除中" },
-      });
+    systemDispatch({
+      type: "system/update-loading",
+      payload: { loading: true, message: "削除中" },
+    });
 
+    try {
       await flashcardRepository.delete(id);
 
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "info",
           message: "削除しました。",
         },
       });
 
+      flashcardLisrPageDispatch({
+        type: "set-stale",
+        payload: true,
+      });
+
       history.replace("/flashcard-list");
     } catch {
-      // エラーの種類で処理を分岐させる
       systemDispatch({
-        type: "set-system-message",
+        type: "system/set-system-message",
         payload: {
           messageType: "error",
           message: "削除できませんでした。",
         },
       });
     } finally {
-      systemDispatch({ type: "update-loading", payload: { loading: false } });
+      systemDispatch({
+        type: "system/update-loading",
+        payload: { loading: false },
+      });
     }
+  };
+
+  const handleClose = () => {
+    history.replace("/flashcard-list");
   };
 
   // 詳細データを取得する
@@ -80,38 +91,28 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const { flashcard } = state;
 
   return (
-    <div>
-      <Header />
-      <LoadingSpinner show={loading} />
-      {!loading && flashcard && (
-        <Container
-          tag="main"
-          style={{ padding: "16px", background: variables.colors.white }}
-        >
-          <TitleWrapper>
-            <Title
-              text={flashcard.name}
-              tag="h1"
-              size="xxl"
-              style={{ flex: 1 }}
-            />
+    <Layout>
+      <div style={{ paddingBottom: "96px" }}>
+        <ClosableHeader title="問題集" onClose={handleClose} />
+        <LoadingSpinner show={loading} />
 
-            <Controller
+        {!loading && flashcard && (
+          <Container
+            tag="main"
+            style={{ padding: "16px", background: variables.colors.white }}
+          >
+            <Title text={flashcard.name} tag="h1" size="l" />
+
+            <QaViewer
+              qaList={flashcard.qaList}
               onEdit={() => history.push(`/flashcard-edit/${id}`)}
               onDelete={deleteFlashcard}
             />
-          </TitleWrapper>
 
-          <QaViewer qaList={flashcard.qaList}></QaViewer>
-
-          {flashcard.description && <p>{flashcard.description}</p>}
-        </Container>
-      )}
-    </div>
+            {flashcard.description && <p>{flashcard.description}</p>}
+          </Container>
+        )}
+      </div>
+    </Layout>
   );
 };
-
-const TitleWrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-`;

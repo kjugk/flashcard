@@ -37,7 +37,8 @@ const StyledButton = styled.button<{
 }>`
   display: inline-block;
   padding: 0.4em;
-  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
   font-size: ${(props) => variables.fontSize[props.size]};
-  ${(props) => (props.disabled ? `color: ${variables.colors.lightGrey}` : "")};
+  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
+  color: ${(props) =>
+    props.disabled ? `color: ${variables.colors.lightGrey}` : ""};
 `;

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Modal, Props as ModalProps } from "../modal";
 import { Title } from "../title";
 import { Button } from "../button";
+import { variables } from "../../../styles/variables";
 
 interface Props {
   onSubmit: () => void;
@@ -28,13 +29,18 @@ export const ConfirmableModal: FC<Props & ModalProps> = ({
         <Title
           text={title}
           tag="h2"
-          size="xl"
+          size="l"
           style={{ marginBottom: "16px" }}
         />
-        <div>{description}</div>
+        <div style={{ fontSize: variables.fontSize.s }}>{description}</div>
         <ModalController>
-          <Button label={cancelLabel} outlined onClick={onCancel} />
-          <Button label={submitLabel} onClick={onSubmit} />
+          <Button
+            label={cancelLabel}
+            outlined
+            onClick={onCancel}
+            color="black"
+          />
+          <Button label={submitLabel} onClick={onSubmit} color="red" />
         </ModalController>
       </div>
     </Modal>

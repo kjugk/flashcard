@@ -1,21 +1,20 @@
 import { useReducer } from "react";
 
 // State
-
-export interface Qa {
+export interface QaState {
   question: string;
   answer: string;
 }
 
-export interface FlashcardDetail {
+export interface FlashcardDetailState {
   id: string;
   name: string;
   description: string;
-  qaList: Qa[];
+  qaList: QaState[];
 }
 
-interface FlashcardDetailPageState {
-  flashcard?: FlashcardDetail;
+export interface FlashcardDetailPageState {
+  flashcard?: FlashcardDetailState;
 }
 
 export const initialState: FlashcardDetailPageState = {
@@ -25,24 +24,24 @@ export const initialState: FlashcardDetailPageState = {
 // Actions
 export type FlashcardDetailPageAction = {
   type: "store-flashcard-detail";
-  payload: FlashcardDetail;
+  payload: FlashcardDetailState;
 };
 
 // Reducer
 export function reducer(
   state: FlashcardDetailPageState,
   action: FlashcardDetailPageAction
-) {
+): FlashcardDetailPageState {
   switch (action.type) {
     case "store-flashcard-detail":
       return {
         ...state,
         flashcard: action.payload,
       };
+
     default:
       return state;
   }
 }
 
-// custom hooks
 export const useDetailPageReducer = () => useReducer(reducer, initialState);

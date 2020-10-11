@@ -16,6 +16,6 @@ export const Container: FC<Props> = ({ tag = "div", style, children }) => {
 
 const StyledContainer = styled.div`
   background: transparent;
-  max-width: 768px;
+  max-width: 854px;
   margin: 0 auto;
 `;

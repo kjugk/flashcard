@@ -11,6 +11,7 @@ interface Props {
   rows?: number;
   placeholder?: string;
   errorMessage?: string;
+  required?: boolean;
 }
 
 export const Textarea: FC<Props> = ({
@@ -21,14 +22,17 @@ export const Textarea: FC<Props> = ({
   rows = 1,
   placeholder,
   errorMessage,
+  required = false,
 }) => {
   const hasError = useMemo(() => {
     return errorMessage !== undefined && errorMessage !== "";
   }, [errorMessage]);
 
+  const labelText = required ? `${label} *` : label;
+
   return (
     <Wrapper hasError={hasError}>
-      <div className="label-text">{label}</div>
+      <div className="label-text">{labelText}</div>
       <StyledTextarea hasError={hasError}>
         <TextareaAutosize
           name={name}
@@ -50,28 +54,34 @@ const Wrapper = styled.label<{ hasError: boolean }>`
   color: #333;
   ${(props) => (props.hasError ? "color: red;" : "")}
   .label-text {
-    font-weight: bold;
     margin-bottom: 4px;
-    font-size: ${variables.fontSize.m};
+    font-size: ${variables.fontSize.s};
   }
   .error {
     margin-top: 4px;
-    font-size: ${variables.fontSize.m};
+    font-size: ${variables.fontSize.s};
   }
 `;
 
 const StyledTextarea = styled.div<{ hasError: boolean }>`
   textarea {
     resize: none;
-    border: 1px solid #676d71;
-    font-size: ${variables.fontSize.l};
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: ${variables.fontSize.m};
     color: inherit;
     width: 100%;
     padding: 12px 8px;
-    line-height: 130%;
-    ${(props) => (props.hasError ? "border-color: red;" : "")}
+    border-color: ${(props) =>
+      props.hasError
+        ? `${variables.colors.red}!important`
+        : variables.colors.grey};
+    &:focus {
+      border-color: ${variables.colors.lightBlue};
+    }
+
     &::placeholder {
-      color: #aaa;
+      color: ${variables.colors.grey};
     }
   }
 `;

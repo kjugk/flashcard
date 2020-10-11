@@ -1,11 +1,12 @@
 import React, { FC } from "react";
 import { useHistory } from "react-router-dom";
-import { Header } from "../../shared";
+import { ClosableHeader } from "../../shared/closable-header";
 import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { Container } from "../../lib";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { FlashcardForm } from "../../shared/flashcard-form";
 import { useSystemContext } from "../../../global/system/system.provider";
+import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
 
 /**
  * カード作成ページ。
@@ -13,26 +14,49 @@ import { useSystemContext } from "../../../global/system/system.provider";
 export const FlashcardCreatePage: FC = () => {
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
+  const { flashcardLisrPageDispatch } = useFlashcardListPageContext();
 
   const handleSubmitForm = async (values: FlashcardFormValues) => {
     try {
       systemDispatch({
-        type: "update-loading",
+        type: "system/update-loading",
         payload: { loading: true, message: "作成中" },
       });
 
       const id = await flashcardRepository.create(values);
-      history.push(`/flashcard-detail/${id}`);
+      systemDispatch({
+        type: "system/set-system-message",
+        payload: {
+          messageType: "info",
+          message: "作成しました。",
+        },
+      });
+
+      flashcardLisrPageDispatch({
+        type: "set-stale",
+        payload: true,
+      });
+
+      history.replace(`/flashcard-detail/${id}`);
     } catch {
-      // TODO エラーハンドリング
+      systemDispatch({
+        type: "system/set-system-message",
+        payload: {
+          messageType: "error",
+          message: "作成できませんでした。",
+        },
+      });
     } finally {
-      systemDispatch({ type: "update-loading", payload: { loading: false } });
+      systemDispatch({
+        type: "system/update-loading",
+        payload: { loading: false },
+      });
     }
   };
 
   return (
     <div>
-      <Header />
+      <ClosableHeader title="問題集の作成" />
       <Container>
         <FlashcardForm
           onSubmit={handleSubmitForm}
