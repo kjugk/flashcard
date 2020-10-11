@@ -11,6 +11,7 @@ interface Props {
   rows?: number;
   placeholder?: string;
   errorMessage?: string;
+  required?: boolean;
 }
 
 export const Textarea: FC<Props> = ({
@@ -21,14 +22,17 @@ export const Textarea: FC<Props> = ({
   rows = 1,
   placeholder,
   errorMessage,
+  required = false,
 }) => {
   const hasError = useMemo(() => {
     return errorMessage !== undefined && errorMessage !== "";
   }, [errorMessage]);
 
+  const labelText = required ? `${label} *` : label;
+
   return (
     <Wrapper hasError={hasError}>
-      <div className="label-text">{label}</div>
+      <div className="label-text">{labelText}</div>
       <StyledTextarea hasError={hasError}>
         <TextareaAutosize
           name={name}

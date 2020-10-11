@@ -79,6 +79,10 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     }
   };
 
+  const handleClose = () => {
+    history.replace("/flashcard-list");
+  };
+
   // 詳細データを取得する
   useEffect(() => {
     getFlashcardDetail();
@@ -89,7 +93,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   return (
     <Layout>
       <div style={{ paddingBottom: "96px" }}>
-        <ClosableHeader title="問題集" />
+        <ClosableHeader title="問題集" onClose={handleClose} />
         <LoadingSpinner show={loading} />
 
         {!loading && flashcard && (

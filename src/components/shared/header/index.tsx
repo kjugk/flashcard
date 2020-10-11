@@ -29,7 +29,7 @@ export const Header: FunctionComponent = () => {
       <Container style={{ padding: "0 16px" }}>
         <Nav>
           <Link to="/flashcard-list" className="brand">
-            <img src="/brand.png" alt="brand logo" width="163x" />
+            <img src="/brand.png" alt="brand logo" width="163px" />
           </Link>
 
           <IconButton
@@ -46,6 +46,14 @@ export const Header: FunctionComponent = () => {
               />
               <Popover show={showPopover} onClose={() => setShowPopover(false)}>
                 <List>
+                  <li>
+                    <ProfileIcon
+                      src={currentUserState.picture}
+                      alt="ユーザープロフィールアイコン"
+                      style={{ marginRight: "8px" }}
+                    />
+                    {currentUserState.name}
+                  </li>
                   <li onClick={handleSignOut}>
                     <ExitToApp className="icon" />
                     <span>ログアウト</span>
