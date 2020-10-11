@@ -54,7 +54,9 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
         <Textarea
           name="name"
           defaultValue=""
+          required
           inputRef={register({
+            required: true,
             maxLength: { value: 10, message: "10" },
           })}
           label="名前"
@@ -94,6 +96,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
                 <Textarea
                   name={`qaList[${index}].question`}
                   label="問題"
+                  required
                   defaultValue={field.question}
                   rows={3}
                   inputRef={register({
@@ -110,6 +113,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
                   defaultValue={field.answer}
                   rows={3}
                   label="答え"
+                  required
                   inputRef={register({
                     required: true,
                     maxLength: { value: 100, message: "100" },

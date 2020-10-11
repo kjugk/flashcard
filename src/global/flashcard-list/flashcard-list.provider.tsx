@@ -1,4 +1,3 @@
-// システム関連の global state を管理する
 import React, { FC, createContext, useContext, Dispatch } from "react";
 import {
   FlashcardListPageAction,
