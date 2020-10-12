@@ -1,6 +1,7 @@
 import React, { FunctionComponent, useState } from "react";
 import Add from "@material-ui/icons/Add";
 import ExitToApp from "@material-ui/icons/ExitToApp";
+import Block from "@material-ui/icons/Block";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { signOut } from "../../../lib/cognito";
@@ -10,18 +11,64 @@ import { Container } from "../../lib/container";
 import { Popover } from "../../lib/popover";
 import { IconButton } from "../../lib/icon-button";
 import { variables } from "../../../styles/variables";
+import { ConfirmableModal } from "../../lib/confirmable-modal";
+import { useSystemContext } from "../../../global/system/system.provider";
+import { accountRepository } from "../../../repositories/account/account-repository";
+import { handleHttpError } from "../../../lib/util/http-error-handler";
 
 export const Header: FunctionComponent = () => {
   const { currentUserState, currentUserDispatch } = useCurrentUserContext();
+  const { systemDispatch } = useSystemContext();
   const history = useHistory();
   const isSignedIn = useIsSignedIn(currentUserState);
   const [showPopover, setShowPopover] = useState(false);
+  const [showAccountDeleteConfirm, setShowAccountDeleteConfirm] = useState(
+    false
+  );
 
   const handleSignOut = async () => {
     await signOut();
     currentUserDispatch({
       type: "sign-out",
     });
+  };
+
+  const handleDeleteAccount = async () => {
+    setShowAccountDeleteConfirm(false);
+    systemDispatch({
+      type: "system/update-loading",
+      payload: {
+        loading: true,
+        message: "削除中",
+      },
+    });
+
+    try {
+      await accountRepository.delete();
+
+      // サインアウト
+      await signOut();
+      currentUserDispatch({
+        type: "sign-out",
+      });
+    } catch (e) {
+      handleHttpError(e, systemDispatch);
+
+      systemDispatch({
+        type: "system/set-system-message",
+        payload: {
+          messageType: "error",
+          message: "削除できませんでした。",
+        },
+      });
+    } finally {
+      systemDispatch({
+        type: "system/update-loading",
+        payload: {
+          loading: false,
+        },
+      });
+    }
   };
 
   return (
@@ -50,7 +97,7 @@ export const Header: FunctionComponent = () => {
                     <ProfileIcon
                       src={currentUserState.picture}
                       alt="ユーザープロフィールアイコン"
-                      style={{ marginRight: "8px" }}
+                      className="icon"
                     />
                     {currentUserState.name}
                   </li>
@@ -59,11 +106,33 @@ export const Header: FunctionComponent = () => {
                     <span>ログアウト</span>
                   </li>
                 </List>
+
+                <List>
+                  <li onClick={() => setShowAccountDeleteConfirm(true)}>
+                    <Block
+                      className="icon"
+                      style={{ color: variables.colors.red }}
+                    />
+                    <span style={{ color: variables.colors.red }}>
+                      アカウント削除
+                    </span>
+                  </li>
+                </List>
               </Popover>
             </ProfileIconWrapper>
           )}
         </Nav>
       </Container>
+
+      <ConfirmableModal
+        title="アカウントを削除しますか?"
+        description="全ての問題集が削除されます。"
+        submitLabel="削除"
+        show={showAccountDeleteConfirm}
+        onCancel={() => setShowAccountDeleteConfirm(false)}
+        onClose={() => setShowAccountDeleteConfirm(false)}
+        onSubmit={handleDeleteAccount}
+      />
     </StyledHeader>
   );
 };
@@ -98,7 +167,7 @@ const ProfileIcon = styled.img`
 const List = styled.ul`
   display: block;
   padding: 24px;
-  min-width: 180px;
+  min-width: 200px;
   color: black;
   li {
     margin-bottom: 24px;
@@ -109,6 +178,7 @@ const List = styled.ul`
       margin-bottom: 0px;
     }
     .icon {
+      width: 24px;
       margin-right: 16px;
     }
   }
