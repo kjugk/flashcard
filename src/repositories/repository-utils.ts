@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getCognitoIdToken } from "../lib/cognito";
-import { NotFoundError, NetworkError, NotAuthorizedError } from "../errors";
+import { NotFoundError, NetworkError, NotAuthorizedError } from "../lib/errors";
 
 export const handleErrors = (e: any): never => {
   if (!!e.isAxiosError && !e.response) {
