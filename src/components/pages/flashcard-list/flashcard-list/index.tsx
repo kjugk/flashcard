@@ -5,7 +5,7 @@ import { FlashcardListItemState } from "../../../../global/flashcard-list/flashc
 import { Title } from "../../../lib/title";
 import { variables } from "../../../../styles/variables";
 import Schedule from "@material-ui/icons/Schedule";
-import { numberToDateString } from "../../../../lib/util/date";
+import { numberToDateString } from "../../../../lib/utils/date-util";
 
 interface Props {
   items: FlashcardListItemState[];

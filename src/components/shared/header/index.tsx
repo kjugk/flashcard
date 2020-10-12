@@ -14,7 +14,7 @@ import { variables } from "../../../styles/variables";
 import { ConfirmableModal } from "../../lib/confirmable-modal";
 import { useSystemContext } from "../../../global/system/system.provider";
 import { accountRepository } from "../../../repositories/account/account-repository";
-import { handleHttpError } from "../../../lib/util/http-error-handler";
+import { handleHttpError } from "../../utils/http-util";
 
 export const Header: FunctionComponent = () => {
   const { currentUserState, currentUserDispatch } = useCurrentUserContext();

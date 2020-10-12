@@ -1,5 +1,8 @@
 import { useReducer, useMemo } from "react";
-import { shuffle, generateSequentialNumberList } from "../../../../lib/util";
+import {
+  shuffle,
+  generateSequentialNumberList,
+} from "../../../../lib/utils/array-util";
 import { QaState } from "../store";
 
 export interface QaViewerState {

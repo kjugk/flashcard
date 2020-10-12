@@ -3,13 +3,13 @@ import { useParams, useHistory } from "react-router-dom";
 import { ClosableHeader } from "../../shared/closable-header";
 import { Container } from "../../lib/container";
 import { FlashcardForm } from "../../shared/flashcard-form";
-import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useSystemContext } from "../../../global/system/system.provider";
 import { LoadingSpinner } from "../../shared/loading-spinner";
 import { Layout } from "../../shared/layout";
-import { handleHttpError } from "../../../lib/util/http-error-handler";
+import { handleHttpError } from "../../utils/http-util";
 import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
+import { FlashcardFormValues } from "../../../types";
 
 /**
  * カード編集ページ。
