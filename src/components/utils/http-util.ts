@@ -1,10 +1,10 @@
-import React from "react";
-import { NotFoundError, NetworkError } from "../../errors";
+import { Dispatch } from "react";
+import { NotFoundError, NetworkError } from "../../lib/errors";
 import { SystemAction } from "../../global/system/system.store";
 
 export const handleHttpError = (
   e: any,
-  systemDispatch: React.Dispatch<SystemAction>
+  systemDispatch: Dispatch<SystemAction>
 ) => {
   if (e instanceof NotFoundError) {
     systemDispatch({

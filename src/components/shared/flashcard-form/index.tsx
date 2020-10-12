@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
 import { useForm, useFieldArray, FieldError } from "react-hook-form";
-import { FlashcardFormValues } from "../../../global/flashcard/types";
 import { Textarea } from "../../lib/textarea";
 import { Box } from "../../lib/box";
 import { Button } from "../../lib/button";
@@ -11,6 +10,7 @@ import Add from "@material-ui/icons/Add";
 import { QaState } from "../../pages/flashcard-detail/store";
 import { IconButton } from "../../lib/icon-button";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { FlashcardFormValues } from "../../../types";
 
 interface Props {
   defaultValues?: Partial<FlashcardFormValues>;
