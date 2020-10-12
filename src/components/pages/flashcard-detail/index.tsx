@@ -10,7 +10,7 @@ import { Container } from "../../lib/container";
 import { variables } from "../../../styles/variables";
 import { LoadingSpinner } from "../../shared/loading-spinner";
 import { Layout } from "../../shared/layout";
-import { handleHttpError } from "../../../lib/util/http-error-handler";
+import { handleHttpError } from "../../../lib/utils/http-util";
 import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
 
 /**

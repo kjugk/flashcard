@@ -8,7 +8,7 @@ import { flashcardRepository } from "../../../repositories/flashcard/flashcard-r
 import { useSystemContext } from "../../../global/system/system.provider";
 import { LoadingSpinner } from "../../shared/loading-spinner";
 import { Layout } from "../../shared/layout";
-import { handleHttpError } from "../../../lib/util/http-error-handler";
+import { handleHttpError } from "../../../lib/utils/http-util";
 import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
 
 /**

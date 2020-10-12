@@ -7,7 +7,7 @@ import { EmptyState } from "./empty-state";
 import { Title } from "../../lib/title";
 import { LoadingSpinner } from "../../shared/loading-spinner";
 import { Layout } from "../../shared/layout";
-import { handleHttpError } from "../../../lib/util/http-error-handler";
+import { handleHttpError } from "../../../lib/utils/http-util";
 import { useSystemContext } from "../../../global/system/system.provider";
 import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
 
