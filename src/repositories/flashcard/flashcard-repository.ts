@@ -1,6 +1,5 @@
 import { FlashcardListItemState } from "../../global/flashcard-list/flashcard-list.store";
 import { FlashcardDetailState } from "../../components/pages/flashcard-detail/store";
-import axios from "axios";
 import {
   GetFlashcardListResponse,
   GetFlashcardResponse,
@@ -9,13 +8,12 @@ import {
   UpdateFlashcardResponse,
 } from "./response";
 import { CreateFlashcardRequest, UpdateFlashcardRequest } from "./request";
-import { getCognitoIdToken } from "../../lib/cognito";
-import { NotFoundError, NetworkError, NotAuthorizedError } from "../../errors";
+import { handleErrors, getHttpClient } from "../repository-utils";
 
 class FlashcardRepository {
   // API のデータをアプリケーションで使える形式にして返す
   async getAll(): Promise<FlashcardListItemState[]> {
-    const http = await this.getHttpClient();
+    const http = await getHttpClient();
 
     try {
       const response = await http.get<GetFlashcardListResponse>("flashcards");
@@ -31,12 +29,12 @@ class FlashcardRepository {
         };
       });
     } catch (e) {
-      return this.handleErrors(e);
+      return handleErrors(e);
     }
   }
 
   async find(id: string): Promise<FlashcardDetailState> {
-    const http = await this.getHttpClient();
+    const http = await getHttpClient();
 
     try {
       const response = await http.get<GetFlashcardResponse>(`flashcards/${id}`);
@@ -49,12 +47,12 @@ class FlashcardRepository {
         qaList: flashcard.qaList,
       };
     } catch (e) {
-      return this.handleErrors(e);
+      return handleErrors(e);
     }
   }
 
   async create(request: CreateFlashcardRequest): Promise<string> {
-    const http = await this.getHttpClient();
+    const http = await getHttpClient();
     // TODO 空のqaは落とす(サーバーでやっても良い)
     try {
       const response = await http.post<CreateFlashcardResponse>(
@@ -64,12 +62,12 @@ class FlashcardRepository {
 
       return response.data.flashcard.id;
     } catch (e) {
-      return this.handleErrors(e);
+      return handleErrors(e);
     }
   }
 
   async update(id: string, request: UpdateFlashcardRequest): Promise<string> {
-    const http = await this.getHttpClient();
+    const http = await getHttpClient();
     try {
       const response = await http.put<UpdateFlashcardResponse>(
         `flashcards/${id}`,
@@ -78,41 +76,18 @@ class FlashcardRepository {
 
       return response.data.flashcard.id;
     } catch (e) {
-      return this.handleErrors(e);
+      return handleErrors(e);
     }
   }
 
   async delete(id: string): Promise<string> {
-    const http = await this.getHttpClient();
+    const http = await getHttpClient();
     const response = await http.delete<DeleteFlashcardResponse>(
       `flashcards/${id}`
     );
 
     return response.data.flashcard.id;
   }
-
-  private handleErrors = (e: any): never => {
-    if (!!e.isAxiosError && !e.response) {
-      throw new NetworkError();
-    }
-
-    switch (e.response.status) {
-      case 401:
-        throw new NotAuthorizedError();
-      case 404:
-        throw new NotFoundError();
-      default:
-        throw new Error();
-    }
-  };
-
-  private getHttpClient = async () => {
-    const token = await getCognitoIdToken();
-    return axios.create({
-      baseURL: process.env.REACT_APP_API_BASE_URL,
-      headers: { Authorization: token },
-    });
-  };
 }
 
 export const flashcardRepository = new FlashcardRepository();
