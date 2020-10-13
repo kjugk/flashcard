@@ -4,8 +4,8 @@ import { ClosableHeader } from "../../shared/closable-header";
 import { Container } from "../../lib";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { FlashcardForm } from "../../shared/flashcard-form";
-import { useSystemContext } from "../../../global/system/system.provider";
-import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
+import { useSystemContext } from "../../../global-context/system/system.provider";
+import { useFlashcardListPageContext } from "../../../global-context/flashcard-list/flashcard-list.provider";
 import { FlashcardFormValues } from "../../../types";
 
 /**

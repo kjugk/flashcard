@@ -8,8 +8,8 @@ import { Title } from "../../lib/title";
 import { LoadingSpinner } from "../../shared/loading-spinner";
 import { Layout } from "../../shared/layout";
 import { handleHttpError } from "../../utils/http-util";
-import { useSystemContext } from "../../../global/system/system.provider";
-import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
+import { useSystemContext } from "../../../global-context/system/system.provider";
+import { useFlashcardListPageContext } from "../../../global-context/flashcard-list/flashcard-list.provider";
 
 /**
  * カードリストページ。

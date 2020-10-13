@@ -6,8 +6,8 @@ import {
   RouteProps,
   Redirect,
 } from "react-router-dom";
-import { useCurrentUserContext } from "../global/current-user/current-user.provider";
-import { useIsSignedIn } from "../global/current-user/current-user.store";
+import { useCurrentUserContext } from "../global-context/current-user/current-user.provider";
+import { useIsSignedIn } from "../global-context/current-user/current-user.store";
 import {
   FlashcardCreatePage,
   FlashcardListPage,
