@@ -11,7 +11,10 @@ export const LoadingModal: FC = () => {
   return (
     <Modal show={systemState.loading}>
       <Content style={{ textAlign: "center" }}>
-        <Cached className="icon" style={{ fontSize: 80 }} />
+        <Cached
+          className="icon"
+          style={{ fontSize: 40, color: variables.colors.lightBlue }}
+        />
         <div className="message">{systemState.loadingMessage || "Loading"}</div>
       </Content>
     </Modal>
