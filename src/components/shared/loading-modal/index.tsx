@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { variables } from "../../../styles/variables";
 import styled from "styled-components";
 import { Modal } from "../../lib/modal";
-import { useSystemContext } from "../../../global/system/system.provider";
+import { useSystemContext } from "../../../global-context/system/system.provider";
 import Cached from "@material-ui/icons/Cached";
 
 export const LoadingModal: FC = () => {

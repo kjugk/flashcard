@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useParams, useHistory } from "react-router-dom";
 import { useDetailPageReducer } from "./store";
-import { useSystemContext } from "../../../global/system/system.provider";
+import { useSystemContext } from "../../../global-context/system/system.provider";
 import { ClosableHeader } from "../../shared/closable-header";
 import { QaViewer } from "./qa-viewer";
 import { Title } from "../../lib/title";
@@ -11,7 +11,7 @@ import { variables } from "../../../styles/variables";
 import { LoadingSpinner } from "../../shared/loading-spinner";
 import { Layout } from "../../shared/layout";
 import { handleHttpError } from "../../utils/http-util";
-import { useFlashcardListPageContext } from "../../../global/flashcard-list/flashcard-list.provider";
+import { useFlashcardListPageContext } from "../../../global-context/flashcard-list/flashcard-list.provider";
 
 /**
  * カードの詳細ページ。

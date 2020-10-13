@@ -1,4 +1,4 @@
-import { FlashcardListItemState } from "../../global/flashcard-list/flashcard-list.store";
+import { FlashcardListItemState } from "../../global-context/flashcard-list/flashcard-list.store";
 import { FlashcardDetailState } from "../../components/pages/flashcard-detail/store";
 import {
   GetFlashcardListResponse,

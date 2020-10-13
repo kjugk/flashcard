@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { FlashcardListItemState } from "../../../../global/flashcard-list/flashcard-list.store";
+import { FlashcardListItemState } from "../../../../global-context/flashcard-list/flashcard-list.store";
 import { Title } from "../../../lib/title";
 import { variables } from "../../../../styles/variables";
 import Schedule from "@material-ui/icons/Schedule";

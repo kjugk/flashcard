@@ -5,14 +5,14 @@ import Block from "@material-ui/icons/Block";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { signOut } from "../../../lib/cognito";
-import { useIsSignedIn } from "../../../global/current-user/current-user.store";
-import { useCurrentUserContext } from "../../../global/current-user/current-user.provider";
+import { useIsSignedIn } from "../../../global-context/current-user/current-user.store";
+import { useCurrentUserContext } from "../../../global-context/current-user/current-user.provider";
 import { Container } from "../../lib/container";
 import { Popover } from "../../lib/popover";
 import { IconButton } from "../../lib/icon-button";
 import { variables } from "../../../styles/variables";
 import { ConfirmableModal } from "../../lib/confirmable-modal";
-import { useSystemContext } from "../../../global/system/system.provider";
+import { useSystemContext } from "../../../global-context/system/system.provider";
 import { accountRepository } from "../../../repositories/account/account-repository";
 import { handleHttpError } from "../../utils/http-util";
 

@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSystemContext } from "../../../../global/system/system.provider";
+import { useSystemContext } from "../../../../global-context/system/system.provider";
 import { Container } from "../../../lib";
 import { Title } from "../../../lib/title";
 import { Header } from "../../../shared/header";

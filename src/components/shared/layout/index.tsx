@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { useSystemContext } from "../../../global/system/system.provider";
+import { useSystemContext } from "../../../global-context/system/system.provider";
 import { NetworkErrorPage } from "../../pages/errors/network-error";
 import { NotFoundErrorPage } from "../../pages/errors/not-found-error";
 
