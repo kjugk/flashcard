@@ -16,20 +16,35 @@ export const TopPage: FC = () => {
       <StyledContainer tag="main">
         <Grid>
           <GridText>
-            <Title tag="h1" size="xxl" text="記憶力を高める最も簡単な方法" />
-            <p style={{ marginBottom: "32px" }}>
+            <Title
+              tag="h1"
+              size="xxl"
+              text="記憶力を高める最も簡単な方法"
+              style={{ marginBottom: "16px" }}
+            />
+            <p>
               flashcard
               は、独自の問題集を簡単に作成し、学習できるアプリケーションです。
             </p>
-            <Button
-              onClick={() => history.push("/sign-in")}
-              label="早速使ってみる (無料)"
-            />
+            <TopButtonWrapper>
+              <Button
+                onClick={() => history.push("/sign-in")}
+                label="早速使ってみる (無料)"
+              />
+            </TopButtonWrapper>
           </GridText>
 
           <div>
-            <Image src="/640.png" />
+            <Image src="/eyecatch.png" alt="アイキャッチ画像" />
           </div>
+
+          <BottomButtonWrapper>
+            <Button
+              onClick={() => history.push("/sign-in")}
+              fullWidth
+              label="早速使ってみる (無料)"
+            />
+          </BottomButtonWrapper>
         </Grid>
       </StyledContainer>
 
@@ -49,6 +64,7 @@ const Wrapper = styled.div`
 `;
 
 const StyledContainer = styled(Container)`
+  padding: 16px;
   flex: 1;
   @media only screen and (min-width: 768px) {
     display: flex;
@@ -60,22 +76,41 @@ const StyledContainer = styled(Container)`
 const Grid = styled.div`
   @media only screen and (min-width: 768px) {
     display: grid;
-    grid-template-columns: 1fr 320px;
+    grid-template-columns: 1fr 360px;
   }
 `;
 
 const GridText = styled.div`
-  padding-top: 32px;
+  @media only screen and (min-width: 768px) {
+    padding-top: 32px;
 `;
 
 const Image = styled.img`
-  max-width: 320px;
+  max-width: 100%;
+  @media only screen and (min-width: 768px) {
+    max-width: 360px;
+  }
+`;
+
+const TopButtonWrapper = styled.div`
+  margin-top: 32px;
+  @media only screen and (max-width: 767px) {
+    display: none;
+  }
+`;
+
+const BottomButtonWrapper = styled.div`
+  text-align: center;
+  margin: 48px 0;
+
+  @media only screen and (min-width: 768px) {
+    display: none;
+  }
 `;
 
 const Footer = styled.div`
-  // background: ${variables.colors.black};
-  // color: ${variables.colors.white};
   background: ${variables.colors.white};
   text-align: right;
-  padding: 16px 0;
+  padding: 16px;
+  font-size: ${variables.fontSize.s};
 `;
