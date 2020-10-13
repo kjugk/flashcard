@@ -40,7 +40,7 @@ export const Button: FunctionComponent<Props> = ({
     >
       <Inner>
         {icon}
-        {label}
+        <div className="label">{label}</div>
       </Inner>
     </StyledButton>
   );
@@ -55,7 +55,7 @@ const StyledButton = styled.button<{
   font-size: ${(props) => variables.fontSize[props.size]};
   border-radius: 38px;
   font-weight: bold;
-  padding: 0.8em 1.6em;
+  padding: 1.2em 1.6em;
   display: inline-block;
   border: 1px solid;
   filter: brightness(1);
@@ -87,6 +87,9 @@ const Inner = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  .label {
+    line-height: 1;
+  }
   svg {
     margin-right: 6px;
   }
