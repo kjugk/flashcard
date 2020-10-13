@@ -62,7 +62,7 @@ const StyledButton = styled.button<{
   transition: filter 0.1s;
   ${(props) =>
     props.fullWidth
-      ? "width: 500px; max-width: 100%; margin: 0 auto"
+      ? "width: min(100%, 500px); margin: 0 auto"
       : "width: auto"};
   &:active,
   &:hover,
