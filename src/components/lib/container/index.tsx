@@ -4,11 +4,17 @@ import styled from "styled-components";
 interface Props {
   tag?: "div" | "main";
   style?: CSSProperties;
+  className?: string;
 }
 
-export const Container: FC<Props> = ({ tag = "div", style, children }) => {
+export const Container: FC<Props> = ({
+  tag = "div",
+  style,
+  className = "",
+  children,
+}) => {
   return (
-    <StyledContainer as={tag} style={style}>
+    <StyledContainer as={tag} style={style} className={className}>
       {children}
     </StyledContainer>
   );

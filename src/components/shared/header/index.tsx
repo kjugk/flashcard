@@ -5,7 +5,10 @@ import Block from "@material-ui/icons/Block";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { signOut } from "../../../lib/cognito";
-import { useIsSignedIn } from "../../../global-context/current-user/current-user.store";
+import {
+  useIsSignedIn,
+  useSignedInUserGuard,
+} from "../../../global-context/current-user/current-user.store";
 import { useCurrentUserContext } from "../../../global-context/current-user/current-user.provider";
 import { Container } from "../../lib/container";
 import { Popover } from "../../lib/popover";
@@ -15,6 +18,7 @@ import { ConfirmableModal } from "../../lib/confirmable-modal";
 import { useSystemContext } from "../../../global-context/system/system.provider";
 import { accountRepository } from "../../../repositories/account/account-repository";
 import { handleHttpError } from "../../utils/http-util";
+import { Button } from "../../lib";
 
 export const Header: FunctionComponent = () => {
   const { currentUserState, currentUserDispatch } = useCurrentUserContext();
@@ -25,6 +29,8 @@ export const Header: FunctionComponent = () => {
   const [showAccountDeleteConfirm, setShowAccountDeleteConfirm] = useState(
     false
   );
+
+  useSignedInUserGuard(currentUserState);
 
   const handleSignOut = async () => {
     await signOut();
@@ -79,47 +85,60 @@ export const Header: FunctionComponent = () => {
             <img src="/brand.png" alt="brand logo" width="163px" />
           </Link>
 
-          <IconButton
-            icon={<Add />}
-            onClick={() => history.push("/flashcard-create")}
-          />
+          {!isSignedIn && (
+            <Button
+              outlined
+              size="xs"
+              onClick={() => history.push("/sign-in")}
+              label="ログイン"
+            />
+          )}
 
           {isSignedIn && (
-            <ProfileIconWrapper>
-              <ProfileIcon
-                src={currentUserState.picture}
-                alt="ユーザープロフィールアイコン"
-                onClick={() => setShowPopover(true)}
+            <>
+              <IconButton
+                icon={<Add />}
+                onClick={() => history.push("/flashcard-create")}
               />
-              <Popover show={showPopover} onClose={() => setShowPopover(false)}>
-                <List>
-                  <li>
-                    <ProfileIcon
-                      src={currentUserState.picture}
-                      alt="ユーザープロフィールアイコン"
-                      className="icon"
-                    />
-                    {currentUserState.name}
-                  </li>
-                  <li onClick={handleSignOut}>
-                    <ExitToApp className="icon" />
-                    <span>ログアウト</span>
-                  </li>
-                </List>
+              <ProfileIconWrapper>
+                <ProfileIcon
+                  src={currentUserState.picture}
+                  alt="ユーザープロフィールアイコン"
+                  onClick={() => setShowPopover(true)}
+                />
+                <Popover
+                  show={showPopover}
+                  onClose={() => setShowPopover(false)}
+                >
+                  <List>
+                    <li>
+                      <ProfileIcon
+                        src={currentUserState.picture}
+                        alt="ユーザープロフィールアイコン"
+                        className="icon"
+                      />
+                      {currentUserState.name}
+                    </li>
+                    <li onClick={handleSignOut}>
+                      <ExitToApp className="icon" />
+                      <span>ログアウト</span>
+                    </li>
+                  </List>
 
-                <List>
-                  <li onClick={() => setShowAccountDeleteConfirm(true)}>
-                    <Block
-                      className="icon"
-                      style={{ color: variables.colors.red }}
-                    />
-                    <span style={{ color: variables.colors.red }}>
-                      アカウント削除
-                    </span>
-                  </li>
-                </List>
-              </Popover>
-            </ProfileIconWrapper>
+                  <List>
+                    <li onClick={() => setShowAccountDeleteConfirm(true)}>
+                      <Block
+                        className="icon"
+                        style={{ color: variables.colors.red }}
+                      />
+                      <span style={{ color: variables.colors.red }}>
+                        アカウント削除
+                      </span>
+                    </li>
+                  </List>
+                </Popover>
+              </ProfileIconWrapper>
+            </>
           )}
         </Nav>
       </Container>
@@ -140,11 +159,11 @@ export const Header: FunctionComponent = () => {
 const StyledHeader = styled.header`
   background: ${variables.colors.white};
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.15);
-  padding: 12px 0;
 `;
 
 const Nav = styled.nav`
   display: flex;
+  height: 66px;
   align-items: center;
   .brand {
     flex: 1;
