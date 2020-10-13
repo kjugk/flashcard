@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { variables } from "../../../styles/variables";
-import { useSystemContext } from "../../../global/system/system.provider";
+import { useSystemContext } from "../../../global-context/system/system.provider";
 import { CSSTransition } from "react-transition-group";
 
 /**

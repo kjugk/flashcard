@@ -233,6 +233,7 @@ const CardContent = styled.div`
     padding: 16px;
     overflow: hidden;
     pre {
+      font-family: inherit;
       font-size: ${variables.fontSize.l};
       font-weight: bold;
       max-height: 100%;

@@ -65,8 +65,9 @@ const StyledButton = styled.button<{
       ? "width: 500px; max-width: 100%; margin: 0 auto"
       : "width: auto"};
   &:active,
+  &:hover,
   &:focus {
-    filter: brightness(0.85);
+    filter: brightness(0.95);
   }
   ${(props) =>
     props.outlined

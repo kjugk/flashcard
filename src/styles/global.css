@@ -516,3 +516,11 @@ body {
   background: #F6F7FB;
   color: #333333;
 }
+
+html, body, #root {
+  height: 100%;
+}
+
+p {
+  margin-bottom: 16px;
+}

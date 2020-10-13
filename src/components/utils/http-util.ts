@@ -1,6 +1,6 @@
 import { Dispatch } from "react";
 import { NotFoundError, NetworkError } from "../../lib/errors";
-import { SystemAction } from "../../global/system/system.store";
+import { SystemAction } from "../../global-context/system/system.store";
 
 export const handleHttpError = (
   e: any,
