@@ -50,7 +50,12 @@ export const TopPage: FC = () => {
 
       <Footer>
         <Container>
-          <div>&copy; Koji Uegaki {dayjs().year()}</div>
+          <div>
+            <span style={{ marginRight: "16px" }}>
+              &copy; Koji Uegaki {dayjs().year()}
+            </span>
+            <a href="https://pixta.jp/">画像素材</a>：PIXTA
+          </div>
         </Container>
       </Footer>
     </Wrapper>
@@ -88,7 +93,8 @@ const GridText = styled.div`
 const Image = styled.img`
   max-width: 100%;
   @media only screen and (min-width: 768px) {
-    max-width: 360px;
+    width: 360px;
+    height: 360px;
   }
 `;
 

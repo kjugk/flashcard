@@ -84,6 +84,7 @@ const Wrapper = styled.div`
 const Message = styled.div`
   padding: 16px 0;
   text-align: center;
+  border-radius: 6px;
   background: ${variables.colors.lightBlue};
   color: ${variables.colors.white};
   font-weight: bold;
