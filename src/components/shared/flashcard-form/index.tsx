@@ -49,7 +49,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
   };
 
   return (
-    <form onSubmit={_onSubmit}>
+    <form onSubmit={_onSubmit} style={{ paddingBottom: "96px" }}>
       <Box withShadow={false}>
         <Textarea
           name="name"
@@ -146,9 +146,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
         />
       </div>
 
-      <div
-        style={{ marginBottom: "96px", padding: "0 16px", textAlign: "center" }}
-      >
+      <div style={{ padding: "0 16px", textAlign: "center" }}>
         <Button type="submit" label="作成" fullWidth />
       </div>
     </form>

@@ -124,7 +124,13 @@ export const Header: FunctionComponent = () => {
                       <span>ログアウト</span>
                     </li>
                   </List>
-
+                  <hr
+                    style={{
+                      height: "1px",
+                      border: "none",
+                      backgroundColor: variables.colors.lightGrey,
+                    }}
+                  />
                   <List>
                     <li onClick={() => setShowAccountDeleteConfirm(true)}>
                       <Block
