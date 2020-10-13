@@ -140,8 +140,8 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
         <Button
           label="カードを追加"
           outlined
-          icon={<Add fontSize="inherit" />}
-          size="s"
+          icon={<Add fontSize="small" />}
+          size="xs"
           onClick={appendQuestion}
         />
       </div>

@@ -86,6 +86,7 @@ const Grid = styled.div`
 `;
 
 const GridText = styled.div`
+  padding-top: 16px;
   @media only screen and (min-width: 768px) {
     padding-top: 32px;
 `;
