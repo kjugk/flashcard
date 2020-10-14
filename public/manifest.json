@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "flashcard",
+  "name": "flashcardは、独自の問題集を簡単に作成し、学習できるアプリケーションです。",
   "icons": [
     {
       "src": "favicon.ico",
