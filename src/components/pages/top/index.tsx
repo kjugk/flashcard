@@ -52,7 +52,8 @@ export const TopPage: FC = () => {
         <Container>
           <div>
             <span style={{ marginRight: "16px" }}>
-              &copy; Koji Uegaki {dayjs().year()}
+              &copy; <a href="https://twitter.com/kjugk1222">kjugk</a>{" "}
+              {dayjs().year()}
             </span>
             <a href="https://pixta.jp/">画像素材</a>：PIXTA
           </div>
