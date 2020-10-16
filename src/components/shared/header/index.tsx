@@ -77,7 +77,7 @@ export const Header: FunctionComponent = () => {
       <Container style={{ padding: "0 16px" }}>
         <Nav>
           <Link to="/" className="brand">
-            <img src="/brand.png" alt="brand logo" width="163px" />
+            <img src="/brand.svg" alt="brand logo" width="163px" />
           </Link>
 
           {!isSignedIn && (
