@@ -55,9 +55,13 @@ const StyledButton = styled.button<{
   text-align: center;
   vertical-align: middle;
   &:active,
-  &:hover,
   &:focus {
     background: rgba(76, 125, 222, 0.2);
+  }
+  @media only screen and (min-width: 768px) {
+    &:hover {
+      filter: brightness(0.95);
+    }
   }
 `;
 
