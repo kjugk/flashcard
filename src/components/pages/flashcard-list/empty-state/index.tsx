@@ -25,7 +25,7 @@ export const EmptyState: FC = () => {
       />
       <Button
         label="問題集を作成"
-        icon={<Add fontSize="inherit" />}
+        icon={<Add fontSize="small" />}
         size="xs"
         outlined
         style={{ margin: "0 auto" }}

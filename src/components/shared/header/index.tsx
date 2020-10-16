@@ -5,10 +5,7 @@ import Block from "@material-ui/icons/Block";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import { signOut } from "../../../lib/cognito";
-import {
-  useIsSignedIn,
-  useSignedInUserGuard,
-} from "../../../global-context/current-user/current-user.store";
+import { useIsSignedIn } from "../../../global-context/current-user/current-user.store";
 import { useCurrentUserContext } from "../../../global-context/current-user/current-user.provider";
 import { Container } from "../../lib/container";
 import { Popover } from "../../lib/popover";
@@ -29,8 +26,6 @@ export const Header: FunctionComponent = () => {
   const [showAccountDeleteConfirm, setShowAccountDeleteConfirm] = useState(
     false
   );
-
-  useSignedInUserGuard(currentUserState);
 
   const handleSignOut = async () => {
     await signOut();
@@ -81,7 +76,7 @@ export const Header: FunctionComponent = () => {
     <StyledHeader>
       <Container style={{ padding: "0 16px" }}>
         <Nav>
-          <Link to="/flashcard-list" className="brand">
+          <Link to="/" className="brand">
             <img src="/brand.png" alt="brand logo" width="163px" />
           </Link>
 
