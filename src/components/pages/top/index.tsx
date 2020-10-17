@@ -51,7 +51,10 @@ export const TopPage: FC = () => {
       <Footer>
         <Container>
           <FooterItem>
-            &copy; <a href="https://twitter.com/kjugk1222">kjugk</a>{" "}
+            &copy;{" "}
+            <a href="https://twitter.com/kjugk1222" rel="nofollow">
+              kjugk
+            </a>{" "}
             {dayjs().year()}
           </FooterItem>
           <FooterItem>
