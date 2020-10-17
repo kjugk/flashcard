@@ -1,4 +1,5 @@
 import { useReducer } from "react";
+import { GetFlashcardResponse } from "../../../repositories/flashcard/response";
 
 // State
 export interface QaState {
@@ -23,8 +24,8 @@ export const initialState: FlashcardDetailPageState = {
 
 // Actions
 export type FlashcardDetailPageAction = {
-  type: "store-flashcard-detail";
-  payload: FlashcardDetailState;
+  type: "flashcard-detail/receive-flashcard-detail";
+  payload: GetFlashcardResponse;
 };
 
 // Reducer
@@ -33,10 +34,16 @@ export function reducer(
   action: FlashcardDetailPageAction
 ): FlashcardDetailPageState {
   switch (action.type) {
-    case "store-flashcard-detail":
+    case "flashcard-detail/receive-flashcard-detail":
+      const { flashcard } = action.payload;
       return {
         ...state,
-        flashcard: action.payload,
+        flashcard: {
+          id: flashcard.id,
+          name: flashcard.name,
+          description: flashcard.description,
+          qaList: flashcard.qaList,
+        },
       };
 
     default:

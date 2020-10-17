@@ -1,13 +1,14 @@
 import { useReducer } from "react";
+import { GetFlashcardListResponse } from "../../repositories/flashcard/response";
 
 // actions
 export type FlashcardListPageAction =
   | {
-      type: "store-flashcards";
-      payload: FlashcardListItemState[];
+      type: "flashcard-list/recieve-flashcards";
+      payload: GetFlashcardListResponse;
     }
   | {
-      type: "set-stale";
+      type: "flashcard-list/set-stale";
       payload: boolean;
     };
 
@@ -35,13 +36,21 @@ function reducer(
   action: FlashcardListPageAction
 ): FlashcardListPageState {
   switch (action.type) {
-    case "store-flashcards":
+    case "flashcard-list/recieve-flashcards":
+      const { flashcards } = action.payload;
       return {
         ...state,
-        flashcards: action.payload,
+        flashcards: flashcards.map((f) => {
+          return {
+            id: f.id,
+            name: f.name,
+            description: f.description,
+            createdAt: f.createdAt,
+          };
+        }),
         stale: false,
       };
-    case "set-stale":
+    case "flashcard-list/set-stale":
       return {
         ...state,
         stale: action.payload,
