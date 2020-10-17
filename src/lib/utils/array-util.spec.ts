@@ -16,10 +16,12 @@ describe("shuffle", () => {
 });
 
 describe("generateSequentialNumberList", () => {
-  const ar = generateSequentialNumberList(3);
+  test("シーケンシャルな配列を生成する。", () => {
+    const ar = generateSequentialNumberList(3);
 
-  expect(ar.length).toBe(3);
-  expect(ar[0]).toBe(0);
-  expect(ar[1]).toBe(1);
-  expect(ar[2]).toBe(2);
+    expect(ar.length).toBe(3);
+    expect(ar[0]).toBe(0);
+    expect(ar[1]).toBe(1);
+    expect(ar[2]).toBe(2);
+  });
 });
