@@ -9,7 +9,6 @@ import { CreateFlashcardRequest, UpdateFlashcardRequest } from "./request";
 import { handleErrors, getHttpClient } from "../repository-utils";
 
 class FlashcardRepository {
-  // API のデータをアプリケーションで使える形式にして返す
   async getAll(): Promise<GetFlashcardListResponse> {
     const http = await getHttpClient();
 
