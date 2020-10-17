@@ -50,13 +50,19 @@ export const TopPage: FC = () => {
 
       <Footer>
         <Container>
-          <div>
-            <span style={{ marginRight: "16px" }}>
-              &copy; <a href="https://twitter.com/kjugk1222">kjugk</a>{" "}
-              {dayjs().year()}
-            </span>
-            <a href="https://pixta.jp/">画像素材</a>：PIXTA
-          </div>
+          <FooterItem>
+            &copy;{" "}
+            <a href="https://twitter.com/kjugk1222" rel="nofollow">
+              kjugk
+            </a>{" "}
+            {dayjs().year()}
+          </FooterItem>
+          <FooterItem>
+            <a href="/terms">利用規約</a>
+          </FooterItem>
+          <FooterItem>
+            <a href="/privacy">プライバシーポリシー</a>
+          </FooterItem>
         </Container>
       </Footer>
     </Wrapper>
@@ -119,7 +125,10 @@ const BottomButtonWrapper = styled.div`
 
 const Footer = styled.div`
   background: ${variables.colors.white};
-  text-align: right;
   padding: 16px;
   font-size: ${variables.fontSize.s};
+`;
+
+const FooterItem = styled.span`
+  margin-right: 8px;
 `;
