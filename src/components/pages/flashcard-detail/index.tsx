@@ -28,10 +28,10 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     setLoading(true);
 
     try {
-      const item = await flashcardRepository.find(id);
+      const response = await flashcardRepository.find(id);
       dispatch({
-        type: "store-flashcard-detail",
-        payload: item,
+        type: "flashcard-detail/receive-flashcard-detail",
+        payload: response,
       });
     } catch (e) {
       handleHttpError(e, systemDispatch);
@@ -58,7 +58,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
       });
 
       flashcardLisrPageDispatch({
-        type: "set-stale",
+        type: "flashcard-list/set-stale",
         payload: true,
       });
 

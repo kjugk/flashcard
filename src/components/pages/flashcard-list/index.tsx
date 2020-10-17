@@ -31,10 +31,10 @@ export const FlashcardListPage: FunctionComponent = () => {
     setLoading(true);
 
     try {
-      const list = await flashcardRepository.getAll();
+      const response = await flashcardRepository.getAll();
       flashcardLisrPageDispatch({
-        type: "store-flashcards",
-        payload: list,
+        type: "flashcard-list/recieve-flashcards",
+        payload: response,
       });
       setLoading(false);
     } catch (e) {
