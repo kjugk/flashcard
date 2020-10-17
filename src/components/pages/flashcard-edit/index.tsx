@@ -28,11 +28,11 @@ export const FlashcardEditPage: FC = () => {
     setLoading(true);
 
     try {
-      const item = await flashcardRepository.find(id);
+      const { flashcard } = await flashcardRepository.find(id);
       setDefaultValues({
-        name: item.name,
-        description: item.description,
-        qaList: item.qaList,
+        name: flashcard.name,
+        description: flashcard.description,
+        qaList: flashcard.qaList,
       });
     } catch (e) {
       handleHttpError(e, systemDispatch);
@@ -58,7 +58,7 @@ export const FlashcardEditPage: FC = () => {
       });
 
       flashcardLisrPageDispatch({
-        type: "set-stale",
+        type: "flashcard-list/set-stale",
         payload: true,
       });
 

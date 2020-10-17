@@ -8,7 +8,7 @@ export type FlashcardListPageAction =
       payload: GetFlashcardListResponse;
     }
   | {
-      type: "set-stale";
+      type: "flashcard-list/set-stale";
       payload: boolean;
     };
 
@@ -50,7 +50,7 @@ function reducer(
         }),
         stale: false,
       };
-    case "set-stale":
+    case "flashcard-list/set-stale":
       return {
         ...state,
         stale: action.payload,

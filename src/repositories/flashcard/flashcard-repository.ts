@@ -1,4 +1,3 @@
-import { FlashcardDetailState } from "../../components/pages/flashcard-detail/store";
 import {
   GetFlashcardListResponse,
   GetFlashcardResponse,
@@ -22,19 +21,12 @@ class FlashcardRepository {
     }
   }
 
-  async find(id: string): Promise<FlashcardDetailState> {
+  async find(id: string): Promise<GetFlashcardResponse> {
     const http = await getHttpClient();
 
     try {
       const response = await http.get<GetFlashcardResponse>(`flashcards/${id}`);
-      const { flashcard } = response.data;
-
-      return {
-        id: flashcard.id,
-        name: flashcard.name,
-        description: flashcard.description,
-        qaList: flashcard.qaList,
-      };
+      return response.data;
     } catch (e) {
       return handleErrors(e);
     }
@@ -42,7 +34,6 @@ class FlashcardRepository {
 
   async create(request: CreateFlashcardRequest): Promise<string> {
     const http = await getHttpClient();
-    // TODO 空のqaは落とす(サーバーでやっても良い)
     try {
       const response = await http.post<CreateFlashcardResponse>(
         "flashcard",

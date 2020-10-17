@@ -33,7 +33,7 @@ export const FlashcardCreatePage: FC = () => {
       });
 
       flashcardLisrPageDispatch({
-        type: "set-stale",
+        type: "flashcard-list/set-stale",
         payload: true,
       });
 
