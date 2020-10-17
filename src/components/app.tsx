@@ -18,6 +18,8 @@ import {
 } from "./pages/index";
 import { LoadingModal } from "./shared/loading-modal";
 import { NotFoundErrorPage } from "./pages/errors/not-found-error";
+import { TermsPage } from "./pages/terms";
+import { PrivacyPage } from "./pages/privacy";
 
 export const App: FunctionComponent = () => (
   <>
@@ -39,9 +41,11 @@ export const App: FunctionComponent = () => (
           <FlashcardDetailPage />
         </PrivateRoute>
 
-        <Route path="/sign-in" component={SignInPage}></Route>
-        <Route exact path="/" component={TopPage}></Route>
-        <Route path="*" component={NotFoundErrorPage}></Route>
+        <Route path="/sign-in" component={SignInPage} />
+        <Route path="/terms" component={TermsPage} />
+        <Route path="/privacy" component={PrivacyPage} />
+        <Route exact path="/" component={TopPage} />
+        <Route path="*" component={NotFoundErrorPage} />
       </Switch>
     </Router>
     <LoadingModal />
