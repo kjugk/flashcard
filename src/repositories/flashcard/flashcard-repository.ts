@@ -1,4 +1,3 @@
-import { FlashcardListItemState } from "../../global-context/flashcard-list/flashcard-list.store";
 import { FlashcardDetailState } from "../../components/pages/flashcard-detail/store";
 import {
   GetFlashcardListResponse,
@@ -12,22 +11,12 @@ import { handleErrors, getHttpClient } from "../repository-utils";
 
 class FlashcardRepository {
   // API のデータをアプリケーションで使える形式にして返す
-  async getAll(): Promise<FlashcardListItemState[]> {
+  async getAll(): Promise<GetFlashcardListResponse> {
     const http = await getHttpClient();
 
     try {
       const response = await http.get<GetFlashcardListResponse>("flashcards");
-      const { flashcards } = response.data;
-
-      // TODO Reducer に移動
-      return flashcards.map((flashcard) => {
-        return {
-          name: flashcard.name,
-          id: flashcard.id,
-          description: flashcard.description,
-          createdAt: flashcard.createdAt,
-        };
-      });
+      return response.data;
     } catch (e) {
       return handleErrors(e);
     }
