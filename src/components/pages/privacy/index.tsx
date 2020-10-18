@@ -6,7 +6,7 @@ import { Header } from "../../shared";
 export const PrivacyPage: FC = () => {
   return (
     <div>
-      <Header />
+      <Header showUser={false} />
       <Container style={{ padding: "16px" }}>
         <Title tag="h1" text="プライバシーポリシー" size="xl" />
         <p>
