@@ -1,6 +1,6 @@
 import axios from "axios";
 import { getCognitoIdToken } from "../lib/cognito";
-import { NotFoundError, NetworkError, NotAuthorizedError } from "../lib/errors";
+import { NotFoundError, NetworkError, PermissionError } from "../lib/errors";
 
 export const handleErrors = (e: any): never => {
   if (!!e.isAxiosError && !e.response) {
@@ -9,7 +9,7 @@ export const handleErrors = (e: any): never => {
 
   switch (e.response.status) {
     case 401:
-      throw new NotAuthorizedError();
+      throw new PermissionError();
     case 404:
       throw new NotFoundError();
     default:
