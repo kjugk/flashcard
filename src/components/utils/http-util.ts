@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { NotFoundError, NetworkError } from "../../lib/errors";
+import { NotFoundError, NetworkError, PermissionError } from "../../lib/errors";
 import { SystemAction } from "../../global-context/system/system.store";
 
 export const handleHttpError = (
@@ -14,6 +14,14 @@ export const handleHttpError = (
     return;
   }
 
+  if (e instanceof PermissionError) {
+    systemDispatch({
+      type: "system/set-system-error",
+      payload: "permission",
+    });
+    return;
+  }
+
   if (e instanceof NetworkError) {
     systemDispatch({
       type: "system/set-system-error",
@@ -21,8 +29,6 @@ export const handleHttpError = (
     });
     return;
   }
-
-  // Not Authorized は ログインページに遷移させる
 
   // ここで処理しないエラーを再送する
   throw e;

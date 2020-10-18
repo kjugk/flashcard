@@ -5,8 +5,9 @@ import { NotFoundErrorPage } from "../../pages/errors/not-found-error";
 
 export const Layout: FC = ({ children }) => {
   const { systemState } = useSystemContext();
+  const { errorType } = systemState;
 
-  if (systemState.errorType === "notFound") {
+  if (errorType === "notFound" || errorType === "permission") {
     return <NotFoundErrorPage />;
   }
 
