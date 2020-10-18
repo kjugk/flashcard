@@ -6,7 +6,7 @@ import { Header } from "../../shared";
 export const TermsPage: FC = () => {
   return (
     <div>
-      <Header />
+      <Header showUser={false} />
       <Container style={{ padding: "16px" }}>
         <Title text="利用規約" tag="h1" size="xl" />
         <p>

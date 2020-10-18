@@ -34,9 +34,11 @@ export const TopPage: FC = () => {
             </TopButtonWrapper>
           </GridText>
 
-          <div>
-            <GridImage src="/eyecatch.png" alt="アイキャッチ画像" />
-          </div>
+          <EyeCatchWrapper>
+            <EyeCatch>
+              <img src="/eyecatch.png" alt="アイキャッチ画像" />
+            </EyeCatch>
+          </EyeCatchWrapper>
 
           <BottomButtonWrapper>
             <Button
@@ -89,22 +91,34 @@ const Grid = styled.div`
   @media only screen and (min-width: 768px) {
     display: grid;
     grid-template-columns: 1fr 360px;
-
-    img {
-      width: 360px;
-      height: 360px;
-    }
   }
 `;
 
 const GridText = styled.div`
   padding-top: 16px;
   @media only screen and (min-width: 768px) {
-    padding-top: 32px;
+    padding-top: 48px;
 `;
 
-const GridImage = styled.img`
-  max-width: 100%;
+const EyeCatchWrapper = styled.div`
+  text-align: center;
+  max-width: 360px;
+  width: 100%;
+  position: relative;
+  margin 0 auto;
+`;
+
+const EyeCatch = styled.div`
+  width: 100%;
+  padding-bottom: 100%;
+  position: relative;
+  img {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    object-fit: cover;
+  }
 `;
 
 const TopButtonWrapper = styled.div`
