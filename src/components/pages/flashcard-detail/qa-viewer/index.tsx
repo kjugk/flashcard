@@ -133,7 +133,7 @@ export const QaViewer: FunctionComponent<Props> = ({
                   <pre>{currentQa.question}</pre>
                 </div>
                 {isFirstPage && !state.showAnswer && (
-                  <div className="guide">答えを見る場合はカードをタップ</div>
+                  <div className="guide">カードをタップで答えを表示</div>
                 )}
               </CardContent>
 

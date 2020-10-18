@@ -12,7 +12,7 @@ export const TopPage: FC = () => {
 
   return (
     <Wrapper>
-      <Header />
+      <Header showUser={false} />
       <StyledContainer tag="main">
         <Grid>
           <GridText>

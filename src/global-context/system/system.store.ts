@@ -2,7 +2,7 @@
 import { useReducer } from "react";
 
 type MessageType = "info" | "error";
-type ErrorType = "notFound" | "network";
+type ErrorType = "notFound" | "network" | "permission";
 
 // actions
 export type SystemAction =

@@ -1,4 +1,4 @@
-export class NotAuthorizedError extends Error {}
+export class PermissionError extends Error {}
 
 export class NotFoundError extends Error {}
 
