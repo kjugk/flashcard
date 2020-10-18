@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from "react";
+import React, { FC, useState } from "react";
 import Add from "@material-ui/icons/Add";
 import ExitToApp from "@material-ui/icons/ExitToApp";
 import Block from "@material-ui/icons/Block";
@@ -17,7 +17,11 @@ import { accountRepository } from "../../../repositories/account/account-reposit
 import { handleHttpError } from "../../utils/http-util";
 import { Button } from "../../lib";
 
-export const Header: FunctionComponent = () => {
+interface Props {
+  showUser?: boolean;
+}
+
+export const Header: FC<Props> = ({ showUser = true }) => {
   const { currentUserState, currentUserDispatch } = useCurrentUserContext();
   const { systemDispatch } = useSystemContext();
   const history = useHistory();
@@ -89,7 +93,16 @@ export const Header: FunctionComponent = () => {
             />
           )}
 
-          {isSignedIn && (
+          {isSignedIn && !showUser && (
+            <Button
+              outlined
+              size="xs"
+              onClick={() => history.push("/sign-in")}
+              label="ログイン"
+            />
+          )}
+
+          {isSignedIn && showUser && (
             <>
               <IconButton
                 icon={<Add />}
