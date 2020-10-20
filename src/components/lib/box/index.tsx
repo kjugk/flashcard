@@ -15,9 +15,10 @@ export const Box: FC<Props> = ({
   tag = "div",
   withShadow = true,
   children,
+  ...rest
 }) => {
   return (
-    <StyledBox style={style} withShadow={withShadow} as={tag}>
+    <StyledBox style={style} withShadow={withShadow} as={tag} {...rest}>
       {children}
     </StyledBox>
   );
