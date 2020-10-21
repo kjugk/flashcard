@@ -6,7 +6,7 @@ import { FlashcardForm } from "../../shared/flashcard-form";
 import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
 import { useSystemContext } from "../../../global-context/system/system.provider";
 import { LoadingSpinner } from "../../shared/loading-spinner";
-import { Layout } from "../../shared/layout";
+import { HttpErrorBoundary } from "../../shared/error-boundary/http-error-boundary";
 import { handleHttpError } from "../../utils/http-util";
 import { useFlashcardListPageContext } from "../../../global-context/flashcard-list/flashcard-list.provider";
 import { FlashcardFormValues } from "../../../types";
@@ -14,7 +14,7 @@ import { FlashcardFormValues } from "../../../types";
 /**
  * カード編集ページ。
  */
-export const FlashcardEditPage: FC = () => {
+const FlashcardEditPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
@@ -84,7 +84,7 @@ export const FlashcardEditPage: FC = () => {
   }, []);
 
   return (
-    <Layout>
+    <HttpErrorBoundary>
       <div>
         <ClosableHeader title="問題集の編集" />
         <LoadingSpinner show={loading} />
@@ -97,6 +97,8 @@ export const FlashcardEditPage: FC = () => {
           </Container>
         )}
       </div>
-    </Layout>
+    </HttpErrorBoundary>
   );
 };
+
+export default FlashcardEditPage;

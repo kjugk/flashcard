@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { useSystemContext } from "../../../global-context/system/system.provider";
 import { NetworkErrorPage } from "../../pages/errors/network-error";
-import { NotFoundErrorPage } from "../../pages/errors/not-found-error";
+import NotFoundErrorPage from "../../pages/errors/not-found-error";
 
-export const Layout: FC = ({ children }) => {
+export const HttpErrorBoundary: FC = ({ children }) => {
   const { systemState } = useSystemContext();
   const { errorType } = systemState;
 
@@ -11,7 +11,7 @@ export const Layout: FC = ({ children }) => {
     return <NotFoundErrorPage />;
   }
 
-  if (systemState.errorType === "network") {
+  if (errorType === "network") {
     return <NetworkErrorPage />;
   }
 

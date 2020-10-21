@@ -43,6 +43,9 @@ function reducer(
         name: "",
         picture: "",
       };
+
+    default:
+      return state;
   }
 }
 

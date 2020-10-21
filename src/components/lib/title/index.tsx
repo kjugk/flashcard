@@ -31,5 +31,7 @@ const StyledTitle = styled.div<{ size: FontSize; ellipsis: boolean }>`
     if (props.ellipsis) {
       return "white-space: nowrap; overflow: hidden; text-overflow: ellipsis";
     }
+
+    return "";
   }};
 `;

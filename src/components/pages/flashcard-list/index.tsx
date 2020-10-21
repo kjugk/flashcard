@@ -1,22 +1,22 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { FlashcardList } from "./flashcard-list";
-import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
-import { Header } from "../../shared";
-import { Container } from "../../lib/";
-import { EmptyState } from "./empty-state";
-import { Title } from "../../lib/title";
-import { LoadingSpinner } from "../../shared/loading-spinner";
-import { Layout } from "../../shared/layout";
-import { handleHttpError } from "../../utils/http-util";
-import { useSystemContext } from "../../../global-context/system/system.provider";
 import { useFlashcardListPageContext } from "../../../global-context/flashcard-list/flashcard-list.provider";
+import { useSystemContext } from "../../../global-context/system/system.provider";
+import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
+import { Container } from "../../lib/";
+import { Title } from "../../lib/title";
+import { Header } from "../../shared";
+import { HttpErrorBoundary } from "../../shared/error-boundary/http-error-boundary";
+import { LoadingSpinner } from "../../shared/loading-spinner";
+import { handleHttpError } from "../../utils/http-util";
+import { EmptyState } from "./empty-state";
+import { FlashcardList } from "./flashcard-list";
 
 /**
  * カードリストページ。
  * page コンポーネントにも、DOM をもたせて OK.
  * container と presentational 的な分け方はしない
  */
-export const FlashcardListPage: FunctionComponent = () => {
+const FlashcardListPage: FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
   const { systemDispatch } = useSystemContext();
   const {
@@ -50,7 +50,7 @@ export const FlashcardListPage: FunctionComponent = () => {
   }, []);
 
   return (
-    <Layout>
+    <HttpErrorBoundary>
       <div>
         <Header />
         <LoadingSpinner show={loading} />
@@ -68,6 +68,8 @@ export const FlashcardListPage: FunctionComponent = () => {
           </Container>
         )}
       </div>
-    </Layout>
+    </HttpErrorBoundary>
   );
 };
+
+export default FlashcardListPage;

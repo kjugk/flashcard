@@ -3,7 +3,7 @@ import { Container } from "../../lib";
 import { Title } from "../../lib/title";
 import { Header } from "../../shared";
 
-export const PrivacyPage: FC = () => {
+const PrivacyPage: FC = () => {
   return (
     <div>
       <Header showUser={false} />
@@ -88,3 +88,5 @@ export const PrivacyPage: FC = () => {
     </div>
   );
 };
+
+export default PrivacyPage;
