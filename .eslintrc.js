@@ -23,5 +23,6 @@ module.exports = {
     // e.g. "@typescript-eslint/explicit-function-return-type": "off",
     "react/prop-types": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "consistent-return": 2,
   },
 };

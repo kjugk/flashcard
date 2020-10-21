@@ -13,7 +13,7 @@ export const handleErrors = (e: any): never => {
     case 404:
       throw new NotFoundError();
     default:
-      throw new Error();
+      throw e;
   }
 };
 

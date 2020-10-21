@@ -74,6 +74,9 @@ function reducer(state: SystemState, action: SystemAction): SystemState {
         loading: action.payload.loading,
         loadingMessage: action.payload.message || "",
       };
+
+    default:
+      return state;
   }
 }
 

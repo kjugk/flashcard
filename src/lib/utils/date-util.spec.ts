@@ -1,4 +1,3 @@
-import { textChangeRangeIsUnchanged } from "typescript";
 import { numberToDateString } from "./date-util";
 
 describe("numberToDateString", () => {

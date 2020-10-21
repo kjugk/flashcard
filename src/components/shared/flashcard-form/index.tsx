@@ -57,7 +57,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
           required
           inputRef={register({
             required: true,
-            maxLength: { value: 10, message: "10" },
+            maxLength: { value: 30, message: "30" },
           })}
           label="名前"
           placeholder="名前を入力してください"

@@ -6,8 +6,10 @@ class AccountRepository {
 
     try {
       await http.delete<void>("account");
+      return;
     } catch (e) {
-      return handleErrors(e);
+      handleErrors(e);
+      return;
     }
   }
 }
