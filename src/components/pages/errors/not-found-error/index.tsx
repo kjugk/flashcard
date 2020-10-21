@@ -5,7 +5,7 @@ import { Container } from "../../../lib";
 import { Title } from "../../../lib/title";
 import { Header } from "../../../shared/header";
 
-export const NotFoundErrorPage: FC = () => {
+const NotFoundErrorPage: FC = () => {
   const { systemDispatch } = useSystemContext();
 
   useEffect(() => {
@@ -31,3 +31,5 @@ export const NotFoundErrorPage: FC = () => {
     </div>
   );
 };
+
+export default NotFoundErrorPage;
