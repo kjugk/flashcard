@@ -14,7 +14,7 @@ import { FlashcardFormValues } from "../../../types";
 /**
  * カード編集ページ。
  */
-export const FlashcardEditPage: FC = () => {
+const FlashcardEditPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
@@ -100,3 +100,5 @@ export const FlashcardEditPage: FC = () => {
     </HttpErrorBoundary>
   );
 };
+
+export default FlashcardEditPage;

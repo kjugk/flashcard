@@ -1,22 +1,22 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
-import { useParams, useHistory } from "react-router-dom";
-import { useDetailPageReducer } from "./store";
-import { useSystemContext } from "../../../global-context/system/system.provider";
-import { ClosableHeader } from "../../shared/closable-header";
-import { QaViewer } from "./qa-viewer";
-import { Title } from "../../lib/title";
-import { Container } from "../../lib/container";
-import { variables } from "../../../styles/variables";
-import { LoadingSpinner } from "../../shared/loading-spinner";
-import { HttpErrorBoundary } from "../../shared/error-boundary/http-error-boundary";
-import { handleHttpError } from "../../utils/http-util";
+import { useHistory, useParams } from "react-router-dom";
 import { useFlashcardListPageContext } from "../../../global-context/flashcard-list/flashcard-list.provider";
+import { useSystemContext } from "../../../global-context/system/system.provider";
+import { flashcardRepository } from "../../../repositories/flashcard/flashcard-repository";
+import { variables } from "../../../styles/variables";
+import { Container } from "../../lib/container";
+import { Title } from "../../lib/title";
+import { ClosableHeader } from "../../shared/closable-header";
+import { HttpErrorBoundary } from "../../shared/error-boundary/http-error-boundary";
+import { LoadingSpinner } from "../../shared/loading-spinner";
+import { handleHttpError } from "../../utils/http-util";
+import { QaViewer } from "./qa-viewer";
+import { useDetailPageReducer } from "./store";
 
 /**
  * カードの詳細ページ。
  */
-export const FlashcardDetailPage: FunctionComponent = () => {
+const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
@@ -116,3 +116,5 @@ export const FlashcardDetailPage: FunctionComponent = () => {
     </HttpErrorBoundary>
   );
 };
+
+export default FlashcardDetailPage;

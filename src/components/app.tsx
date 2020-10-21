@@ -1,52 +1,53 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
-  Switch,
+  Redirect,
   Route,
   RouteProps,
-  Redirect,
+  Switch,
 } from "react-router-dom";
 import { useCurrentUserContext } from "../global-context/current-user/current-user.provider";
 import { useIsSignedIn } from "../global-context/current-user/current-user.store";
-import {
-  FlashcardCreatePage,
-  FlashcardListPage,
-  FlashcardDetailPage,
-  FlashcardEditPage,
-  SignInPage,
-  TopPage,
-} from "./pages/index";
-import { LoadingModal } from "./shared/loading-modal";
 import { NotFoundErrorPage } from "./pages/errors/not-found-error";
-import { TermsPage } from "./pages/terms";
 import { PrivacyPage } from "./pages/privacy";
+import { TermsPage } from "./pages/terms";
+import { TopPage } from "./pages/top";
+import { LoadingModal } from "./shared/loading-modal";
+
+const FlashcardListPage = lazy(() => import("./pages/flashcard-list"));
+const FlashcardDetailPage = lazy(() => import("./pages/flashcard-detail"));
+const FlashcardCreatePage = lazy(() => import("./pages/flashcard-create"));
+const FlashcardEditPage = lazy(() => import("./pages/flashcard-edit"));
+const SignInPage = lazy(() => import("./pages/sign-in"));
 
 export const App: FunctionComponent = () => (
   <>
     <Router>
-      <Switch>
-        <PrivateRoute path="/flashcard-list">
-          <FlashcardListPage />
-        </PrivateRoute>
+      <Suspense fallback={<div>loading..</div>}>
+        <Switch>
+          <PrivateRoute path="/flashcard-list">
+            <FlashcardListPage />
+          </PrivateRoute>
 
-        <PrivateRoute path="/flashcard-create">
-          <FlashcardCreatePage />
-        </PrivateRoute>
+          <PrivateRoute path="/flashcard-create">
+            <FlashcardCreatePage />
+          </PrivateRoute>
 
-        <PrivateRoute path="/flashcard-edit/:id">
-          <FlashcardEditPage />
-        </PrivateRoute>
+          <PrivateRoute path="/flashcard-edit/:id">
+            <FlashcardEditPage />
+          </PrivateRoute>
 
-        <PrivateRoute path="/flashcard-detail/:id">
-          <FlashcardDetailPage />
-        </PrivateRoute>
+          <PrivateRoute path="/flashcard-detail/:id">
+            <FlashcardDetailPage />
+          </PrivateRoute>
 
-        <Route path="/sign-in" component={SignInPage} />
-        <Route path="/terms" component={TermsPage} />
-        <Route path="/privacy" component={PrivacyPage} />
-        <Route exact path="/" component={TopPage} />
-        <Route path="*" component={NotFoundErrorPage} />
-      </Switch>
+          <Route path="/sign-in" component={SignInPage} />
+          <Route path="/terms" component={TermsPage} />
+          <Route path="/privacy" component={PrivacyPage} />
+          <Route exact path="/" component={TopPage} />
+          <Route path="*" component={NotFoundErrorPage} />
+        </Switch>
+      </Suspense>
     </Router>
     <LoadingModal />
   </>
