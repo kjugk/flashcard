@@ -1,4 +1,5 @@
-import React, { FC, lazy, Suspense } from "react";
+import loadable from "@loadable/component";
+import React, { FC, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -10,15 +11,31 @@ import { useCurrentUserContext } from "../global-context/current-user/current-us
 import { useIsSignedIn } from "../global-context/current-user/current-user.store";
 import { LoadingModal } from "./shared/loading-modal";
 
-const FlashcardListPage = lazy(() => import("./pages/flashcard-list"));
-const FlashcardDetailPage = lazy(() => import("./pages/flashcard-detail"));
-const FlashcardCreatePage = lazy(() => import("./pages/flashcard-create"));
-const FlashcardEditPage = lazy(() => import("./pages/flashcard-edit"));
-const SignInPage = lazy(() => import("./pages/sign-in"));
-const TopPage = lazy(() => import("./pages/top"));
-const TermsPage = lazy(() => import("./pages/terms"));
-const PrivacyPage = lazy(() => import("./pages/privacy"));
-const NotFoundErrorPage = lazy(() => import("./pages/errors/not-found-error"));
+const FlashcardListPage = loadable(
+  () => import(/* webpackPrefetch: true */ "./pages/flashcard-list")
+);
+const FlashcardDetailPage = loadable(
+  () => import(/* webpackPrefetch: true */ "./pages/flashcard-detail")
+);
+const FlashcardCreatePage = loadable(() => import("./pages/flashcard-create"));
+const FlashcardEditPage = loadable(
+  () => import(/* webpackPrefetch: true */ "./pages/flashcard-edit")
+);
+const SignInPage = loadable(
+  () => import(/* webpackPrefetch: true */ "./pages/sign-in")
+);
+const TopPage = loadable(
+  () => import(/* webpackPrefetch: true */ "./pages/top")
+);
+const TermsPage = loadable(
+  () => import(/* webpackPrefetch: true */ "./pages/terms")
+);
+const PrivacyPage = loadable(
+  () => import(/* webpackPrefetch: true */ "./pages/privacy")
+);
+const NotFoundErrorPage = loadable(
+  () => import(/* webpackPrefetch: true */ "./pages/errors/not-found-error")
+);
 
 export const App: FC = () => (
   <>
