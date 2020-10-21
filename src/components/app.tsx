@@ -1,4 +1,4 @@
-import React, { FunctionComponent, lazy, Suspense } from "react";
+import React, { FC, lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Redirect,
@@ -8,9 +8,6 @@ import {
 } from "react-router-dom";
 import { useCurrentUserContext } from "../global-context/current-user/current-user.provider";
 import { useIsSignedIn } from "../global-context/current-user/current-user.store";
-import { NotFoundErrorPage } from "./pages/errors/not-found-error";
-import { PrivacyPage } from "./pages/privacy";
-import { TermsPage } from "./pages/terms";
 import { LoadingModal } from "./shared/loading-modal";
 
 const FlashcardListPage = lazy(() => import("./pages/flashcard-list"));
@@ -19,8 +16,11 @@ const FlashcardCreatePage = lazy(() => import("./pages/flashcard-create"));
 const FlashcardEditPage = lazy(() => import("./pages/flashcard-edit"));
 const SignInPage = lazy(() => import("./pages/sign-in"));
 const TopPage = lazy(() => import("./pages/top"));
+const TermsPage = lazy(() => import("./pages/terms"));
+const PrivacyPage = lazy(() => import("./pages/privacy"));
+const NotFoundErrorPage = lazy(() => import("./pages/errors/not-found-error"));
 
-export const App: FunctionComponent = () => (
+export const App: FC = () => (
   <>
     <Router>
       <Suspense fallback={<div />}>
@@ -54,7 +54,7 @@ export const App: FunctionComponent = () => (
 );
 
 // ログイン「必須」ページのRoute
-const PrivateRoute: FunctionComponent<RouteProps> = ({ children, ...rest }) => {
+const PrivateRoute: FC<RouteProps> = ({ children, ...rest }) => {
   const { currentUserState } = useCurrentUserContext();
   const isSignedIn = useIsSignedIn(currentUserState);
 

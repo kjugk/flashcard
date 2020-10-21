@@ -3,7 +3,7 @@ import { Container } from "../../lib";
 import { Title } from "../../lib/title";
 import { Header } from "../../shared";
 
-export const TermsPage: FC = () => {
+const TermsPage: FC = () => {
   return (
     <div>
       <Header showUser={false} />
@@ -166,3 +166,5 @@ export const TermsPage: FC = () => {
     </div>
   );
 };
+
+export default TermsPage;
