@@ -11,7 +11,6 @@ import { useIsSignedIn } from "../global-context/current-user/current-user.store
 import { NotFoundErrorPage } from "./pages/errors/not-found-error";
 import { PrivacyPage } from "./pages/privacy";
 import { TermsPage } from "./pages/terms";
-import { TopPage } from "./pages/top";
 import { LoadingModal } from "./shared/loading-modal";
 
 const FlashcardListPage = lazy(() => import("./pages/flashcard-list"));
@@ -19,6 +18,7 @@ const FlashcardDetailPage = lazy(() => import("./pages/flashcard-detail"));
 const FlashcardCreatePage = lazy(() => import("./pages/flashcard-create"));
 const FlashcardEditPage = lazy(() => import("./pages/flashcard-edit"));
 const SignInPage = lazy(() => import("./pages/sign-in"));
+const TopPage = lazy(() => import("./pages/top"));
 
 export const App: FunctionComponent = () => (
   <>
