@@ -11,7 +11,7 @@ export const Layout: FC = ({ children }) => {
     return <NotFoundErrorPage />;
   }
 
-  if (systemState.errorType === "network") {
+  if (errorType === "network") {
     return <NetworkErrorPage />;
   }
 
