@@ -23,7 +23,7 @@ const TopPage = lazy(() => import("./pages/top"));
 export const App: FunctionComponent = () => (
   <>
     <Router>
-      <Suspense fallback={<div>loading..</div>}>
+      <Suspense fallback={<div />}>
         <Switch>
           <PrivateRoute path="/flashcard-list">
             <FlashcardListPage />
