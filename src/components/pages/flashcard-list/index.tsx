@@ -6,7 +6,7 @@ import { Container } from "../../lib/";
 import { EmptyState } from "./empty-state";
 import { Title } from "../../lib/title";
 import { LoadingSpinner } from "../../shared/loading-spinner";
-import { Layout } from "../../shared/layout";
+import { HttpErrorBoundary } from "../../shared/error-boundary/http-error-boundary";
 import { handleHttpError } from "../../utils/http-util";
 import { useSystemContext } from "../../../global-context/system/system.provider";
 import { useFlashcardListPageContext } from "../../../global-context/flashcard-list/flashcard-list.provider";
@@ -50,7 +50,7 @@ export const FlashcardListPage: FunctionComponent = () => {
   }, []);
 
   return (
-    <Layout>
+    <HttpErrorBoundary>
       <div>
         <Header />
         <LoadingSpinner show={loading} />
@@ -68,6 +68,6 @@ export const FlashcardListPage: FunctionComponent = () => {
           </Container>
         )}
       </div>
-    </Layout>
+    </HttpErrorBoundary>
   );
 };

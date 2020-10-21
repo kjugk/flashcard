@@ -9,7 +9,7 @@ import { Title } from "../../lib/title";
 import { Container } from "../../lib/container";
 import { variables } from "../../../styles/variables";
 import { LoadingSpinner } from "../../shared/loading-spinner";
-import { Layout } from "../../shared/layout";
+import { HttpErrorBoundary } from "../../shared/error-boundary/http-error-boundary";
 import { handleHttpError } from "../../utils/http-util";
 import { useFlashcardListPageContext } from "../../../global-context/flashcard-list/flashcard-list.provider";
 
@@ -91,7 +91,7 @@ export const FlashcardDetailPage: FunctionComponent = () => {
   const { flashcard } = state;
 
   return (
-    <Layout>
+    <HttpErrorBoundary>
       <div style={{ paddingBottom: "96px" }}>
         <ClosableHeader title="問題集" onClose={handleClose} />
         <LoadingSpinner show={loading} />
@@ -113,6 +113,6 @@ export const FlashcardDetailPage: FunctionComponent = () => {
           </Container>
         )}
       </div>
-    </Layout>
+    </HttpErrorBoundary>
   );
 };
