@@ -7,7 +7,7 @@ import { Title } from "../../lib/title";
 import { Header } from "../../shared";
 import dayjs from "dayjs";
 
-const TopPage: FC = () => {
+export const TopPage: FC = () => {
   const history = useHistory();
 
   return (
@@ -146,5 +146,3 @@ const Footer = styled.div`
 const FooterItem = styled.span`
   margin-right: 8px;
 `;
-
-export default TopPage;

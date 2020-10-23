@@ -84,7 +84,7 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
           }
         >
           {fields.map((field, index) => (
-            <CSSTransition key={index} timeout={200}>
+            <CSSTransition key={field.id} timeout={200}>
               <Box withShadow={false} tag="li" style={{ marginBottom: "16px" }}>
                 <Title
                   text={`カード${index + 1}`}

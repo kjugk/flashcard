@@ -7,7 +7,7 @@ import { ClosableHeader } from "../../shared/closable-header";
 import { Container } from "../../lib";
 import { useHistory } from "react-router-dom";
 
-const SignInPage: FunctionComponent = () => {
+export const SignInPage: FunctionComponent = () => {
   const { currentUserState } = useCurrentUserContext();
   useSignedInUserGuard(currentUserState);
   const history = useHistory();
@@ -34,5 +34,3 @@ const StyledButton = styled.button`
     max-width: 100%;
   }
 `;
-
-export default SignInPage;

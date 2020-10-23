@@ -1,8 +1,7 @@
-import React, { FunctionComponent, CSSProperties } from "react";
-import styled from "styled-components";
-import { variables, Color } from "../../../styles/variables";
-import { FontSize } from "../../../styles/variables";
 import { SvgIconProps } from "@material-ui/core";
+import React, { CSSProperties, forwardRef } from "react";
+import styled from "styled-components";
+import { Color, FontSize, variables } from "../../../styles/variables";
 
 interface Props {
   icon: SvgIconProps;
@@ -13,16 +12,13 @@ interface Props {
   size?: FontSize;
 }
 
-export const IconButton: FunctionComponent<Props> = ({
-  icon,
-  onClick,
-  disabled = false,
-  color = "black",
-  size = "l",
-  style,
-}) => {
+export const IconButton = forwardRef<HTMLButtonElement, Props>(function button(
+  { icon, onClick, disabled = false, color = "black", size = "l", style },
+  ref
+) {
   return (
     <StyledButton
+      ref={ref}
       type="button"
       disabled={disabled}
       size={size}
@@ -33,7 +29,7 @@ export const IconButton: FunctionComponent<Props> = ({
       <Wrapper>{icon}</Wrapper>
     </StyledButton>
   );
-};
+});
 
 const StyledButton = styled.button<{
   size: FontSize;

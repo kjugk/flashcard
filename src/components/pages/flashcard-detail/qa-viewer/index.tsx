@@ -1,17 +1,16 @@
-import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import ArrowFoward from "@material-ui/icons/ArrowForward";
-import Shuffle from "@material-ui/icons/Shuffle";
 import Replay from "@material-ui/icons/Replay";
+import Shuffle from "@material-ui/icons/Shuffle";
+import Hammer from "hammerjs";
+import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { variables } from "../../../../styles/variables";
-import { IconButton } from "../../../lib/icon-button";
 import { Button } from "../../../lib/button";
-import { QaState } from "../store";
-import { ProgressBar } from "../progress-bar";
-import Hammer from "hammerjs";
+import { IconButton } from "../../../lib/icon-button";
 import { EditButton } from "../edit-button";
-
+import { ProgressBar } from "../progress-bar";
+import { QaState } from "../store";
 import { useCurrentQa, useQaViewerReducer } from "./store";
 
 interface Props {
@@ -34,6 +33,7 @@ export const QaViewer: FunctionComponent<Props> = ({
   const showNextPage = () => dispatch({ type: "show-next-page" });
   const showPrevPage = () => dispatch({ type: "show-prev-page" });
   const flipQa = () => dispatch({ type: "flip-qa" });
+  const shuffleButtonRef = useRef<HTMLButtonElement>(null);
 
   // スワイプジェスチャー対応
   const hammerRef = useRef<HammerManager>();
@@ -156,11 +156,15 @@ export const QaViewer: FunctionComponent<Props> = ({
 
       <Controller>
         <IconButton
+          ref={shuffleButtonRef}
           style={{ position: "absolute", left: 0 }}
           size="xxl"
           icon={<Shuffle />}
           color={state.shuffling ? "lightBlue" : "darkGrey"}
-          onClick={() => dispatch({ type: "toggle-shuffle" })}
+          onClick={() => {
+            shuffleButtonRef.current?.blur();
+            dispatch({ type: "toggle-shuffle" });
+          }}
         />
 
         <IconButton
@@ -190,15 +194,15 @@ export const QaViewer: FunctionComponent<Props> = ({
 const CardWrapper = styled.div`
   max-width: 768px;
   position: relative;
-  margin: 0 auto;
+  margin: 16px auto;
 `;
 
 const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
   position: relative;
   width: 100%;
-  margin: 16px 0;
   transform-style: preserve-3d;
-  ${(props) => (props.inTransition ? "" : "transition: transform 0.4s;")};
+  ${(props) =>
+    props.inTransition ? "" : "transition: transform 0.2s linear;"};
   ${(props) => (props.showAnswer ? "transform: rotateY(-180deg);" : "")};
 
   padding-bottom: 70%;
@@ -217,8 +221,8 @@ const CardContent = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
   backface-visibility: hidden;
   &.answer {
     transform: rotateY(-180deg);
@@ -234,12 +238,15 @@ const CardContent = styled.div`
     overflow: hidden;
     pre {
       font-family: inherit;
-      font-size: ${variables.fontSize.l};
       font-weight: bold;
       max-height: 100%;
       white-space: pre-wrap;
       word-wrap: break-word;
       overflow: scroll;
+      font-size: ${variables.fontSize.m};
+      @media only screen and (min-width: 768px) {
+        font-size: ${variables.fontSize.l};
+      }
     }
   }
   .guide {
