@@ -238,12 +238,15 @@ const CardContent = styled.div`
     overflow: hidden;
     pre {
       font-family: inherit;
-      font-size: ${variables.fontSize.l};
       font-weight: bold;
       max-height: 100%;
       white-space: pre-wrap;
       word-wrap: break-word;
       overflow: scroll;
+      font-size: ${variables.fontSize.m};
+      @media only screen and (min-width: 768px) {
+        font-size: ${variables.fontSize.l};
+      }
     }
   }
   .guide {
