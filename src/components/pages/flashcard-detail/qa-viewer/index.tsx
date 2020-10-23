@@ -194,15 +194,15 @@ export const QaViewer: FunctionComponent<Props> = ({
 const CardWrapper = styled.div`
   max-width: 768px;
   position: relative;
-  margin: 0 auto;
+  margin: 16px auto;
 `;
 
 const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
   position: relative;
   width: 100%;
-  margin: 16px 0;
   transform-style: preserve-3d;
-  ${(props) => (props.inTransition ? "" : "transition: transform 0.4s;")};
+  ${(props) =>
+    props.inTransition ? "" : "transition: transform 0.2s linear;"};
   ${(props) => (props.showAnswer ? "transform: rotateY(-180deg);" : "")};
 
   padding-bottom: 70%;
@@ -221,8 +221,8 @@ const CardContent = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  bottom: 0;
   backface-visibility: hidden;
   &.answer {
     transform: rotateY(-180deg);
