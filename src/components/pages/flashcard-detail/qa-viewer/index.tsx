@@ -1,17 +1,16 @@
-import React, { FunctionComponent, useState, useEffect, useRef } from "react";
 import ArrowBack from "@material-ui/icons/ArrowBack";
 import ArrowFoward from "@material-ui/icons/ArrowForward";
-import Shuffle from "@material-ui/icons/Shuffle";
 import Replay from "@material-ui/icons/Replay";
+import Shuffle from "@material-ui/icons/Shuffle";
+import Hammer from "hammerjs";
+import React, { FunctionComponent, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { variables } from "../../../../styles/variables";
-import { IconButton } from "../../../lib/icon-button";
 import { Button } from "../../../lib/button";
-import { QaState } from "../store";
-import { ProgressBar } from "../progress-bar";
-import Hammer from "hammerjs";
+import { IconButton } from "../../../lib/icon-button";
 import { EditButton } from "../edit-button";
-
+import { ProgressBar } from "../progress-bar";
+import { QaState } from "../store";
 import { useCurrentQa, useQaViewerReducer } from "./store";
 
 interface Props {
@@ -34,6 +33,7 @@ export const QaViewer: FunctionComponent<Props> = ({
   const showNextPage = () => dispatch({ type: "show-next-page" });
   const showPrevPage = () => dispatch({ type: "show-prev-page" });
   const flipQa = () => dispatch({ type: "flip-qa" });
+  const shuffleButtonRef = useRef<HTMLButtonElement>(null);
 
   // スワイプジェスチャー対応
   const hammerRef = useRef<HammerManager>();
@@ -156,11 +156,15 @@ export const QaViewer: FunctionComponent<Props> = ({
 
       <Controller>
         <IconButton
+          ref={shuffleButtonRef}
           style={{ position: "absolute", left: 0 }}
           size="xxl"
           icon={<Shuffle />}
           color={state.shuffling ? "lightBlue" : "darkGrey"}
-          onClick={() => dispatch({ type: "toggle-shuffle" })}
+          onClick={() => {
+            shuffleButtonRef.current?.blur();
+            dispatch({ type: "toggle-shuffle" });
+          }}
         />
 
         <IconButton
