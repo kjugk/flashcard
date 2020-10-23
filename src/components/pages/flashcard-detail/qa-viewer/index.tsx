@@ -3,7 +3,13 @@ import ArrowFoward from "@material-ui/icons/ArrowForward";
 import Replay from "@material-ui/icons/Replay";
 import Shuffle from "@material-ui/icons/Shuffle";
 import Hammer from "hammerjs";
-import React, { FunctionComponent, useEffect, useRef, useState } from "react";
+import React, {
+  FunctionComponent,
+  useEffect,
+  useRef,
+  useState,
+  useLayoutEffect,
+} from "react";
 import styled from "styled-components";
 import { variables } from "../../../../styles/variables";
 import { Button } from "../../../lib/button";
@@ -69,7 +75,7 @@ export const QaViewer: FunctionComponent<Props> = ({
   };
 
   // ページ変更直後は css の animation を off にする。
-  useEffect(() => {
+  useLayoutEffect(() => {
     setInPageTransition(true);
     setTimeout(() => {
       setInPageTransition(false);
