@@ -16,7 +16,7 @@ import { FlashcardList } from "./flashcard-list";
  * page コンポーネントにも、DOM をもたせて OK.
  * container と presentational 的な分け方はしない
  */
-const FlashcardListPage: FunctionComponent = () => {
+export const FlashcardListPage: FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
   const { systemDispatch } = useSystemContext();
   const {
@@ -71,5 +71,3 @@ const FlashcardListPage: FunctionComponent = () => {
     </HttpErrorBoundary>
   );
 };
-
-export default FlashcardListPage;

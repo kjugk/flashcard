@@ -11,7 +11,7 @@ import { FlashcardFormValues } from "../../../types";
 /**
  * カード作成ページ。
  */
-const FlashcardCreatePage: FC = () => {
+export const FlashcardCreatePage: FC = () => {
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
   const { flashcardLisrPageDispatch } = useFlashcardListPageContext();
@@ -71,5 +71,3 @@ const FlashcardCreatePage: FC = () => {
     </div>
   );
 };
-
-export default FlashcardCreatePage;

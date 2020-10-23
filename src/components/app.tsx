@@ -10,23 +10,13 @@ import {
 import { useCurrentUserContext } from "../global-context/current-user/current-user.provider";
 import { useIsSignedIn } from "../global-context/current-user/current-user.store";
 import { LoadingModal } from "./shared/loading-modal";
+import { FlashcardListPage } from "./pages/flashcard-list";
+import { FlashcardDetailPage } from "./pages/flashcard-detail";
+import { FlashcardCreatePage } from "./pages/flashcard-create";
+import { FlashcardEditPage } from "./pages/flashcard-edit";
+import { SignInPage } from "./pages/sign-in";
+import { TopPage } from "./pages/top";
 
-const FlashcardListPage = loadable(
-  () => import(/* webpackPrefetch: true */ "./pages/flashcard-list")
-);
-const FlashcardDetailPage = loadable(
-  () => import(/* webpackPrefetch: true */ "./pages/flashcard-detail")
-);
-const FlashcardCreatePage = loadable(() => import("./pages/flashcard-create"));
-const FlashcardEditPage = loadable(
-  () => import(/* webpackPrefetch: true */ "./pages/flashcard-edit")
-);
-const SignInPage = loadable(
-  () => import(/* webpackPrefetch: true */ "./pages/sign-in")
-);
-const TopPage = loadable(
-  () => import(/* webpackPrefetch: true */ "./pages/top")
-);
 const TermsPage = loadable(
   () => import(/* webpackPrefetch: true */ "./pages/terms")
 );

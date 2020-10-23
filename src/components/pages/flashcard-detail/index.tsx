@@ -16,7 +16,7 @@ import { useDetailPageReducer } from "./store";
 /**
  * カードの詳細ページ。
  */
-const FlashcardDetailPage: FunctionComponent = () => {
+export const FlashcardDetailPage: FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const { systemDispatch } = useSystemContext();
@@ -116,5 +116,3 @@ const FlashcardDetailPage: FunctionComponent = () => {
     </HttpErrorBoundary>
   );
 };
-
-export default FlashcardDetailPage;
