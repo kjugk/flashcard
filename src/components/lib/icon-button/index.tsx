@@ -56,7 +56,7 @@ const StyledButton = styled.button<{
   }
   @media only screen and (min-width: 768px) {
     &:hover {
-      filter: brightness(0.95);
+      background: rgba(76, 125, 222, 0.2);
     }
   }
 `;
