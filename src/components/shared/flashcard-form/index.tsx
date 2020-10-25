@@ -155,9 +155,10 @@ export const FlashcardForm: FC<Props> = ({ onSubmit, defaultValues }) => {
 
 const QaListWrapper = styled.ul`
   margin-top: 16px;
+  padding: 0 16px;
 
-  @media only screen and (max-width: 767px) {
-    padding: 0 16px;
+  @media only screen and (min-width: 768px) {
+    padding: 0;
   }
 
   .qa-list-item-enter {

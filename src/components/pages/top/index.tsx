@@ -123,8 +123,9 @@ const EyeCatch = styled.div`
 
 const TopButtonWrapper = styled.div`
   margin-top: 32px;
-  @media only screen and (max-width: 767px) {
-    display: none;
+  display: none;
+  @media only screen and (min-width: 768px) {
+    display: block;
   }
 `;
 

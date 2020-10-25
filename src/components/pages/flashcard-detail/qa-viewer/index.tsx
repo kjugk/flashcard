@@ -211,9 +211,9 @@ const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
     props.inTransition ? "" : "transition: transform 0.2s linear;"};
   ${(props) => (props.showAnswer ? "transform: rotateY(-180deg);" : "")};
 
-  padding-bottom: 70%;
-  @media only screen and (max-width: 767px) {
-    padding-bottom: 86%;
+  padding-bottom: 86%;
+  @media only screen and (min-width: 768px) {
+    padding-bottom: 70%;
   }
 `;
 
