@@ -50,14 +50,10 @@ const StyledButton = styled.button<{
   border-radius: 9999px;
   text-align: center;
   vertical-align: middle;
-  &:active,
-  &:focus {
+  &:hover,
+  &:focus,
+  &:active {
     background: rgba(76, 125, 222, 0.2);
-  }
-  @media only screen and (min-width: 768px) {
-    &:hover {
-      background: rgba(76, 125, 222, 0.2);
-    }
   }
 `;
 
