@@ -39,7 +39,6 @@ export const QaViewer: FunctionComponent<Props> = ({
   const showNextPage = () => dispatch({ type: "show-next-page" });
   const showPrevPage = () => dispatch({ type: "show-prev-page" });
   const flipQa = () => dispatch({ type: "flip-qa" });
-  const shuffleButtonRef = useRef<HTMLButtonElement>(null);
 
   // スワイプジェスチャー対応
   const hammerRef = useRef<HammerManager>();
@@ -162,13 +161,10 @@ export const QaViewer: FunctionComponent<Props> = ({
 
       <Controller>
         <IconButton
-          ref={shuffleButtonRef}
           style={{ position: "absolute", left: 0 }}
-          size="xxl"
           icon={<Shuffle />}
           color={state.shuffling ? "lightBlue" : "darkGrey"}
           onClick={() => {
-            shuffleButtonRef.current?.blur();
             dispatch({ type: "toggle-shuffle" });
           }}
         />
@@ -211,9 +207,9 @@ const Card = styled.div<{ showAnswer: boolean; inTransition: boolean }>`
     props.inTransition ? "" : "transition: transform 0.2s linear;"};
   ${(props) => (props.showAnswer ? "transform: rotateY(-180deg);" : "")};
 
-  padding-bottom: 70%;
-  @media only screen and (max-width: 767px) {
-    padding-bottom: 86%;
+  padding-bottom: 86%;
+  @media only screen and (min-width: 768px) {
+    padding-bottom: 70%;
   }
 `;
 

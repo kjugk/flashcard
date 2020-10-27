@@ -57,19 +57,20 @@ const StyledButton = styled.button<{
   font-weight: bold;
   padding: 1.2em 1.6em;
   display: inline-block;
-  border: 1px solid;
+  border: 1px solid transparent;
+  min-width: 64px;
   filter: brightness(1);
   transition: filter 0.1s;
   ${(props) =>
     props.fullWidth
       ? "width: min(100%, 500px); margin: 0 auto"
       : "width: auto"};
-  &:active,
-  &:focus {
+  &:active {
     filter: brightness(0.95);
   }
   @media only screen and (min-width: 768px) {
-    &:hover {
+    &:hover,
+    &:focus {
       filter: brightness(0.95);
     }
   }

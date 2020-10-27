@@ -1,5 +1,5 @@
 import { SvgIconProps } from "@material-ui/core";
-import React, { CSSProperties, forwardRef } from "react";
+import React, { CSSProperties, FC, useRef } from "react";
 import styled from "styled-components";
 import { Color, FontSize, variables } from "../../../styles/variables";
 
@@ -12,24 +12,33 @@ interface Props {
   size?: FontSize;
 }
 
-export const IconButton = forwardRef<HTMLButtonElement, Props>(function button(
-  { icon, onClick, disabled = false, color = "black", size = "l", style },
-  ref
-) {
+export const IconButton: FC<Props> = ({
+  icon,
+  onClick,
+  disabled = false,
+  color = "black",
+  size = "l",
+  style,
+}) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   return (
     <StyledButton
-      ref={ref}
+      ref={buttonRef}
       type="button"
       disabled={disabled}
       size={size}
       color={color}
       style={style}
-      onClick={onClick}
+      onClick={(e) => {
+        buttonRef.current?.blur();
+        onClick(e);
+      }}
     >
       <Wrapper>{icon}</Wrapper>
     </StyledButton>
   );
-});
+};
 
 const StyledButton = styled.button<{
   size: FontSize;
@@ -40,23 +49,22 @@ const StyledButton = styled.button<{
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  line-height: 1.43;
   padding: 0.5em;
   font-size: ${(props) => variables.fontSize[props.size]};
   color: ${(props) =>
     props.disabled
       ? variables.colors.lightGrey
       : variables.colors[props.color]};
-  transition: background-color color 0.2s;
-  border-radius: 9999px;
-  text-align: center;
-  vertical-align: middle;
-  &:active,
-  &:focus {
+  border-radius: 50%;
+  &:active {
     background: rgba(76, 125, 222, 0.2);
   }
+
   @media only screen and (min-width: 768px) {
-    &:hover {
-      filter: brightness(0.95);
+    &:hover,
+    &:focus {
+      background: rgba(76, 125, 222, 0.2);
     }
   }
 `;
