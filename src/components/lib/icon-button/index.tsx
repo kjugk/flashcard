@@ -1,5 +1,5 @@
 import { SvgIconProps } from "@material-ui/core";
-import React, { CSSProperties, forwardRef } from "react";
+import React, { CSSProperties, FC, useRef } from "react";
 import styled from "styled-components";
 import { Color, FontSize, variables } from "../../../styles/variables";
 
@@ -12,24 +12,33 @@ interface Props {
   size?: FontSize;
 }
 
-export const IconButton = forwardRef<HTMLButtonElement, Props>(function button(
-  { icon, onClick, disabled = false, color = "black", size = "l", style },
-  ref
-) {
+export const IconButton: FC<Props> = ({
+  icon,
+  onClick,
+  disabled = false,
+  color = "black",
+  size = "l",
+  style,
+}) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
   return (
     <StyledButton
-      ref={ref}
+      ref={buttonRef}
       type="button"
       disabled={disabled}
       size={size}
       color={color}
       style={style}
-      onClick={onClick}
+      onClick={(e) => {
+        buttonRef.current?.blur();
+        onClick(e);
+      }}
     >
       <Wrapper>{icon}</Wrapper>
     </StyledButton>
   );
-});
+};
 
 const StyledButton = styled.button<{
   size: FontSize;
@@ -49,13 +58,9 @@ const StyledButton = styled.button<{
       : variables.colors[props.color]};
   border-radius: 50%;
   &:hover,
+  &:focus,
   &:active {
     background: rgba(76, 125, 222, 0.2);
-  }
-  @media only screen and (min-width: 768px) {
-    &:focus {
-      background: rgba(76, 125, 222, 0.2);
-    }
   }
 `;
 
