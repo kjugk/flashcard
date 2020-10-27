@@ -63,8 +63,7 @@ const StyledButton = styled.button<{
 
   @media only screen and (min-width: 768px) {
     &:hover,
-    &:focus,
-    &:active {
+    &:focus {
       background: rgba(76, 125, 222, 0.2);
     }
   }

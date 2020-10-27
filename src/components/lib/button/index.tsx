@@ -65,11 +65,11 @@ const StyledButton = styled.button<{
     props.fullWidth
       ? "width: min(100%, 500px); margin: 0 auto"
       : "width: auto"};
-  &:hover,
   &:active {
     filter: brightness(0.95);
   }
   @media only screen and (min-width: 768px) {
+    &:hover,
     &:focus {
       filter: brightness(0.95);
     }
