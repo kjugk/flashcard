@@ -47,17 +47,13 @@ const StyledButton = styled.button<{
       ? variables.colors.lightGrey
       : variables.colors[props.color]};
   transition: background-color color 0.2s;
-  border-radius: 9999px;
+  border-radius: 50%;
   text-align: center;
   vertical-align: middle;
-  &:active,
-  &:focus {
+  &:hover,
+  &:focus,
+  &:active {
     background: rgba(76, 125, 222, 0.2);
-  }
-  @media only screen and (min-width: 768px) {
-    &:hover {
-      filter: brightness(0.95);
-    }
   }
 `;
 
