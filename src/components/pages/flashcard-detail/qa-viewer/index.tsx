@@ -39,7 +39,6 @@ export const QaViewer: FunctionComponent<Props> = ({
   const showNextPage = () => dispatch({ type: "show-next-page" });
   const showPrevPage = () => dispatch({ type: "show-prev-page" });
   const flipQa = () => dispatch({ type: "flip-qa" });
-  const shuffleButtonRef = useRef<HTMLButtonElement>(null);
 
   // スワイプジェスチャー対応
   const hammerRef = useRef<HammerManager>();
@@ -162,12 +161,10 @@ export const QaViewer: FunctionComponent<Props> = ({
 
       <Controller>
         <IconButton
-          ref={shuffleButtonRef}
           style={{ position: "absolute", left: 0 }}
           icon={<Shuffle />}
           color={state.shuffling ? "lightBlue" : "darkGrey"}
           onClick={() => {
-            shuffleButtonRef.current?.blur();
             dispatch({ type: "toggle-shuffle" });
           }}
         />
