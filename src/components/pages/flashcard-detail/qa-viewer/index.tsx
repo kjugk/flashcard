@@ -164,7 +164,6 @@ export const QaViewer: FunctionComponent<Props> = ({
         <IconButton
           ref={shuffleButtonRef}
           style={{ position: "absolute", left: 0 }}
-          size="xxl"
           icon={<Shuffle />}
           color={state.shuffling ? "lightBlue" : "darkGrey"}
           onClick={() => {

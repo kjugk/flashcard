@@ -49,9 +49,13 @@ const StyledButton = styled.button<{
       : variables.colors[props.color]};
   border-radius: 50%;
   &:hover,
-  &:focus,
   &:active {
     background: rgba(76, 125, 222, 0.2);
+  }
+  @media only screen and (min-width: 768px) {
+    &:focus {
+      background: rgba(76, 125, 222, 0.2);
+    }
   }
 `;
 
