@@ -57,7 +57,8 @@ const StyledButton = styled.button<{
   font-weight: bold;
   padding: 1.2em 1.6em;
   display: inline-block;
-  border: 1px solid;
+  border: 1px solid transparent;
+  min-width: 64px;
   filter: brightness(1);
   transition: filter 0.1s;
   ${(props) =>
