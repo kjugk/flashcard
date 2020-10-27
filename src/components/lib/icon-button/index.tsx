@@ -40,16 +40,14 @@ const StyledButton = styled.button<{
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  line-height: 1.43;
   padding: 0.5em;
   font-size: ${(props) => variables.fontSize[props.size]};
   color: ${(props) =>
     props.disabled
       ? variables.colors.lightGrey
       : variables.colors[props.color]};
-  transition: background-color color 0.2s;
   border-radius: 50%;
-  text-align: center;
-  vertical-align: middle;
   &:hover,
   &:focus,
   &:active {

@@ -11,7 +11,7 @@ export const TopPage: FC = () => {
   const history = useHistory();
 
   return (
-    <Wrapper>
+    <Page>
       <Header showUser={false} />
       <StyledContainer tag="main">
         <Grid>
@@ -67,11 +67,11 @@ export const TopPage: FC = () => {
           </FooterItem>
         </Container>
       </Footer>
-    </Wrapper>
+    </Page>
   );
 };
 
-const Wrapper = styled.div`
+const Page = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -80,11 +80,9 @@ const Wrapper = styled.div`
 const StyledContainer = styled(Container)`
   padding: 16px;
   flex: 1;
-  @media only screen and (min-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const Grid = styled.div`
@@ -101,9 +99,7 @@ const GridText = styled.div`
 `;
 
 const EyeCatchWrapper = styled.div`
-  text-align: center;
-  max-width: 360px;
-  width: 100%;
+  width: min(100%, 360px);
   position: relative;
   margin 0 auto;
 `;
