@@ -47,7 +47,10 @@ const StyledButton = styled.button<{
     props.disabled
       ? variables.colors.lightGrey
       : variables.colors[props.color]};
+  transition: background-color color 0.2s;
   border-radius: 50%;
+  text-align: center;
+  vertical-align: middle;
   &:hover,
   &:focus,
   &:active {
