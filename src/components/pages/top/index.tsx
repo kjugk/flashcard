@@ -80,9 +80,11 @@ const Page = styled.div`
 const StyledContainer = styled(Container)`
   padding: 16px;
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @media only screen and (min-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 const Grid = styled.div`
