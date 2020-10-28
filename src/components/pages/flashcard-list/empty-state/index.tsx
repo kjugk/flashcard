@@ -10,7 +10,7 @@ export const EmptyState: FC = () => {
   const history = useHistory();
 
   return (
-    <div style={{ textAlign: "center", marginTop: "72px" }}>
+    <div style={{ textAlign: "center", marginTop: "72px", padding: "0 16px" }}>
       <Title
         text="まだ問題集がありません"
         tag="h2"
