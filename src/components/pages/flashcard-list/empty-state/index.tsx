@@ -1,7 +1,8 @@
 import React, { FC } from "react";
+import styled from "styled-components";
 import { variables } from "../../../../styles/variables";
 import { useHistory } from "react-router-dom";
-import { Box, Button } from "../../../lib";
+import { Button } from "../../../lib";
 import { Title } from "../../../lib/title";
 import Add from "@material-ui/icons/Add";
 
@@ -9,28 +10,29 @@ export const EmptyState: FC = () => {
   const history = useHistory();
 
   return (
-    <Box
-      style={{
-        textAlign: "center",
-        background: variables.colors.lightBlue,
-        borderRadius: "6px",
-        color: variables.colors.white,
-      }}
-    >
+    <div style={{ textAlign: "center", marginTop: "72px", padding: "0 16px" }}>
       <Title
-        text="最初の問題集を作成しましょう"
+        text="まだ問題集がありません"
         tag="h2"
-        size="m"
-        style={{ marginBottom: "24px" }}
+        size="l"
+        style={{ marginBottom: "16px" }}
       />
+      <Paragraph>
+        学習したい課題について、最初の問題集を作成してみましょう!
+      </Paragraph>
       <Button
-        label="問題集を作成"
-        icon={<Add fontSize="small" />}
-        size="xs"
+        label="問題集を作成する"
+        icon={<Add />}
+        size="s"
         outlined
-        style={{ margin: "0 auto" }}
         onClick={() => history.push("/flashcard-create")}
       />
-    </Box>
+    </div>
   );
 };
+
+const Paragraph = styled.p`
+  color: ${variables.colors.darkGrey};
+  font-size: ${variables.fontSize.s};
+  margin-bottom: 24px;
+`;
