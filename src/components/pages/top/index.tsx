@@ -36,7 +36,7 @@ export const TopPage: FC = () => {
 
           <EyeCatchWrapper>
             <EyeCatch>
-              <img src="/eyecatch.png" alt="アイキャッチ画像" />
+              <img src="/eyecatch.png" alt="eyecatch image" width="360px" />
             </EyeCatch>
           </EyeCatchWrapper>
 

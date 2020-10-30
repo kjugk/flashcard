@@ -10,7 +10,8 @@ export const EmptyState: FC = () => {
   const history = useHistory();
 
   return (
-    <div style={{ textAlign: "center", marginTop: "72px", padding: "0 16px" }}>
+    <Wrapper>
+      <Image src="/empty-state.png" width="360px" alt="empty state image" />
       <Title
         text="まだ問題集がありません"
         tag="h2"
@@ -27,12 +28,23 @@ export const EmptyState: FC = () => {
         outlined
         onClick={() => history.push("/flashcard-create")}
       />
-    </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  text-align: center;
+  margin-top: 48px;
+  padding 0 16px;
+`;
+
+const Image = styled.img`
+  width: min(360px, 100%);
+  margin-bottom: 48px;
+`;
 
 const Paragraph = styled.p`
   color: ${variables.colors.darkGrey};
   font-size: ${variables.fontSize.s};
-  margin-bottom: 24px;
+  margin-bottom: 36px;
 `;
