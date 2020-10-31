@@ -2,14 +2,12 @@ import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { signInWithGoogle } from "../../../lib/cognito";
 import { useSignedInUserGuard } from "../../../global-context/current-user/current-user.store";
-import { useCurrentUserContext } from "../../../global-context/current-user/current-user.provider";
 import { ClosableHeader } from "../../shared/closable-header";
 import { Container } from "../../lib";
 import { useHistory } from "react-router-dom";
 
 export const SignInPage: FunctionComponent = () => {
-  const { currentUserState } = useCurrentUserContext();
-  useSignedInUserGuard(currentUserState);
+  useSignedInUserGuard();
   const history = useHistory();
 
   return (
