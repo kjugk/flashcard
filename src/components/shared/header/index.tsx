@@ -25,7 +25,7 @@ export const Header: FC<Props> = ({ showUser = true }) => {
   const { currentUserState, currentUserDispatch } = useCurrentUserContext();
   const { systemDispatch } = useSystemContext();
   const history = useHistory();
-  const isSignedIn = useIsSignedIn(currentUserState);
+  const isSignedIn = useIsSignedIn();
   const [showPopover, setShowPopover] = useState(false);
   const [showAccountDeleteConfirm, setShowAccountDeleteConfirm] = useState(
     false
@@ -81,7 +81,7 @@ export const Header: FC<Props> = ({ showUser = true }) => {
       <Container style={{ padding: "0 16px" }}>
         <Nav>
           <Link to="/" className="brand">
-            <img src="/brand.svg" alt="brand logo" width="163px" />
+            <img src="/brand.svg" alt="brand logo" width="163" />
           </Link>
 
           {!isSignedIn && (

@@ -23,5 +23,4 @@ export const SystemProvider: React.FunctionComponent = (props) => {
   );
 };
 
-// custome hooks
 export const useSystemContext = () => useContext(SystemContext);
