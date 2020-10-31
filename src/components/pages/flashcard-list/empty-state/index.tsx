@@ -11,7 +11,7 @@ export const EmptyState: FC = () => {
 
   return (
     <Wrapper>
-      <Image src="/empty-state.png" width="360px" alt="empty state image" />
+      <Image src="/empty-state.png" width="360" alt="empty state image" />
       <Title
         text="まだ問題集がありません"
         tag="h2"
