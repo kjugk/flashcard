@@ -63,7 +63,7 @@ export const App: FC = () => (
 // ログイン「必須」ページのRoute
 const PrivateRoute: FC<RouteProps> = ({ children, ...rest }) => {
   const { currentUserState } = useCurrentUserContext();
-  const isSignedIn = useIsSignedIn(currentUserState);
+  const isSignedIn = useIsSignedIn();
 
   if (!currentUserState.initialized) {
     return <div>loading...</div>;

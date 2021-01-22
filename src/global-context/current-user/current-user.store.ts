@@ -1,6 +1,7 @@
 // カレントユーザー関連の global state を管理する
 import { useReducer, useEffect, useMemo } from "react";
 import { useHistory } from "react-router-dom";
+import { useCurrentUserContext } from "./current-user.provider";
 
 // actions
 export type CurrentUserAction =
@@ -51,18 +52,17 @@ function reducer(
 
 export const useCurrentUserReducer = () => useReducer(reducer, initialState);
 
-// selectors
-// TODO ただのモジュールにまとめようかな
-export const useIsSignedIn = (currentUserState: CurrentUserState) => {
+// custom hooks
+export const useIsSignedIn = () => {
+  const { currentUserState } = useCurrentUserContext();
   return useMemo(
     () => currentUserState.initialized && currentUserState.name !== "",
     [currentUserState.initialized, currentUserState.name]
   );
 };
 
-// TODO 置き場所決める(components/shared/hooks?)
-export const useSignedInUserGuard = (currentUserState: CurrentUserState) => {
-  const isSignedIn = useIsSignedIn(currentUserState);
+export const useSignedInUserGuard = () => {
+  const isSignedIn = useIsSignedIn();
   const history = useHistory();
 
   useEffect(() => {
